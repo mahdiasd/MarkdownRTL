@@ -1,0 +1,53 @@
+<idea-plugin>
+    <id>com.persian.markdown</id>
+    <name>Markdown RTL</name>
+    <vendor url="https://github.com/mahdiasd/MarkdownRTL">Mahdi</vendor>
+
+    <description><![CDATA[
+      <h3>Persian & Right-to-Left (RTL) Markdown Enhancer</h3>
+      <p>
+        Automatically enhances Markdown preview with full RTL direction and Persian typography in IntelliJ IDEA and Android Studio.
+      </p>
+      <h4>Features:</h4>
+      <ul>
+        <li><b>Automatic Preview Integration:</b> Sits directly on the built-in Markdown preview window without needing any manual commands.</li>
+        <li><b>Direction Modes:</b> Auto RTL (BiDi detection per paragraph/element), Force RTL, and Force LTR.</li>
+        <li><b>Code Block Protection:</b> Ensures code snippets, pre, and inline code remain LTR with monospace typography.</li>
+        <li><b>Persian Typography:</b> Bundled high-legibility <i>Vazirmatn</i> font (Regular & Bold), customizable font stack, font size, and line-height.</li>
+        <li><b>Headings & Lists:</b> Tailored line height, right-aligned lists, and Persian-friendly quote borders.</li>
+        <li><b>Quick Toggle:</b> Fast switching between direction modes via Toolbar, Context Menu, Tools menu, or shortcut (Shift+Alt+R).</li>
+      </ul>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.intellij.plugins.markdown</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.persian.markdown.settings.PersianMarkdownSettings"/>
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.persian.markdown.settings.PersianMarkdownConfigurable"
+                id="com.persian.markdown.settings"
+                displayName="Persian Markdown"/>
+        <postStartupActivity implementation="com.persian.markdown.startup.PersianMarkdownStartupActivity"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="org.intellij.markdown">
+        <browserPreviewExtensionProvider implementation="com.persian.markdown.preview.PersianMarkdownBrowserExtension$Provider"/>
+    </extensions>
+
+    <actions>
+        <action id="PersianMarkdown.ToggleDirection"
+                class="com.persian.markdown.actions.ToggleDirectionAction"
+                text="Markdown RTL Direction"
+                description="Cycles Markdown preview between Auto-RTL, Force RTL, and Force LTR"
+                icon="AllIcons.Actions.SplitVertically">
+            <add-to-group group-id="Markdown.Toolbar.Right" anchor="last"/>
+            <add-to-group group-id="Markdown.Toolbar.Floating" anchor="last"/>
+            <add-to-group group-id="Markdown.EditorContextMenuGroup" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift alt R"/>
+        </action>
+    </actions>
+</idea-plugin>
