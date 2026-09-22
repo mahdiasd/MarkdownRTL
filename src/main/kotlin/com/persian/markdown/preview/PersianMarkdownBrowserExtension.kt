@@ -46,10 +46,25 @@ class PersianMarkdownBrowserExtension(
             }
             "persianMarkdown/persian.js" -> {
                 val state = PersianMarkdownSettings.getInstance().state
-                val js = CssGenerator.generateAutoDirScript(state)
+                val js = CssGenerator.generateAutoDirScript(state, cachedSystemFonts)
                 ResourceProvider.Resource(js.toByteArray(Charsets.UTF_8), "application/javascript; charset=utf-8")
             }
             else -> null
+        }
+    }
+
+    companion object {
+        val cachedSystemFonts: Array<String> by lazy {
+            try {
+                java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment()
+                    .availableFontFamilyNames
+                    .filter { it.isNotBlank() && !it.startsWith("@") }
+                    .distinct()
+                    .sorted()
+                    .toTypedArray()
+            } catch (_: Exception) {
+                emptyArray()
+            }
         }
     }
 

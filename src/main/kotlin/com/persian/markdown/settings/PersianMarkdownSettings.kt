@@ -11,6 +11,8 @@ import com.intellij.util.messages.Topic
 class PersianMarkdownState : BaseState() {
     var directionMode by enum(DirectionMode.AUTO)
     var fontFamily by string("Vazirmatn, -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif")
+    var enFontFamily by string("JetBrains Mono, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif")
+    var codeFontFamily by string("JetBrains Mono, Menlo, Monaco, Consolas, monospace")
     var fontSize by property(16)
     var lineHeight by property(1.8f)
     var useBundledFont by property(true)

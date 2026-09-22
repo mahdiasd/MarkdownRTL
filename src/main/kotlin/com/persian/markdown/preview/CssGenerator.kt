@@ -15,6 +15,14 @@ object CssGenerator {
         loadFontAsBase64("/fonts/Vazirmatn-Bold.ttf")
     }
 
+    private val bundledJbRegularFontBase64: String? by lazy {
+        loadFontAsBase64("/fonts/JetBrainsMono-Regular.ttf")
+    }
+
+    private val bundledJbBoldFontBase64: String? by lazy {
+        loadFontAsBase64("/fonts/JetBrainsMono-Bold.ttf")
+    }
+
     private fun loadFontAsBase64(resourcePath: String): String? {
         return try {
             val stream = CssGenerator::class.java.getResourceAsStream(resourcePath) ?: return null
@@ -50,25 +58,56 @@ object CssGenerator {
             }
         }
 
-        val fontStack = buildString {
+        if (bundledJbRegularFontBase64 != null) {
+            sb.append("""
+                @font-face {
+                    font-family: 'PersianMarkdownBundledJBMono';
+                    src: url('data:font/truetype;charset=utf-8;base64,${bundledJbRegularFontBase64}') format('truetype');
+                    font-weight: 400;
+                    font-style: normal;
+                }
+            """.trimIndent()).append("\n")
+
+            if (bundledJbBoldFontBase64 != null) {
+                sb.append("""
+                    @font-face {
+                        font-family: 'PersianMarkdownBundledJBMono';
+                        src: url('data:font/truetype;charset=utf-8;base64,${bundledJbBoldFontBase64}') format('truetype');
+                        font-weight: 700;
+                        font-style: normal;
+                    }
+                """.trimIndent()).append("\n")
+            }
+        }
+
+        val faFontStack = buildString {
             if (state.useBundledFont && bundledRegularFontBase64 != null) {
                 append("'PersianMarkdownBundledVazir', ")
             }
             if (!state.fontFamily.isNullOrBlank()) {
                 append("${state.fontFamily}, ")
             }
-            append("Tahoma, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif")
+            append("'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif")
+        }
+
+        val enFontStack = buildString {
+            if (bundledJbRegularFontBase64 != null) {
+                append("'PersianMarkdownBundledJBMono', ")
+            }
+            if (!state.enFontFamily.isNullOrBlank()) {
+                append("${state.enFontFamily}, ")
+            }
+            append("'JetBrains Mono', 'SF Pro', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif")
         }
 
         val codeFontStack = buildString {
-            append("'JetBrains Mono', Menlo, Monaco, Consolas, 'Courier New', ")
-            if (state.useBundledFont && bundledRegularFontBase64 != null) {
-                append("'PersianMarkdownBundledVazir', ")
+            if (bundledJbRegularFontBase64 != null) {
+                append("'PersianMarkdownBundledJBMono', ")
             }
-            if (!state.fontFamily.isNullOrBlank()) {
-                append("${state.fontFamily}, ")
+            if (!state.codeFontFamily.isNullOrBlank()) {
+                append("${state.codeFontFamily}, ")
             }
-            append("'Vazirmatn', monospace")
+            append("'JetBrains Mono', Menlo, Monaco, Consolas, monospace")
         }
 
         val fs = state.fontSize
@@ -78,15 +117,21 @@ object CssGenerator {
             :root {
                 --pm-font-size: ${fs}px;
                 --pm-line-height: $lh;
-                --pm-fa-font: $fontStack;
+                --pm-fa-font: $faFontStack;
+                --pm-en-font: $enFontStack;
                 --pm-code-font: $codeFontStack;
             }
-            body {
+            body:not(#persian-markdown-switcher) {
                 padding-bottom: 85px !important;
             }
-            body, p, li, blockquote, table, div, span, td, th {
-                font-family: $fontStack !important;
-                font-family: var(--pm-fa-font, $fontStack) !important;
+            p:not(#persian-markdown-switcher *),
+            li:not(#persian-markdown-switcher *),
+            blockquote:not(#persian-markdown-switcher *),
+            table:not(#persian-markdown-switcher *),
+            td:not(#persian-markdown-switcher *),
+            th:not(#persian-markdown-switcher *) {
+                font-family: $faFontStack !important;
+                font-family: var(--pm-fa-font, $faFontStack) !important;
                 font-size: ${fs}px !important;
                 font-size: var(--pm-font-size, ${fs}px) !important;
                 line-height: $lh !important;
@@ -96,27 +141,49 @@ object CssGenerator {
 
         if (state.enhanceHeadings) {
             sb.append("""
-                h1 { font-family: var(--pm-fa-font, $fontStack) !important; font-size: calc(var(--pm-font-size, ${fs}px) * 1.75) !important; line-height: 1.3 !important; }
-                h2 { font-family: var(--pm-fa-font, $fontStack) !important; font-size: calc(var(--pm-font-size, ${fs}px) * 1.50) !important; line-height: 1.35 !important; }
-                h3 { font-family: var(--pm-fa-font, $fontStack) !important; font-size: calc(var(--pm-font-size, ${fs}px) * 1.25) !important; line-height: 1.4 !important; }
-                h4 { font-family: var(--pm-fa-font, $fontStack) !important; font-size: calc(var(--pm-font-size, ${fs}px) * 1.12) !important; line-height: 1.4 !important; }
-                h5, h6 { font-family: var(--pm-fa-font, $fontStack) !important; font-size: var(--pm-font-size, ${fs}px) !important; line-height: 1.4 !important; }
+                h1:not(#persian-markdown-switcher *),
+                h2:not(#persian-markdown-switcher *),
+                h3:not(#persian-markdown-switcher *),
+                h4:not(#persian-markdown-switcher *),
+                h5:not(#persian-markdown-switcher *),
+                h6:not(#persian-markdown-switcher *) {
+                    font-family: var(--pm-fa-font, $faFontStack) !important;
+                }
+                h1:not(#persian-markdown-switcher *) { font-size: calc(var(--pm-font-size, ${fs}px) * 1.75) !important; line-height: 1.3 !important; }
+                h2:not(#persian-markdown-switcher *) { font-size: calc(var(--pm-font-size, ${fs}px) * 1.50) !important; line-height: 1.35 !important; }
+                h3:not(#persian-markdown-switcher *) { font-size: calc(var(--pm-font-size, ${fs}px) * 1.25) !important; line-height: 1.4 !important; }
+                h4:not(#persian-markdown-switcher *) { font-size: calc(var(--pm-font-size, ${fs}px) * 1.12) !important; line-height: 1.4 !important; }
+                h5:not(#persian-markdown-switcher *), h6:not(#persian-markdown-switcher *) { font-size: var(--pm-font-size, ${fs}px) !important; line-height: 1.4 !important; }
             """.trimIndent()).append("\n")
         }
 
         when (state.directionMode) {
             DirectionMode.FORCE_RTL -> {
                 sb.append("""
-                    body, p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, table, tr, td, th {
+                    body:not(#persian-markdown-switcher),
+                    p:not(#persian-markdown-switcher *),
+                    h1:not(#persian-markdown-switcher *),
+                    h2:not(#persian-markdown-switcher *),
+                    h3:not(#persian-markdown-switcher *),
+                    h4:not(#persian-markdown-switcher *),
+                    h5:not(#persian-markdown-switcher *),
+                    h6:not(#persian-markdown-switcher *),
+                    ul:not(#persian-markdown-switcher *),
+                    ol:not(#persian-markdown-switcher *),
+                    blockquote:not(#persian-markdown-switcher *),
+                    table:not(#persian-markdown-switcher *),
+                    tr:not(#persian-markdown-switcher *),
+                    td:not(#persian-markdown-switcher *),
+                    th:not(#persian-markdown-switcher *) {
                         direction: rtl !important;
                         text-align: right !important;
                     }
-                    ul, ol {
+                    ul:not(#persian-markdown-switcher *), ol:not(#persian-markdown-switcher *) {
                         padding-right: 1.8em !important;
                         padding-left: 0 !important;
                     }
-                    blockquote {
-                        border-right: 4px solid #3b82f6 !important;
+                    blockquote:not(#persian-markdown-switcher *) {
+                        border-right: 4px solid #6366f1 !important;
                         border-left: none !important;
                         padding-right: 1em !important;
                         padding-left: 0 !important;
@@ -125,16 +192,31 @@ object CssGenerator {
             }
             DirectionMode.FORCE_LTR -> {
                 sb.append("""
-                    body, p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, table, tr, td, th {
+                    body:not(#persian-markdown-switcher),
+                    p:not(#persian-markdown-switcher *),
+                    h1:not(#persian-markdown-switcher *),
+                    h2:not(#persian-markdown-switcher *),
+                    h3:not(#persian-markdown-switcher *),
+                    h4:not(#persian-markdown-switcher *),
+                    h5:not(#persian-markdown-switcher *),
+                    h6:not(#persian-markdown-switcher *),
+                    ul:not(#persian-markdown-switcher *),
+                    ol:not(#persian-markdown-switcher *),
+                    blockquote:not(#persian-markdown-switcher *),
+                    table:not(#persian-markdown-switcher *),
+                    tr:not(#persian-markdown-switcher *),
+                    td:not(#persian-markdown-switcher *),
+                    th:not(#persian-markdown-switcher *) {
                         direction: ltr !important;
                         text-align: left !important;
+                        font-family: var(--pm-en-font, $enFontStack) !important;
                     }
-                    ul, ol {
+                    ul:not(#persian-markdown-switcher *), ol:not(#persian-markdown-switcher *) {
                         padding-left: 1.8em !important;
                         padding-right: 0 !important;
                     }
-                    blockquote {
-                        border-left: 4px solid #3b82f6 !important;
+                    blockquote:not(#persian-markdown-switcher *) {
+                        border-left: 4px solid #6366f1 !important;
                         border-right: none !important;
                         padding-left: 1em !important;
                         padding-right: 0 !important;
@@ -143,21 +225,29 @@ object CssGenerator {
             }
             DirectionMode.AUTO -> {
                 sb.append("""
-                    [dir="rtl"], .persian-dir-rtl {
+                    [dir="rtl"]:not(#persian-markdown-switcher):not(#persian-markdown-switcher *),
+                    .persian-dir-rtl:not(#persian-markdown-switcher):not(#persian-markdown-switcher *) {
                         direction: rtl !important;
                         text-align: right !important;
+                        font-family: var(--pm-fa-font, $faFontStack) !important;
                     }
-                    [dir="ltr"], .persian-dir-ltr {
+                    [dir="ltr"]:not(#persian-markdown-switcher):not(#persian-markdown-switcher *),
+                    .persian-dir-ltr:not(#persian-markdown-switcher):not(#persian-markdown-switcher *) {
                         direction: ltr !important;
                         text-align: left !important;
+                        font-family: var(--pm-en-font, $enFontStack) !important;
                     }
-                    blockquote[dir="rtl"], blockquote.persian-dir-rtl {
-                        border-right: 4px solid #3b82f6 !important;
+                    blockquote[dir="rtl"]:not(#persian-markdown-switcher *),
+                    blockquote.persian-dir-rtl:not(#persian-markdown-switcher *) {
+                        border-right: 4px solid #6366f1 !important;
                         border-left: none !important;
                         padding-right: 1em !important;
                         padding-left: 0 !important;
                     }
-                    ul[dir="rtl"], ol[dir="rtl"], ul.persian-dir-rtl, ol.persian-dir-rtl {
+                    ul[dir="rtl"]:not(#persian-markdown-switcher *),
+                    ol[dir="rtl"]:not(#persian-markdown-switcher *),
+                    ul.persian-dir-rtl:not(#persian-markdown-switcher *),
+                    ol.persian-dir-rtl:not(#persian-markdown-switcher *) {
                         padding-right: 1.8em !important;
                         padding-left: 0 !important;
                     }
@@ -186,293 +276,650 @@ object CssGenerator {
                 unicode-bidi: isolate !important;
                 font-family: var(--pm-code-font, $codeFontStack) !important;
             }
-            a {
+            a:not(#persian-markdown-switcher *) {
                 unicode-bidi: isolate !important;
             }
-            html.pm-disabled [dir="rtl"],
-            html.pm-disabled .persian-dir-rtl {
+            html.pm-disabled [dir="rtl"]:not(#persian-markdown-switcher *),
+            html.pm-disabled .persian-dir-rtl:not(#persian-markdown-switcher *) {
                 direction: ltr !important;
                 text-align: left !important;
             }
-            html.pm-disabled blockquote {
+            html.pm-disabled blockquote:not(#persian-markdown-switcher *) {
                 border-left: 4px solid #3b82f6 !important;
                 border-right: none !important;
                 padding-left: 1em !important;
                 padding-right: 0 !important;
             }
-            html.pm-disabled ul, html.pm-disabled ol {
+            html.pm-disabled ul:not(#persian-markdown-switcher *),
+            html.pm-disabled ol:not(#persian-markdown-switcher *) {
                 padding-left: 1.8em !important;
                 padding-right: 0 !important;
             }
         """.trimIndent()).append("\n")
 
-        // Styles for floating settings card in preview (bottom-left popup)
+        // Styles for Linear / Raycast Bento Switcher in preview (bottom-left popup)
         sb.append("""
-            #persian-markdown-switcher {
-                position: fixed;
-                bottom: 16px;
-                left: 16px;
-                z-index: 2147483647;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
-                user-select: none;
-                -webkit-user-select: none;
-            }
+            /* --- Isolated Floating Switcher & Dialog --- */
+            #persian-markdown-switcher,
             #persian-markdown-switcher * {
-                box-sizing: border-box;
+                box-sizing: border-box !important;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+                letter-spacing: normal !important;
+                text-transform: none !important;
+                direction: ltr !important;
+                text-align: left !important;
             }
+            #persian-markdown-switcher {
+                position: fixed !important;
+                bottom: 12px !important;
+                left: 12px !important;
+                z-index: 2147483647 !important;
+                user-select: none !important;
+                -webkit-user-select: none !important;
+                line-height: 1.2 !important;
+            }
+
+            /* Floating Trigger Capsule Pill (Matching Stitch Redesign Exactly) */
             #pm-trigger {
-                display: inline-flex;
-                align-items: center;
-                gap: 7px;
-                height: 30px;
-                padding: 0 12px 0 10px;
-                border-radius: 15px;
-                background: rgba(24, 28, 38, 0.88);
-                backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px);
-                color: #e2e8f0;
-                border: 1px solid rgba(255, 255, 255, 0.16);
-                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-                cursor: pointer;
-                font-size: 11px;
-                font-weight: 600;
-                letter-spacing: 0.2px;
-                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+                position: relative !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 7px !important;
+                padding: 3px 11px 3px 4px !important;
+                height: 28px !important;
+                border-radius: 9999px !important;
+                background: #171A20 !important;
+                border: 1px solid #282D36 !important;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+                cursor: pointer !important;
+                transition: all 0.15s ease !important;
+                outline: none !important;
+                user-select: none !important;
             }
             #pm-trigger:hover {
-                background: rgba(34, 40, 54, 0.96);
-                border-color: rgba(255, 255, 255, 0.3);
-                transform: translateY(-1px);
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
-                color: #ffffff;
+                border-color: #384152 !important;
+                background: #1C2027 !important;
+                box-shadow: 0 10px 28px rgba(0, 0, 0, 0.8), 0 3px 10px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+                transform: translateY(-1px) !important;
             }
-            #pm-trigger svg.pm-icon {
-                width: 13px;
-                height: 13px;
-                opacity: 0.9;
+            #pm-trigger:active {
+                transform: scale(0.97) !important;
             }
-            #pm-trigger svg.pm-gear {
-                width: 12px;
-                height: 12px;
-                opacity: 0.75;
-                transition: transform 0.3s ease;
+            #persian-markdown-switcher.pm-open #pm-trigger {
+                border-color: #10B981 !important;
+                background: #1C2027 !important;
+                box-shadow: 0 0 16px rgba(16, 185, 129, 0.35), 0 8px 24px rgba(0, 0, 0, 0.7) !important;
             }
-            #persian-markdown-switcher.pm-open #pm-trigger svg.pm-gear {
-                transform: rotate(60deg);
-                opacity: 1;
+
+            /* Glowing Squircle Icon Box (replacing green dot) - delicate & roomy */
+            #pm-status-dot {
+                width: 20px !important;
+                height: 20px !important;
+                border-radius: 6px !important;
+                background: rgba(16, 185, 129, 0.09) !important;
+                border: 1.5px solid #10B981 !important;
+                box-shadow: 0 0 10px rgba(16, 185, 129, 0.45), inset 0 0 4px rgba(16, 185, 129, 0.15) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                flex-shrink: 0 !important;
+                transition: all 0.2s ease !important;
             }
+            #pm-status-dot svg {
+                width: 10px !important;
+                height: 10px !important;
+                stroke: #10B981 !important;
+                stroke-width: 2.2 !important;
+                display: block !important;
+                transition: stroke 0.2s ease, transform 0.15s ease !important;
+            }
+            #pm-trigger:hover #pm-status-dot:not(.pm-disabled-dot) {
+                box-shadow: 0 0 14px rgba(16, 185, 129, 0.65), inset 0 0 5px rgba(16, 185, 129, 0.25) !important;
+                border-color: #34D399 !important;
+            }
+            #pm-trigger:hover #pm-status-dot:not(.pm-disabled-dot) svg {
+                stroke: #34D399 !important;
+            }
+            #pm-status-dot.pm-disabled-dot {
+                border-color: #475569 !important;
+                background: transparent !important;
+                box-shadow: none !important;
+            }
+            #pm-status-dot.pm-disabled-dot svg {
+                stroke: #64748B !important;
+            }
+
+            /* Markdown RTL Text Label */
+            #pm-current-label {
+                font-size: 11.5px !important;
+                font-weight: 500 !important;
+                color: #F1F5F9 !important;
+                letter-spacing: -0.01em !important;
+                white-space: nowrap !important;
+                line-height: 1 !important;
+            }
+            #pm-status-dot.pm-disabled-dot ~ #pm-current-label {
+                color: #94A3B8 !important;
+            }
+
+            /* Popover Compact Bento Card */
             #pm-card {
-                position: absolute;
-                bottom: calc(100% + 10px);
-                left: 0;
-                width: 275px;
-                padding: 16px;
-                border-radius: 16px;
-                background: rgba(22, 27, 39, 0.96);
-                backdrop-filter: blur(24px) saturate(180%);
-                -webkit-backdrop-filter: blur(24px) saturate(180%);
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.3);
-                opacity: 0;
-                visibility: hidden;
-                transform: translateY(8px) scale(0.95);
-                transform-origin: bottom left;
-                transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-                            transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-                            visibility 0.2s;
-                pointer-events: none;
-                color: #f1f5f9;
+                position: absolute !important;
+                bottom: calc(100% + 8px) !important;
+                left: 0 !important;
+                width: 270px !important;
+                max-width: calc(100vw - 24px) !important;
+                background: rgba(13, 17, 25, 0.97) !important;
+                backdrop-filter: blur(20px) saturate(180%) !important;
+                -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+                border-radius: 12px !important;
+                border: 1px solid #202737 !important;
+                box-shadow: 0 20px 48px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.06) !important;
+                display: flex !important;
+                flex-direction: column !important;
+                opacity: 0 !important;
+                visibility: hidden !important;
+                transform: translateY(6px) scale(0.97) !important;
+                transform-origin: bottom left !important;
+                transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s !important;
+                pointer-events: none !important;
+                color: #F1F5F9 !important;
+                overflow: visible !important;
+            }
+            #pm-card::before {
+                content: '' !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                height: 1px !important;
+                background: linear-gradient(to right, transparent, rgba(99, 102, 241, 0.4), transparent) !important;
+                pointer-events: none !important;
+                border-radius: 12px 12px 0 0 !important;
             }
             #persian-markdown-switcher.pm-open #pm-card {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0) scale(1);
-                pointer-events: auto;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: translateY(0) scale(1) !important;
+                pointer-events: auto !important;
             }
-            .pm-card-title {
-                font-size: 14px;
-                font-weight: 700;
-                color: #ffffff;
-                text-align: center;
-                letter-spacing: 0.3px;
-                padding-bottom: 12px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-                margin-bottom: 14px;
+
+            /* Header */
+            #pm-header {
+                padding: 6px 9px !important;
+                border-bottom: 1px solid #1A212E !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                background: rgba(16, 20, 29, 0.8) !important;
+                border-radius: 12px 12px 0 0 !important;
             }
-            .pm-row {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 11px;
-                font-size: 12px;
-                font-weight: 500;
-                color: #cbd5e1;
+            .pm-header-left {
+                display: flex !important;
+                align-items: center !important;
+                gap: 6px !important;
             }
-            .pm-row-label {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-                color: #cbd5e1;
+            .pm-brand-icon-box {
+                width: 18px !important;
+                height: 18px !important;
+                border-radius: 5px !important;
+                background: linear-gradient(to bottom, #1E2536, #141924) !important;
+                border: 1px solid #283348 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                flex-shrink: 0 !important;
             }
-            .pm-info-icon {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                width: 13px;
-                height: 13px;
-                border-radius: 50%;
-                border: 1px solid #64748b;
-                font-size: 9px;
-                color: #94a3b8;
-                cursor: help;
-                user-select: none;
+            .pm-brand-icon-box svg {
+                width: 10px !important;
+                height: 10px !important;
+                color: #818CF8 !important;
             }
-            /* Switch */
+            .pm-header-title {
+                font-size: 13px !important;
+                font-weight: 600 !important;
+                color: #F1F5F9 !important;
+                line-height: 1 !important;
+            }
+            .pm-header-badge {
+                padding: 1.5px 5px !important;
+                background: rgba(99, 102, 241, 0.12) !important;
+                border: 1px solid rgba(99, 102, 241, 0.25) !important;
+                font-size: 10px !important;
+                font-family: 'JetBrains Mono', monospace !important;
+                font-weight: 500 !important;
+                color: #A5B4FC !important;
+                border-radius: 4px !important;
+                line-height: 1 !important;
+            }
+            #pm-close-btn {
+                height: 20px !important;
+                padding: 0 6px !important;
+                border-radius: 4px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                color: #94A3B8 !important;
+                background: transparent !important;
+                border: 1px solid transparent !important;
+                font-family: 'JetBrains Mono', monospace !important;
+                font-size: 10.5px !important;
+                cursor: pointer !important;
+                transition: all 0.15s !important;
+                line-height: 1 !important;
+            }
+            #pm-close-btn:hover {
+                background: rgba(30, 41, 59, 0.6) !important;
+                color: #F1F5F9 !important;
+                border-color: rgba(51, 65, 85, 0.5) !important;
+            }
+
+            /* Card Body */
+            #pm-body {
+                padding: 6px 7px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 5px !important;
+                overflow: visible !important;
+            }
+
+            /* Toggle Controls */
+            .pm-toggle-grid {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 5px !important;
+            }
+            .pm-toggle-card {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                padding: 4px 8px !important;
+                height: 28px !important;
+                border-radius: 6px !important;
+                background: #121722 !important;
+                border: 1px solid #1E2536 !important;
+            }
+            .pm-toggle-label-wrap {
+                display: flex !important;
+                align-items: center !important;
+                gap: 4px !important;
+            }
+            .pm-toggle-title {
+                font-size: 11.5px !important;
+                font-weight: 500 !important;
+                color: #CBD5E1 !important;
+                line-height: 1 !important;
+            }
+            .pm-kbd-tag {
+                padding: 0 3px !important;
+                border-radius: 3px !important;
+                background: #1B2130 !important;
+                font-size: 9.5px !important;
+                font-family: 'JetBrains Mono', monospace !important;
+                color: #8292A6 !important;
+                border: 1px solid #242E42 !important;
+                line-height: 1.2 !important;
+            }
+
+            /* Compact Switch */
             .pm-switch {
-                position: relative;
-                display: inline-block;
-                width: 38px;
-                height: 22px;
-                flex-shrink: 0;
+                position: relative !important;
+                display: inline-block !important;
+                width: 24px !important;
+                height: 14px !important;
+                flex-shrink: 0 !important;
+                cursor: pointer !important;
+                margin: 0 !important;
             }
             .pm-switch input {
-                opacity: 0;
-                width: 0;
-                height: 0;
+                position: absolute !important;
+                opacity: 0 !important;
+                width: 0 !important;
+                height: 0 !important;
+                margin: 0 !important;
             }
-            .pm-switch-slider {
-                position: absolute;
-                cursor: pointer;
-                top: 0; left: 0; right: 0; bottom: 0;
-                background-color: rgba(255, 255, 255, 0.16);
-                transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-                border-radius: 22px;
+            .pm-switch-track {
+                position: absolute !important;
+                top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+                background: #232B3B !important;
+                border-radius: 9999px !important;
+                transition: background 0.15s ease !important;
             }
-            .pm-switch-slider:before {
-                position: absolute;
-                content: "";
-                height: 18px;
-                width: 18px;
-                left: 2px;
-                bottom: 2px;
-                background-color: white;
-                transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-                border-radius: 50%;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            .pm-switch-track::after {
+                content: '' !important;
+                position: absolute !important;
+                top: 2px !important;
+                left: 2px !important;
+                width: 10px !important;
+                height: 10px !important;
+                background: #FFFFFF !important;
+                border-radius: 50% !important;
+                transition: transform 0.15s ease !important;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.3) !important;
             }
-            .pm-switch input:checked + .pm-switch-slider {
-                background-color: #5856d6;
+            .pm-switch input:checked + .pm-switch-track {
+                background: #4F46E5 !important;
             }
-            .pm-switch input:checked + .pm-switch-slider:before {
-                transform: translateX(16px);
+            .pm-switch input:checked + .pm-switch-track::after {
+                transform: translateX(10px) !important;
             }
-            /* Inputs */
-            .pm-input {
-                width: 126px;
-                height: 25px;
-                background: rgba(255, 255, 255, 0.07);
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                border-radius: 6px;
-                color: #e2e8f0;
-                font-size: 11px;
-                padding: 0 8px;
-                outline: none;
-                transition: border-color 0.15s, background 0.15s;
-                font-family: inherit;
+
+            /* Section Title - Clean, subtle, no uppercase screaming badge */
+            .pm-section-title {
+                font-size: 10.5px !important;
+                font-weight: 500 !important;
+                color: #64748B !important;
+                padding: 2px 2px 0 2px !important;
+                letter-spacing: normal !important;
+                line-height: 1 !important;
             }
-            .pm-input:focus {
-                border-color: #6366f1;
-                background: rgba(255, 255, 255, 0.12);
+
+            /* Bento Card Container */
+            .pm-bento-card {
+                background: #121722 !important;
+                border-radius: 6px !important;
+                border: 1px solid #1E2536 !important;
+                overflow: visible !important;
             }
-            .pm-input::placeholder {
-                color: #94a3b8;
+
+            /* Searchable Font Combobox Row */
+            .pm-font-combobox {
+                position: relative !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                gap: 5px !important;
+                padding: 4px 7px !important;
+                border-bottom: 1px solid #181F2C !important;
             }
-            /* Sliders */
-            .pm-slider-wrap {
-                display: flex;
-                align-items: center;
-                gap: 7px;
-                width: 126px;
+            .pm-font-combobox:last-child {
+                border-bottom: none !important;
             }
-            .pm-slider {
-                -webkit-appearance: none;
-                appearance: none;
-                width: 100%;
-                height: 4px;
-                border-radius: 2px;
-                background: rgba(255, 255, 255, 0.18);
-                outline: none;
-                cursor: pointer;
+            .pm-combobox-label {
+                font-size: 11px !important;
+                font-weight: 500 !important;
+                color: #94A3B8 !important;
+                white-space: nowrap !important;
+                width: 40px !important;
+                flex-shrink: 0 !important;
+                line-height: 1 !important;
             }
-            .pm-slider::-webkit-slider-thumb {
-                -webkit-appearance: none;
-                appearance: none;
-                width: 14px;
-                height: 14px;
-                border-radius: 50%;
-                background: #5856d6;
-                cursor: pointer;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-                transition: transform 0.1s;
+            .pm-combobox-input-wrap {
+                position: relative !important;
+                flex: 1 !important;
+                display: flex !important;
+                align-items: center !important;
             }
-            .pm-slider::-webkit-slider-thumb:hover {
-                transform: scale(1.15);
+            .pm-font-search-input {
+                width: 100% !important;
+                height: 24px !important;
+                background: #0C1018 !important;
+                border: 1px solid #1C2332 !important;
+                border-radius: 4px !important;
+                color: #E2E8F0 !important;
+                font-size: 11.5px !important;
+                font-family: 'JetBrains Mono', -apple-system, sans-serif !important;
+                padding: 0 16px 0 6px !important;
+                outline: none !important;
+                transition: all 0.12s ease !important;
+                line-height: 1 !important;
             }
-            .pm-reset-btn {
-                background: none;
-                border: none;
-                color: #94a3b8;
-                cursor: pointer;
-                padding: 2px;
-                font-size: 13px;
-                line-height: 1;
-                transition: color 0.15s;
-                display: flex;
-                align-items: center;
+            .pm-font-search-input:focus {
+                border-color: #6366F1 !important;
+                background: #111622 !important;
+                box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25) !important;
             }
-            .pm-reset-btn:hover {
-                color: #ffffff;
+            .pm-combobox-arrow {
+                position: absolute !important;
+                right: 6px !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                pointer-events: none !important;
+                color: #64748B !important;
+                width: 8px !important;
+                height: 8px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
             }
-            .pm-card-divider {
-                border-top: 1px solid rgba(255, 255, 255, 0.08);
-                margin: 12px 0 10px 0;
+            .pm-combobox-arrow svg {
+                width: 8px !important;
+                height: 8px !important;
+            }
+
+            /* Floating Searchable Dropdown */
+            .pm-combobox-dropdown {
+                position: absolute !important;
+                top: calc(100% + 2px) !important;
+                left: 0 !important;
+                right: 0 !important;
+                max-height: 140px !important;
+                overflow-y: auto !important;
+                background: #0E131E !important;
+                border: 1px solid #252F42 !important;
+                border-radius: 5px !important;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8) !important;
+                z-index: 999999 !important;
+                display: none;
+                padding: 2px !important;
+            }
+            .pm-combobox-dropdown.pm-open {
+                display: block !important;
+            }
+            .pm-combobox-dropdown::-webkit-scrollbar {
+                width: 3px !important;
+            }
+            .pm-combobox-dropdown::-webkit-scrollbar-thumb {
+                background: #263145 !important;
+                border-radius: 2px !important;
+            }
+            .pm-dropdown-header {
+                font-size: 9.5px !important;
+                font-weight: 600 !important;
+                color: #64748B !important;
+                padding: 3px 5px 2px 5px !important;
+                user-select: none !important;
+            }
+            .pm-dropdown-item {
+                font-size: 11px !important;
+                font-family: 'JetBrains Mono', -apple-system, sans-serif !important;
+                color: #CBD5E1 !important;
+                padding: 3px 6px !important;
+                border-radius: 3px !important;
+                cursor: pointer !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                transition: background 0.1s, color 0.1s !important;
+                line-height: 1.3 !important;
+            }
+            .pm-dropdown-item:hover {
+                background: #1C2333 !important;
+                color: #FFFFFF !important;
+            }
+            .pm-dropdown-item.pm-selected {
+                background: rgba(99, 102, 241, 0.22) !important;
+                color: #A5B4FC !important;
+                font-weight: 500 !important;
+            }
+            .pm-dropdown-item.pm-dropdown-custom {
+                color: #34D399 !important;
+                border-bottom: 1px dashed #1E2738 !important;
+                margin-bottom: 2px !important;
+            }
+            .pm-dropdown-empty {
+                font-size: 10.5px !important;
+                color: #64748B !important;
+                padding: 5px !important;
+                text-align: center !important;
+            }
+
+            /* Metrics & Layout Grid */
+            .pm-metrics-grid {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 5px !important;
+            }
+            .pm-metric-card {
+                background: #121722 !important;
+                border-radius: 6px !important;
+                border: 1px solid #1E2536 !important;
+                padding: 4px 7px !important;
+                height: 28px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+            }
+            .pm-metric-label {
+                font-size: 11px !important;
+                font-weight: 500 !important;
+                color: #94A3B8 !important;
+                line-height: 1 !important;
+            }
+            .pm-stepper-group {
+                display: flex !important;
+                align-items: center !important;
+                gap: 3px !important;
+            }
+            .pm-stepper-btn {
+                width: 17px !important;
+                height: 17px !important;
+                border-radius: 3px !important;
+                background: #1A2130 !important;
+                color: #94A3B8 !important;
+                border: none !important;
+                cursor: pointer !important;
+                font-size: 12px !important;
+                font-weight: 500 !important;
+                line-height: 1 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                transition: all 0.1s !important;
+                padding: 0 !important;
+            }
+            .pm-stepper-btn:hover {
+                color: #FFFFFF !important;
+                background: #252F44 !important;
+            }
+            .pm-stepper-btn:active {
+                transform: scale(0.9) !important;
+            }
+            .pm-metric-val {
+                font-family: 'JetBrains Mono', monospace !important;
+                font-size: 10.5px !important;
+                color: #A5B4FC !important;
+                font-weight: 500 !important;
+                padding: 1px 4px !important;
+                background: rgba(99, 102, 241, 0.1) !important;
+                border-radius: 3px !important;
+                border: 1px solid rgba(99, 102, 241, 0.2) !important;
+                min-width: 32px !important;
+                text-align: center !important;
+                line-height: 1.2 !important;
+            }
+
+            /* Compact Footer */
+            #pm-footer {
+                padding: 5px 8px !important;
+                background: rgba(16, 20, 29, 0.8) !important;
+                border-top: 1px solid #1A212E !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                border-radius: 0 0 12px 12px !important;
+            }
+            #pm-reset-btn {
+                padding: 3px 6px !important;
+                font-size: 11px !important;
+                color: #94A3B8 !important;
+                font-weight: 500 !important;
+                border-radius: 4px !important;
+                background: transparent !important;
+                border: none !important;
+                cursor: pointer !important;
+                transition: all 0.12s !important;
+                line-height: 1 !important;
+            }
+            #pm-reset-btn:hover {
+                color: #F1F5F9 !important;
+                background: #1C2332 !important;
             }
             .pm-github-btn {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 7px;
-                color: #f59e0b;
-                font-size: 12px;
-                font-weight: 600;
-                text-decoration: none;
-                padding: 6px 0 2px 0;
-                cursor: pointer;
-                transition: opacity 0.15s, transform 0.15s;
+                display: flex !important;
+                align-items: center !important;
+                gap: 5px !important;
+                padding: 3px 7px !important;
+                border-radius: 4px !important;
+                background: transparent !important;
+                border: 1px solid transparent !important;
+                color: #94A3B8 !important;
+                font-size: 11px !important;
+                font-weight: 500 !important;
+                text-decoration: none !important;
+                transition: all 0.12s !important;
+                cursor: pointer !important;
+                line-height: 1 !important;
             }
             .pm-github-btn:hover {
-                opacity: 0.88;
-                transform: translateY(-0.5px);
+                background: #1C2332 !important;
+                color: #F1F5F9 !important;
+                border-color: #283244 !important;
             }
-            .pm-github-icon {
-                width: 15px;
-                height: 15px;
-                fill: currentColor;
+            .pm-star-icon {
+                width: 12px !important;
+                height: 12px !important;
+                fill: #F59E0B !important;
+                stroke: #F59E0B !important;
+                stroke-width: 1.5 !important;
+                display: inline-block !important;
+                transition: transform 0.15s ease !important;
+            }
+            .pm-github-btn:hover .pm-star-icon {
+                transform: scale(1.18) rotate(12deg) !important;
             }
         """.trimIndent()).append("\n")
 
         return sb.toString()
     }
 
-    fun generateAutoDirScript(state: PersianMarkdownState): String {
+    private fun escapeJs(str: String): String {
+        return str.replace("\\", "\\\\")
+            .replace("'", "\\'")
+            .replace("\"", "\\\"")
+            .replace("\n", "\\n")
+            .replace("\r", "\\r")
+    }
+
+    @JvmOverloads
+    fun generateAutoDirScript(
+        state: PersianMarkdownState,
+        systemFonts: Array<String> = emptyArray()
+    ): String {
         val initialMode = state.directionMode.id
         val defaultFontSize = state.fontSize
         val defaultLineHeight = state.lineHeight
+        val defaultFaFont = state.fontFamily?.split(",")?.firstOrNull()?.trim()?.replace("'", "")?.replace("\"", "")?.ifBlank { null } ?: "Vazirmatn"
+        val defaultEnFont = state.enFontFamily?.split(",")?.firstOrNull()?.trim()?.replace("'", "")?.replace("\"", "")?.ifBlank { null } ?: "JetBrains Mono"
+        val defaultCodeFont = state.codeFontFamily?.split(",")?.firstOrNull()?.trim()?.replace("'", "")?.replace("\"", "")?.ifBlank { null } ?: "JetBrains Mono"
+
+        val systemFontsJson = systemFonts
+            .filter { it.isNotBlank() }
+            .distinct()
+            .sorted()
+            .joinToString(prefix = "[", postfix = "]") {
+                "\"" + it.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", " ").replace("\r", " ") + "\""
+            }
+
         return """
             (function() {
                 var defaultFs = $defaultFontSize;
                 var defaultLh = $defaultLineHeight;
-                var currentMode = '$initialMode';
+                var defaultFaFont = '${escapeJs(defaultFaFont)}';
+                var defaultEnFont = '${escapeJs(defaultEnFont)}';
+                var defaultCodeFont = '${escapeJs(defaultCodeFont)}';
+                var currentMode = '${escapeJs(initialMode)}';
+                var systemFonts = $systemFontsJson;
                 var persianRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
 
                 function savePref(k, v) { try { localStorage.setItem('pm_' + k, v); } catch(e){} }
@@ -545,7 +992,7 @@ object CssGenerator {
                     }
 
                     // 3. Links and isolated tokens
-                    var links = document.querySelectorAll('a');
+                    var links = document.querySelectorAll('a:not(.pm-github-btn)');
                     for (var a = 0; a < links.length; a++) {
                         links[a].setAttribute('dir', 'auto');
                         links[a].style.unicodeBidi = 'isolate';
@@ -579,107 +1026,461 @@ object CssGenerator {
                     }
                 }
 
+                function cleanFontName(name) {
+                    if (!name) return '';
+                    if (name.indexOf(',') !== -1) {
+                        name = name.split(',')[0];
+                    }
+                    return name.trim().replace(/['"]/g, '');
+                }
+
+                function cleanFontName(name) {
+                    if (!name) return '';
+                    if (name.indexOf(',') !== -1) {
+                        name = name.split(',')[0];
+                    }
+                    return name.trim().replace(/['"]/g, '');
+                }
+
+                function setupFontCombobox(type, inputEl, dropdownEl, suggestedList, initialVal, onSelect) {
+                    var selected = cleanFontName(initialVal);
+                    inputEl.value = selected;
+                    inputEl.placeholder = selected;
+
+                    function closeDropdown() {
+                        dropdownEl.classList.remove('pm-open');
+                    }
+
+                    function selectFont(fontName) {
+                        selected = cleanFontName(fontName);
+                        if (!selected) return;
+                        inputEl.value = selected;
+                        inputEl.placeholder = selected;
+                        closeDropdown();
+                        onSelect(selected);
+                    }
+
+                    function renderList(query) {
+                        dropdownEl.innerHTML = '';
+                        var q = (query || '').trim().toLowerCase();
+                        var seen = {};
+                        var matchCount = 0;
+
+                        function addItem(fontName, isCustom) {
+                            var item = document.createElement('div');
+                            item.className = 'pm-dropdown-item';
+                            if (isCustom) {
+                                item.classList.add('pm-dropdown-custom');
+                                item.textContent = 'Use: "' + fontName + '"';
+                            } else {
+                                if (selected && fontName.toLowerCase() === selected.toLowerCase()) {
+                                    item.classList.add('pm-selected');
+                                }
+                                item.textContent = fontName;
+                            }
+                            item.addEventListener('mousedown', function(e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                selectFont(fontName);
+                            });
+                            dropdownEl.appendChild(item);
+                            matchCount++;
+                        }
+
+                        function addHeader(title) {
+                            var h = document.createElement('div');
+                            h.className = 'pm-dropdown-header';
+                            h.textContent = title;
+                            dropdownEl.appendChild(h);
+                        }
+
+                        // If user typed something custom not exactly in lists, offer it at top
+                        if (q) {
+                            var exactMatch = false;
+                            for (var k = 0; k < suggestedList.length; k++) {
+                                if (suggestedList[k].toLowerCase() === q) { exactMatch = true; break; }
+                            }
+                            if (!exactMatch && systemFonts) {
+                                for (var m = 0; m < systemFonts.length; m++) {
+                                    if (systemFonts[m].toLowerCase() === q) { exactMatch = true; break; }
+                                }
+                            }
+                            if (!exactMatch) {
+                                addItem(query.trim(), true);
+                            }
+                        }
+
+                        // Recommended
+                        var recMatches = [];
+                        for (var i = 0; i < suggestedList.length; i++) {
+                            var f = suggestedList[i];
+                            if (!q || f.toLowerCase().indexOf(q) !== -1) {
+                                recMatches.push(f);
+                                seen[f.toLowerCase()] = true;
+                            }
+                        }
+                        if (recMatches.length > 0) {
+                            addHeader('Recommended');
+                            for (var r = 0; r < recMatches.length; r++) {
+                                addItem(recMatches[r], false);
+                            }
+                        }
+
+                        // System Fonts
+                        if (systemFonts && systemFonts.length > 0) {
+                            var sysMatches = [];
+                            for (var j = 0; j < systemFonts.length; j++) {
+                                var sf = systemFonts[j];
+                                if (seen[sf.toLowerCase()]) continue;
+                                if (!q || sf.toLowerCase().indexOf(q) !== -1) {
+                                    sysMatches.push(sf);
+                                    seen[sf.toLowerCase()] = true;
+                                }
+                            }
+                            if (sysMatches.length > 0) {
+                                addHeader('System Fonts');
+                                for (var s = 0; s < sysMatches.length; s++) {
+                                    addItem(sysMatches[s], false);
+                                }
+                            }
+                        }
+
+                        if (matchCount === 0 && !dropdownEl.firstChild) {
+                            var empty = document.createElement('div');
+                            empty.className = 'pm-dropdown-empty';
+                            empty.textContent = 'No fonts found';
+                            dropdownEl.appendChild(empty);
+                        }
+                    }
+
+                    function openDropdown() {
+                        var allDrops = document.querySelectorAll('.pm-combobox-dropdown');
+                        for (var d = 0; d < allDrops.length; d++) {
+                            if (allDrops[d] !== dropdownEl) allDrops[d].classList.remove('pm-open');
+                        }
+                        inputEl.placeholder = selected;
+                        inputEl.value = '';
+                        renderList('');
+                        dropdownEl.classList.add('pm-open');
+                    }
+
+                    inputEl.addEventListener('focus', function() {
+                        openDropdown();
+                    });
+
+                    inputEl.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        if (!dropdownEl.classList.contains('pm-open')) {
+                            openDropdown();
+                        }
+                    });
+
+                    inputEl.addEventListener('input', function() {
+                        renderList(inputEl.value);
+                        if (!dropdownEl.classList.contains('pm-open')) {
+                            dropdownEl.classList.add('pm-open');
+                        }
+                    });
+
+                    inputEl.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            var firstItem = dropdownEl.querySelector('.pm-dropdown-item');
+                            if (firstItem) {
+                                var text = firstItem.textContent || '';
+                                if (text.indexOf('Use: "') === 0) {
+                                    selectFont(text.substring(6, text.length - 1));
+                                } else {
+                                    selectFont(text);
+                                }
+                            } else if (inputEl.value.trim()) {
+                                selectFont(inputEl.value.trim());
+                            }
+                        } else if (e.key === 'Escape') {
+                            if (dropdownEl.classList.contains('pm-open')) {
+                                e.stopPropagation();
+                                closeDropdown();
+                            }
+                        }
+                    });
+
+                    inputEl.addEventListener('blur', function() {
+                        setTimeout(function() {
+                            closeDropdown();
+                            var val = cleanFontName(inputEl.value);
+                            if (val && val.toLowerCase() !== selected.toLowerCase()) {
+                                selectFont(val);
+                            } else {
+                                inputEl.value = selected;
+                            }
+                        }, 200);
+                    });
+
+                    return {
+                        setValue: function(v) {
+                            selected = cleanFontName(v);
+                            inputEl.value = selected;
+                            inputEl.placeholder = selected;
+                        },
+                        getValue: function() {
+                            return selected;
+                        },
+                        close: closeDropdown
+                    };
+                }
+
                 function createSwitcherUI() {
-                    if (document.getElementById('persian-markdown-switcher')) return;
+                    var existing = document.getElementById('persian-markdown-switcher');
+                    var container = document.body || document.documentElement;
+                    if (!container) return;
+
+                    if (existing) {
+                        if (document.body && existing.parentElement !== document.body) {
+                            document.body.appendChild(existing);
+                        }
+                        return;
+                    }
 
                     var switcher = document.createElement('div');
                     switcher.id = 'persian-markdown-switcher';
                     switcher.innerHTML = 
-                        '<div id="pm-trigger" title="Markdown RTL Settings">' +
-                            '<svg class="pm-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
-                                '<path d="M4 6h16M4 12h10M4 18h14"/>' +
-                            '</svg>' +
+                        '<div id="pm-trigger" title="Markdown RTL (⌥R)">' +
+                            '<div id="pm-status-dot">' +
+                                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">' +
+                                    '<line x1="4" y1="6" x2="20" y2="6"></line>' +
+                                    '<polyline points="8 9 4 12 8 15"></polyline>' +
+                                    '<line x1="4" y1="12" x2="20" y2="12"></line>' +
+                                    '<line x1="4" y1="18" x2="20" y2="18"></line>' +
+                                '</svg>' +
+                            '</div>' +
                             '<span id="pm-current-label">Markdown RTL</span>' +
-                            '<svg class="pm-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-                                '<circle cx="12" cy="12" r="3"/>' +
-                                '<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>' +
-                            '</svg>' +
+                            '<kbd id="pm-trigger-kbd">⌥R</kbd>' +
                         '</div>' +
                         '<div id="pm-card">' +
-                            '<div class="pm-card-title">Markdown RTL</div>' +
-                            '<div class="pm-row">' +
-                                '<div class="pm-row-label">' +
-                                    '<span>Enabled</span>' +
-                                    '<span class="pm-info-icon" title="Enable or disable RTL enhancement">ⓘ</span>' +
+                            '<div id="pm-header">' +
+                                '<div class="pm-header-left">' +
+                                    '<div class="pm-brand-icon-box">' +
+                                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
+                                            '<polyline points="4 7 4 4 20 4 20 7"></polyline>' +
+                                            '<line x1="9" x2="15" y1="20" y2="20"></line>' +
+                                            '<line x1="12" x2="12" y1="4" y2="20"></line>' +
+                                            '<path d="M7 11l-3 3 3 3"></path>' +
+                                        '</svg>' +
+                                    '</div>' +
+                                    '<span class="pm-header-title">Markdown RTL</span>' +
+                                    '<span class="pm-header-badge">v1.3</span>' +
                                 '</div>' +
-                                '<label class="pm-switch">' +
-                                    '<input type="checkbox" id="pm-opt-enabled" checked>' +
-                                    '<span class="pm-switch-slider"></span>' +
-                                '</label>' +
-                            '</div>' +
-                            '<div class="pm-row">' +
-                                '<div class="pm-row-label">' +
-                                    '<span>Force RTL</span>' +
-                                    '<span class="pm-info-icon" title="Force all paragraphs and blocks to RTL">ⓘ</span>' +
-                                '</div>' +
-                                '<label class="pm-switch">' +
-                                    '<input type="checkbox" id="pm-opt-force-rtl">' +
-                                    '<span class="pm-switch-slider"></span>' +
-                                '</label>' +
-                            '</div>' +
-                            '<div class="pm-row">' +
-                                '<span class="pm-row-label">FA/AR Font</span>' +
-                                '<input type="text" id="pm-input-fa-font" class="pm-input" placeholder="Default: Vazirmatn">' +
-                            '</div>' +
-                            '<div class="pm-row">' +
-                                '<span class="pm-row-label">EN Font</span>' +
-                                '<input type="text" id="pm-input-en-font" class="pm-input" placeholder="Default: System">' +
-                            '</div>' +
-                            '<div class="pm-row">' +
-                                '<span class="pm-row-label">Code Font</span>' +
-                                '<input type="text" id="pm-input-code-font" class="pm-input" placeholder="Default: System">' +
-                            '</div>' +
-                            '<div class="pm-row">' +
-                                '<span class="pm-row-label">Line Height</span>' +
-                                '<div class="pm-slider-wrap">' +
-                                    '<input type="range" id="pm-slider-line-height" class="pm-slider" min="1.2" max="2.6" step="0.05" value="' + defaultLh + '">' +
-                                    '<button id="pm-reset-line-height" class="pm-reset-btn" title="Reset Line Height">↺</button>' +
+                                '<div class="pm-header-right">' +
+                                    '<button id="pm-close-btn" type="button" title="Close (ESC)">esc</button>' +
                                 '</div>' +
                             '</div>' +
-                            '<div class="pm-row">' +
-                                '<span class="pm-row-label">Font Size</span>' +
-                                '<div class="pm-slider-wrap">' +
-                                    '<input type="range" id="pm-slider-font-size" class="pm-slider" min="12" max="26" step="1" value="' + defaultFs + '">' +
-                                    '<button id="pm-reset-font-size" class="pm-reset-btn" title="Reset Font Size">↺</button>' +
+                            '<div id="pm-body">' +
+                                '<div class="pm-toggle-grid">' +
+                                    '<div class="pm-toggle-card">' +
+                                        '<div class="pm-toggle-label-wrap">' +
+                                            '<span class="pm-toggle-title">Enabled</span>' +
+                                            '<span class="pm-kbd-tag">⌥E</span>' +
+                                        '</div>' +
+                                        '<label class="pm-switch">' +
+                                            '<input type="checkbox" id="pm-opt-enabled" checked>' +
+                                            '<span class="pm-switch-track"></span>' +
+                                        '</label>' +
+                                    '</div>' +
+                                    '<div class="pm-toggle-card">' +
+                                        '<div class="pm-toggle-label-wrap">' +
+                                            '<span class="pm-toggle-title">Force RTL</span>' +
+                                            '<span class="pm-kbd-tag">⌥R</span>' +
+                                        '</div>' +
+                                        '<label class="pm-switch">' +
+                                            '<input type="checkbox" id="pm-opt-force-rtl">' +
+                                            '<span class="pm-switch-track"></span>' +
+                                        '</label>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="pm-section-title">Fonts</div>' +
+                                '<div class="pm-bento-card">' +
+                                    '<div class="pm-font-combobox" id="pm-combo-fa">' +
+                                        '<span class="pm-combobox-label">FA/AR</span>' +
+                                        '<div class="pm-combobox-input-wrap">' +
+                                            '<input type="text" class="pm-font-search-input" id="pm-input-fa" placeholder="Search font..." autocomplete="off" spellcheck="false">' +
+                                            '<div class="pm-combobox-arrow">' +
+                                                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>' +
+                                            '</div>' +
+                                            '<div class="pm-combobox-dropdown" id="pm-drop-fa"></div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="pm-font-combobox" id="pm-combo-en">' +
+                                        '<span class="pm-combobox-label">EN</span>' +
+                                        '<div class="pm-combobox-input-wrap">' +
+                                            '<input type="text" class="pm-font-search-input" id="pm-input-en" placeholder="Search font..." autocomplete="off" spellcheck="false">' +
+                                            '<div class="pm-combobox-arrow">' +
+                                                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>' +
+                                            '</div>' +
+                                            '<div class="pm-combobox-dropdown" id="pm-drop-en"></div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="pm-font-combobox" id="pm-combo-code">' +
+                                        '<span class="pm-combobox-label">Code</span>' +
+                                        '<div class="pm-combobox-input-wrap">' +
+                                            '<input type="text" class="pm-font-search-input" id="pm-input-code" placeholder="Search font..." autocomplete="off" spellcheck="false">' +
+                                            '<div class="pm-combobox-arrow">' +
+                                                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>' +
+                                            '</div>' +
+                                            '<div class="pm-combobox-dropdown" id="pm-drop-code"></div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="pm-section-title">Typography</div>' +
+                                '<div class="pm-metrics-grid">' +
+                                    '<div class="pm-metric-card">' +
+                                        '<span class="pm-metric-label">Line</span>' +
+                                        '<div class="pm-stepper-group">' +
+                                            '<button type="button" class="pm-stepper-btn" id="pm-dec-lh">-</button>' +
+                                            '<span class="pm-metric-val" id="pm-lh-val">' + defaultLh.toFixed(1) + 'x</span>' +
+                                            '<button type="button" class="pm-stepper-btn" id="pm-inc-lh">+</button>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="pm-metric-card">' +
+                                        '<span class="pm-metric-label">Size</span>' +
+                                        '<div class="pm-stepper-group">' +
+                                            '<button type="button" class="pm-stepper-btn" id="pm-dec-fs">-</button>' +
+                                            '<span class="pm-metric-val" id="pm-fs-val">' + defaultFs + 'px</span>' +
+                                            '<button type="button" class="pm-stepper-btn" id="pm-inc-fs">+</button>' +
+                                        '</div>' +
+                                    '</div>' +
                                 '</div>' +
                             '</div>' +
-                            '<div class="pm-card-divider"></div>' +
-                            '<a href="https://github.com/mahdiasd/MarkdownRTL" target="_blank" class="pm-github-btn" title="Star Markdown RTL on GitHub">' +
-                                '<svg class="pm-github-icon" viewBox="0 0 24 24">' +
-                                    '<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>' +
-                                '</svg>' +
-                                '<span>Star on GitHub</span>' +
-                            '</a>' +
+                            '<div id="pm-footer">' +
+                                '<button id="pm-reset-btn" type="button">Reset Defaults</button>' +
+                                '<a href="https://github.com/mahdiasd/MarkdownRTL" class="pm-github-btn" title="Star Markdown RTL on GitHub">' +
+                                    '<svg viewBox="0 0 24 24" class="pm-star-icon">' +
+                                        '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>' +
+                                    '</svg>' +
+                                    '<span>Star on github</span>' +
+                                '</a>' +
+                            '</div>' +
                         '</div>';
 
                     var trigger = switcher.querySelector('#pm-trigger');
                     var card = switcher.querySelector('#pm-card');
+                    var statusDot = switcher.querySelector('#pm-status-dot');
+                    var closeBtn = switcher.querySelector('#pm-close-btn');
+
+                    function closeAllDropdowns() {
+                        var drops = switcher.querySelectorAll('.pm-combobox-dropdown');
+                        for (var d = 0; d < drops.length; d++) {
+                            drops[d].classList.remove('pm-open');
+                        }
+                    }
 
                     trigger.addEventListener('click', function(e) {
                         e.stopPropagation();
                         switcher.classList.toggle('pm-open');
+                        if (!switcher.classList.contains('pm-open')) {
+                            closeAllDropdowns();
+                        }
                     });
 
                     card.addEventListener('click', function(e) {
                         e.stopPropagation();
                     });
 
+                    closeBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        switcher.classList.remove('pm-open');
+                        closeAllDropdowns();
+                    });
+
+                    var ghBtn = switcher.querySelector('.pm-github-btn');
+                    if (ghBtn) {
+                        ghBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            try {
+                                window.location.href = 'https://github.com/mahdiasd/MarkdownRTL';
+                            } catch (_) {
+                                window.open('https://github.com/mahdiasd/MarkdownRTL', '_blank');
+                            }
+                        });
+                    }
+
                     document.addEventListener('click', function(e) {
                         if (!switcher.contains(e.target)) {
                             switcher.classList.remove('pm-open');
                         }
+                        closeAllDropdowns();
                     });
 
                     // Controls
                     var optEnabled = card.querySelector('#pm-opt-enabled');
                     var optForceRtl = card.querySelector('#pm-opt-force-rtl');
-                    var inputFaFont = card.querySelector('#pm-input-fa-font');
-                    var inputEnFont = card.querySelector('#pm-input-en-font');
-                    var inputCodeFont = card.querySelector('#pm-input-code-font');
-                    var sliderFs = card.querySelector('#pm-slider-font-size');
-                    var resetFs = card.querySelector('#pm-reset-font-size');
-                    var sliderLh = card.querySelector('#pm-slider-line-height');
-                    var resetLh = card.querySelector('#pm-reset-line-height');
+                    var decLh = card.querySelector('#pm-dec-lh');
+                    var incLh = card.querySelector('#pm-inc-lh');
+                    var lhVal = card.querySelector('#pm-lh-val');
+                    var decFs = card.querySelector('#pm-dec-fs');
+                    var incFs = card.querySelector('#pm-inc-fs');
+                    var fsVal = card.querySelector('#pm-fs-val');
+                    var resetBtn = card.querySelector('#pm-reset-btn');
+
+                    // Fonts population
+                    var suggestedFa = ['Vazirmatn', 'Sahel', 'Shabnam', 'Samim', 'Parastoo', 'Tanha', 'Tahoma', 'Segoe UI', 'Noto Sans Arabic', 'Arial'];
+                    var suggestedEn = ['JetBrains Mono', 'SF Pro', 'Inter', 'Geist', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'System UI'];
+                    var suggestedCode = ['JetBrains Mono', 'Cascadia Code', 'Fira Code', 'SF Mono', 'Geist Mono', 'Consolas', 'Courier New', 'Menlo', 'Monaco'];
+
+                    var savedFa = cleanFontName(getPref('fa_font', defaultFaFont)) || 'Vazirmatn';
+                    var savedEn = cleanFontName(getPref('en_font', defaultEnFont)) || 'JetBrains Mono';
+                    var savedCode = cleanFontName(getPref('code_font', defaultCodeFont)) || 'JetBrains Mono';
+
+                    function updateFaFont(val) {
+                        val = cleanFontName(val);
+                        if (!val) return;
+                        savePref('fa_font', val);
+                        document.documentElement.style.setProperty('--pm-fa-font', "'" + val + "', 'PersianMarkdownBundledVazir', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif");
+                    }
+
+                    function updateEnFont(val) {
+                        val = cleanFontName(val);
+                        if (!val) return;
+                        savePref('en_font', val);
+                        document.documentElement.style.setProperty('--pm-en-font', "'" + val + "', 'PersianMarkdownBundledJBMono', 'SF Pro', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif");
+                    }
+
+                    function updateCodeFont(val) {
+                        val = cleanFontName(val);
+                        if (!val) return;
+                        savePref('code_font', val);
+                        document.documentElement.style.setProperty('--pm-code-font', "'" + val + "', 'PersianMarkdownBundledJBMono', Menlo, Monaco, Consolas, monospace");
+                    }
+
+                    var comboFa = setupFontCombobox('fa', 
+                        card.querySelector('#pm-input-fa'), 
+                        card.querySelector('#pm-drop-fa'), 
+                        suggestedFa, 
+                        savedFa, 
+                        function(selectedFont) {
+                            updateFaFont(selectedFont);
+                        }
+                    );
+
+                    var comboEn = setupFontCombobox('en', 
+                        card.querySelector('#pm-input-en'), 
+                        card.querySelector('#pm-drop-en'), 
+                        suggestedEn, 
+                        savedEn, 
+                        function(selectedFont) {
+                            updateEnFont(selectedFont);
+                        }
+                    );
+
+                    var comboCode = setupFontCombobox('code', 
+                        card.querySelector('#pm-input-code'), 
+                        card.querySelector('#pm-drop-code'), 
+                        suggestedCode, 
+                        savedCode, 
+                        function(selectedFont) {
+                            updateCodeFont(selectedFont);
+                        }
+                    );
 
                     // Enabled toggle
                     optEnabled.addEventListener('change', function() {
@@ -687,9 +1488,11 @@ object CssGenerator {
                         savePref('enabled', isEnabled ? '1' : '0');
                         if (isEnabled) {
                             document.documentElement.classList.remove('pm-disabled');
+                            statusDot.classList.remove('pm-disabled-dot');
                             applyDirections();
                         } else {
                             document.documentElement.classList.add('pm-disabled');
+                            statusDot.classList.add('pm-disabled-dot');
                             resetDirections();
                         }
                     });
@@ -702,95 +1505,110 @@ object CssGenerator {
                         applyDirections();
                     });
 
-                    // Font Size
-                    sliderFs.addEventListener('input', function() {
-                        var val = sliderFs.value;
-                        document.documentElement.style.setProperty('--pm-font-size', val + 'px');
-                        savePref('font_size', val);
-                    });
-                    resetFs.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        sliderFs.value = defaultFs;
-                        document.documentElement.style.setProperty('--pm-font-size', defaultFs + 'px');
-                        savePref('font_size', defaultFs);
-                    });
-
-                    // Line Height
-                    sliderLh.addEventListener('input', function() {
-                        var val = sliderLh.value;
-                        document.documentElement.style.setProperty('--pm-line-height', val);
-                        savePref('line_height', val);
-                    });
-                    resetLh.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        sliderLh.value = defaultLh;
-                        document.documentElement.style.setProperty('--pm-line-height', defaultLh);
-                        savePref('line_height', defaultLh);
-                    });
-
-                    // Fonts
-                    function updateFaFont() {
-                        var val = inputFaFont.value.trim();
-                        savePref('fa_font', val);
-                        if (val) {
-                            document.documentElement.style.setProperty('--pm-fa-font', "'" + val + "', 'PersianMarkdownBundledVazir', Tahoma, sans-serif");
-                        } else {
-                            document.documentElement.style.removeProperty('--pm-fa-font');
-                        }
+                    // Font Size stepper
+                    var currentFs = parseInt(getPref('font_size', defaultFs), 10) || defaultFs;
+                    function updateFsDisplay() {
+                        fsVal.textContent = currentFs + 'px';
+                        document.documentElement.style.setProperty('--pm-font-size', currentFs + 'px');
+                        savePref('font_size', currentFs);
                     }
-                    inputFaFont.addEventListener('change', updateFaFont);
-                    inputFaFont.addEventListener('blur', updateFaFont);
+                    decFs.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        currentFs = Math.max(10, currentFs - 1);
+                        updateFsDisplay();
+                    });
+                    incFs.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        currentFs = Math.min(32, currentFs + 1);
+                        updateFsDisplay();
+                    });
 
-                    function updateCodeFont() {
-                        var val = inputCodeFont.value.trim();
-                        savePref('code_font', val);
-                        if (val) {
-                            document.documentElement.style.setProperty('--pm-code-font', "'" + val + "', 'JetBrains Mono', Menlo, monospace");
-                        } else {
-                            document.documentElement.style.removeProperty('--pm-code-font');
-                        }
+                    // Line Height stepper
+                    var currentLh = parseFloat(getPref('line_height', defaultLh)) || defaultLh;
+                    function updateLhDisplay() {
+                        lhVal.textContent = currentLh.toFixed(1) + 'x';
+                        document.documentElement.style.setProperty('--pm-line-height', currentLh.toFixed(1));
+                        savePref('line_height', currentLh.toFixed(1));
                     }
-                    inputCodeFont.addEventListener('change', updateCodeFont);
-                    inputCodeFont.addEventListener('blur', updateCodeFont);
+                    decLh.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        currentLh = Math.max(1.0, Math.round((currentLh - 0.1) * 10) / 10);
+                        updateLhDisplay();
+                    });
+                    incLh.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        currentLh = Math.min(2.8, Math.round((currentLh + 0.1) * 10) / 10);
+                        updateLhDisplay();
+                    });
 
-                    // Load saved preferences
+                    // Reset Defaults
+                    resetBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        optEnabled.checked = true;
+                        savePref('enabled', '1');
+                        document.documentElement.classList.remove('pm-disabled');
+                        statusDot.classList.remove('pm-disabled-dot');
+
+                        optForceRtl.checked = false;
+                        currentMode = 'auto';
+                        savePref('force_rtl', '0');
+
+                        comboFa.setValue('Vazirmatn');
+                        updateFaFont('Vazirmatn');
+                        comboEn.setValue('JetBrains Mono');
+                        updateEnFont('JetBrains Mono');
+                        comboCode.setValue('JetBrains Mono');
+                        updateCodeFont('JetBrains Mono');
+
+                        currentFs = defaultFs;
+                        updateFsDisplay();
+                        currentLh = defaultLh;
+                        updateLhDisplay();
+
+                        applyDirections();
+                    });
+
+                    // Keyboard shortcuts
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') {
+                            var anyOpen = switcher.querySelector('.pm-combobox-dropdown.pm-open');
+                            if (anyOpen) {
+                                closeAllDropdowns();
+                            } else if (switcher.classList.contains('pm-open')) {
+                                switcher.classList.remove('pm-open');
+                            }
+                        } else if (e.altKey && (e.key === 'e' || e.key === 'E' || e.code === 'KeyE')) {
+                            e.preventDefault();
+                            optEnabled.checked = !optEnabled.checked;
+                            optEnabled.dispatchEvent(new Event('change'));
+                        } else if (e.altKey && (e.key === 'r' || e.key === 'R' || e.code === 'KeyR')) {
+                            e.preventDefault();
+                            optForceRtl.checked = !optForceRtl.checked;
+                            optForceRtl.dispatchEvent(new Event('change'));
+                        }
+                    });
+
+                    // Load saved preferences on init
                     var savedEnabled = getPref('enabled', '1');
                     optEnabled.checked = savedEnabled === '1';
                     if (!optEnabled.checked) {
                         document.documentElement.classList.add('pm-disabled');
+                        statusDot.classList.add('pm-disabled-dot');
+                    } else {
+                        statusDot.classList.remove('pm-disabled-dot');
                     }
 
                     var savedForceRtl = getPref('force_rtl', currentMode === 'force_rtl' ? '1' : '0');
                     optForceRtl.checked = savedForceRtl === '1';
                     currentMode = optForceRtl.checked ? 'force_rtl' : 'auto';
 
-                    var savedFs = getPref('font_size', '');
-                    if (savedFs) {
-                        sliderFs.value = savedFs;
-                        document.documentElement.style.setProperty('--pm-font-size', savedFs + 'px');
-                    }
-                    var savedLh = getPref('line_height', '');
-                    if (savedLh) {
-                        sliderLh.value = savedLh;
-                        document.documentElement.style.setProperty('--pm-line-height', savedLh);
-                    }
+                    updateFsDisplay();
+                    updateLhDisplay();
+                    updateFaFont(savedFa);
+                    updateEnFont(savedEn);
+                    updateCodeFont(savedCode);
 
-                    var savedFaFont = getPref('fa_font', '');
-                    if (savedFaFont) {
-                        inputFaFont.value = savedFaFont;
-                        updateFaFont();
-                    }
-                    var savedEnFont = getPref('en_font', '');
-                    if (savedEnFont) {
-                        inputEnFont.value = savedEnFont;
-                    }
-                    var savedCodeFont = getPref('code_font', '');
-                    if (savedCodeFont) {
-                        inputCodeFont.value = savedCodeFont;
-                        updateCodeFont();
-                    }
-
-                    document.body.appendChild(switcher);
+                    container.appendChild(switcher);
                 }
 
                 function init() {
@@ -809,7 +1627,10 @@ object CssGenerator {
                         createSwitcherUI();
                         applyDirections();
                     });
-                    observer.observe(document.body || document.documentElement, { childList: true, subtree: true });
+                    var obsTarget = document.body || document.documentElement;
+                    if (obsTarget) {
+                        observer.observe(obsTarget, { childList: true, subtree: true });
+                    }
                 }
             })();
         """.trimIndent()
