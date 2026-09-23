@@ -196,7 +196,7 @@ object CssGenerator {
                         padding-left: 0 !important;
                     }
                     blockquote:not(#persian-markdown-switcher *) {
-                        border-right: 4px solid #6366f1 !important;
+                        border-right: 4px solid #1EB4EB !important;
                         border-left: none !important;
                         padding-right: 1em !important;
                         padding-left: 0 !important;
@@ -229,7 +229,7 @@ object CssGenerator {
                         padding-right: 0 !important;
                     }
                     blockquote:not(#persian-markdown-switcher *) {
-                        border-left: 4px solid #6366f1 !important;
+                        border-left: 4px solid #1EB4EB !important;
                         border-right: none !important;
                         padding-left: 1em !important;
                         padding-right: 0 !important;
@@ -252,7 +252,7 @@ object CssGenerator {
                     }
                     blockquote[dir="rtl"]:not(#persian-markdown-switcher *),
                     blockquote.persian-dir-rtl:not(#persian-markdown-switcher *) {
-                        border-right: 4px solid #6366f1 !important;
+                        border-right: 4px solid #1EB4EB !important;
                         border-left: none !important;
                         padding-right: 1em !important;
                         padding-left: 0 !important;
@@ -298,7 +298,7 @@ object CssGenerator {
                 text-align: left !important;
             }
             html.pm-disabled blockquote:not(#persian-markdown-switcher *) {
-                border-left: 4px solid #3b82f6 !important;
+                border-left: 4px solid #1EB4EB !important;
                 border-right: none !important;
                 padding-left: 1em !important;
                 padding-right: 0 !important;
@@ -488,12 +488,12 @@ object CssGenerator {
             }
             .pm-header-badge {
                 padding: 1.5px 5px !important;
-                background: rgba(99, 102, 241, 0.12) !important;
-                border: 1px solid rgba(99, 102, 241, 0.25) !important;
+                background: rgba(30, 180, 235, 0.15) !important;
+                border: 1px solid rgba(30, 180, 235, 0.3) !important;
                 font-size: 10px !important;
                 font-family: 'JetBrains Mono', monospace !important;
                 font-weight: 500 !important;
-                color: #A5B4FC !important;
+                color: #8ED9F5 !important;
                 border-radius: 4px !important;
                 line-height: 1 !important;
             }
@@ -748,7 +748,7 @@ object CssGenerator {
                 font-weight: 500 !important;
             }
             .pm-dropdown-item.pm-dropdown-custom {
-                color: #34D399 !important;
+                color: #1EB4EB !important;
                 border-bottom: 1px dashed #1E2738 !important;
                 margin-bottom: 2px !important;
             }
@@ -813,12 +813,12 @@ object CssGenerator {
             .pm-metric-val {
                 font-family: 'JetBrains Mono', monospace !important;
                 font-size: 10.5px !important;
-                color: #A5B4FC !important;
+                color: #8ED9F5 !important;
                 font-weight: 500 !important;
                 padding: 1px 4px !important;
-                background: rgba(99, 102, 241, 0.1) !important;
+                background: rgba(30, 180, 235, 0.15) !important;
                 border-radius: 3px !important;
-                border: 1px solid rgba(99, 102, 241, 0.2) !important;
+                border: 1px solid rgba(30, 180, 235, 0.3) !important;
                 min-width: 32px !important;
                 text-align: center !important;
                 line-height: 1.2 !important;
@@ -1377,7 +1377,7 @@ object CssGenerator {
                             '</div>' +
                             '<div id="pm-footer">' +
                                 '<button id="pm-reset-btn" type="button">Reset to default</button>' +
-                                '<a href="https://github.com/mahdiasd/MarkdownRTL" class="pm-github-btn" title="Star Markdown RTL on GitHub">' +
+                                '<a href="https://github.com/mahdiasd/MarkdownRTL" target="_blank" rel="noopener noreferrer" class="pm-github-btn" title="Star Markdown RTL on GitHub">' +
                                     '<svg viewBox="0 0 24 24" class="pm-star-icon">' +
                                         '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>' +
                                     '</svg>' +
@@ -1421,10 +1421,23 @@ object CssGenerator {
                         ghBtn.addEventListener('click', function(e) {
                             e.preventDefault();
                             e.stopPropagation();
+                            var targetUrl = 'https://github.com/mahdiasd/MarkdownRTL';
                             try {
-                                window.location.href = 'https://github.com/mahdiasd/MarkdownRTL';
+                                if (window.__IntelliJTools && window.__IntelliJTools.messagePipe && typeof window.__IntelliJTools.messagePipe.post === 'function') {
+                                    window.__IntelliJTools.messagePipe.post('openLink', targetUrl);
+                                    return;
+                                }
+                            } catch (_) {}
+                            try {
+                                if (window.__IntelliJTools && typeof window.__IntelliJTools.processClick === 'function') {
+                                    window.__IntelliJTools.processClick(ghBtn);
+                                    return;
+                                }
+                            } catch (_) {}
+                            try {
+                                window.open(targetUrl, '_blank');
                             } catch (_) {
-                                window.open('https://github.com/mahdiasd/MarkdownRTL', '_blank');
+                                window.location.href = targetUrl;
                             }
                         });
                     }
