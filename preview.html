@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markdown RTL - Live UI Preview (Sky Blue Theme)</title>
+    <title>Markdown RTL - Live UI Preview (Concentric 10px Radius)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -161,7 +161,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
         }
 
-        /* Floating Trigger Capsule Pill (Matching Align-Vertical-Top Sky Blue Theme) */
+        /* Floating Trigger Rounded Button (Concentric 10px Radius Matching Inner Squircle) */
         #pm-trigger {
             position: relative !important;
             display: inline-flex !important;
@@ -169,7 +169,7 @@
             gap: 7px !important;
             padding: 3px 11px 3px 4px !important;
             height: 28px !important;
-            border-radius: 9999px !important;
+            border-radius: 10px !important;
             background: #111722 !important;
             border: 1px solid rgba(30, 180, 235, 0.35) !important;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(30, 180, 235, 0.15), inset 0 1px 0 rgba(142, 217, 245, 0.12) !important;
@@ -509,46 +509,55 @@
             color: #8ED9F5 !important;
         }
 
-        /* Typography Stepper Row */
+        /* Typography Steppers - Stacked in Two Separate Lines */
+        .pm-metrics-stack {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 5px !important;
+        }
         .pm-stepper-row {
+            background: #101622 !important;
+            border: 1px solid #1C273A !important;
+            border-radius: 6px !important;
+            padding: 4px 8px !important;
+            height: 28px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: space-between !important;
         }
         .pm-stepper-label {
             font-size: 11px !important;
+            font-weight: 500 !important;
             color: #94A3B8 !important;
         }
         .pm-stepper-controls {
             display: flex !important;
             align-items: center !important;
-            background: #0B1017 !important;
-            border: 1px solid #202B3D !important;
-            border-radius: 5px !important;
-            overflow: hidden !important;
-            height: 23px !important;
+            gap: 3px !important;
         }
         .pm-step-btn {
-            background: transparent !important;
-            border: none !important;
+            width: 18px !important;
+            height: 18px !important;
+            border-radius: 3px !important;
+            background: #182233 !important;
             color: #94A3B8 !important;
-            width: 20px !important;
-            height: 100% !important;
+            border: none !important;
             cursor: pointer !important;
             font-size: 12px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
+            transition: all 0.1s !important;
         }
         .pm-step-btn:hover {
-            background: #182233 !important;
-            color: #F1F5F9 !important;
+            background: #233247 !important;
+            color: #FFFFFF !important;
         }
         .pm-step-val {
-            font-size: 10.5px !important;
+            font-size: 11px !important;
             font-family: monospace !important;
             color: #F1F5F9 !important;
-            min-width: 38px !important;
+            min-width: 42px !important;
             text-align: center !important;
         }
 
@@ -623,15 +632,15 @@
         <div class="markdown-body" id="md-content" style="direction: rtl; text-align: right; font-family: 'Vazirmatn', sans-serif;">
             <h1>پروژه مارک‌داون فارسی و دوجهته (Markdown RTL)</h1>
             <p>
-                این پیش‌نمایش تعاملی با تم اختصاصی رنگ فیروزه‌ای/آبی آسمانی (<span class="inline-code">#1EB4EB</span>) و آیکون جدید <span class="inline-code">align-vertical-top.svg</span> به‌روزرسانی شده است.
-                رنگ کادر و هاله‌های دکمه کپسولی نیز دقیقاً مطابق این آیکون تنظیم گردیده است.
+                در این به‌روزرسانی شعاع گردی دکمه (Border Radius) دقیقاً متناسب با شعاع اسکوارکل آیکون تنظیم شده (Concentric Radius: 10px)،
+                تنظیمات Font Size و Line Height در دو سطر مجزا قرار گرفته‌اند و عنوان دکمه ریست به <span class="inline-code">Reset to default</span> و ورژن به <span class="inline-code">v1.0</span> ارتقا یافته است.
             </p>
 
             <h2>ویژگی‌های کلیدی افزونه</h2>
             <ul>
                 <li>تشخیص هوشمند پاراگراف‌های فارسی، عربی و انگلیسی بر اساس نویسه اول.</li>
                 <li>حفظ کامل چیدمان چپ‌به‌راست برای کدهای برنامه‌نویسی و بلوک‌های <span class="inline-code">code</span>.</li>
-                <li>دکمه شناور جمع‌وجور کپسولی در گوشه پایین سمت چپ با نور ملایم آسمانی.</li>
+                <li>طراحی ارگونومیک دکمه شناور با گوشه‌های گرد هماهنگ با آیکون.</li>
             </ul>
 
             <div class="code-box">
@@ -642,7 +651,7 @@
             </div>
 
             <p>
-                برای باز کردن دیالوگ تنظیمات و تغییر فونت یا سایز، روی دکمه شناور در گوشه پایین سمت چپ کلیک کنید!
+                برای باز کردن دیالوگ تنظیمات و بررسی چیدمان جدید بخش Typography، روی دکمه شناور کلیک کنید!
             </p>
         </div>
     </div>
@@ -702,7 +711,7 @@
                         </svg>
                     </div>
                     <span class="pm-header-title">Markdown RTL</span>
-                    <span class="pm-header-badge">v1.3</span>
+                    <span class="pm-header-badge">v1.0</span>
                 </div>
                 <div class="pm-header-right">
                     <button id="pm-close-btn" type="button" title="Close (ESC)" onclick="closeSwitcher()">esc</button>
@@ -755,7 +764,7 @@
                         </div>
                     </div>
                     <div class="pm-font-combobox" id="pm-combo-code">
-                        <span class="pm-combobox-label">CODE</span>
+                        <span class="pm-combobox-label">Code</span>
                         <div class="pm-combobox-input-wrap">
                             <input type="text" class="pm-font-search-input" id="pm-input-code" value="JetBrains Mono" onfocus="handleFontFocus(this, 'code')" oninput="filterFonts(this, 'code')">
                             <div class="pm-combobox-arrow">
@@ -767,7 +776,7 @@
                 </div>
 
                 <div class="pm-section-title">Typography</div>
-                <div class="pm-bento-card">
+                <div class="pm-metrics-stack">
                     <div class="pm-stepper-row">
                         <span class="pm-stepper-label">Font Size</span>
                         <div class="pm-stepper-controls">
@@ -780,14 +789,14 @@
                         <span class="pm-stepper-label">Line Height</span>
                         <div class="pm-stepper-controls">
                             <button class="pm-step-btn" type="button" onclick="stepLineHeight(-0.1)">-</button>
-                            <span class="pm-step-val" id="pm-lh-val">1.7</span>
+                            <span class="pm-step-val" id="pm-lh-val">1.7x</span>
                             <button class="pm-step-btn" type="button" onclick="stepLineHeight(0.1)">+</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div id="pm-footer">
-                <button id="pm-reset-btn" class="pm-footer-btn" type="button" onclick="resetDefaults()">Reset</button>
+                <button id="pm-reset-btn" class="pm-footer-btn" type="button" onclick="resetDefaults()">Reset to default</button>
                 <button id="pm-star-btn" class="pm-footer-btn" type="button" onclick="openGithub()">
                     <svg viewBox="0 0 24 24">
                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
@@ -853,7 +862,7 @@
 
         function stepLineHeight(delta) {
             lineHeight = Math.max(1.1, Math.min(2.8, parseFloat((lineHeight + delta).toFixed(1))));
-            document.getElementById('pm-lh-val').innerText = lineHeight.toFixed(1);
+            document.getElementById('pm-lh-val').innerText = lineHeight.toFixed(1) + 'x';
             mdContent.style.lineHeight = lineHeight;
         }
 
@@ -861,7 +870,7 @@
             fontSize = 15;
             lineHeight = 1.7;
             document.getElementById('pm-fs-val').innerText = '15px';
-            document.getElementById('pm-lh-val').innerText = '1.7';
+            document.getElementById('pm-lh-val').innerText = '1.7x';
             document.getElementById('pm-input-fa').value = 'Vazirmatn';
             document.getElementById('pm-input-en').value = 'JetBrains Mono';
             document.getElementById('pm-input-code').value = 'JetBrains Mono';

@@ -1,0 +1,303 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 640" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090D16"/>
+      <stop offset="50%" stop-color="#0E1422"/>
+      <stop offset="100%" stop-color="#070A10"/>
+    </linearGradient>
+
+    <!-- Card Gradients -->
+    <linearGradient id="cardGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141C2E"/>
+      <stop offset="100%" stop-color="#0F1624"/>
+    </linearGradient>
+
+    <!-- Accent Gradients -->
+    <linearGradient id="cyanGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="roseGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FB7185"/>
+      <stop offset="100%" stop-color="#E11D48"/>
+    </linearGradient>
+    <linearGradient id="amberGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="cardShadow2" x="-10%" y="-5%" width="120%" height="115%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+
+    <!-- Markers -->
+    <marker id="arrowCyan2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <polygon points="0 1, 8 4.5, 0 8" fill="#38BDF8"/>
+    </marker>
+    <marker id="arrowEmerald2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <polygon points="0 1, 8 4.5, 0 8" fill="#34D399"/>
+    </marker>
+    <marker id="arrowRose2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <polygon points="0 1, 8 4.5, 0 8" fill="#FB7185"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1140" height="640" rx="16" fill="url(#bgGrad2)" stroke="#1E293B" stroke-width="1.5"/>
+
+  <!-- Background Decorative Grid Lines -->
+  <g opacity="0.06" stroke="#94A3B8" stroke-width="1">
+    <line x1="120" y1="0" x2="120" y2="640" stroke-dasharray="4 6"/>
+    <line x1="360" y1="0" x2="360" y2="640" stroke-dasharray="4 6"/>
+    <line x1="600" y1="0" x2="600" y2="640" stroke-dasharray="4 6"/>
+    <line x1="840" y1="0" x2="840" y2="640" stroke-dasharray="4 6"/>
+    <line x1="0" y1="120" x2="1140" y2="120" stroke-dasharray="4 6"/>
+    <line x1="0" y1="320" x2="1140" y2="320" stroke-dasharray="4 6"/>
+    <line x1="0" y1="520" x2="1140" y2="520" stroke-dasharray="4 6"/>
+  </g>
+
+  <!-- ==================== HEADER ==================== -->
+  <g transform="translate(60, 40)">
+    <rect x="0" y="0" width="38" height="38" rx="10" fill="url(#emeraldGrad2)" />
+    <path d="M12 20 l6 6 l10 -12" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <text x="50" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#F8FAFC" letter-spacing="-0.02em">
+      BiDi Heuristic &amp; Code Protection Pipeline
+    </text>
+    <text x="50" y="37" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="400" fill="#94A3B8">
+      Smart per-element character analysis with zero code breakage and isolated monospace typography
+    </text>
+  </g>
+
+  <!-- ==================== STEP 1: DOM INGESTION ==================== -->
+  <g transform="translate(60, 110)">
+    <rect width="210" height="470" rx="12" fill="url(#cardGrad2)" stroke="#1E293B" stroke-width="1.2" filter="url(#cardShadow2)"/>
+    <rect width="210" height="36" rx="12" fill="#141F33"/>
+    <rect y="26" width="210" height="10" fill="#141F33"/>
+    <text x="16" y="23" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#38BDF8">
+      1. DOM Element Ingestion
+    </text>
+
+    <!-- Element tags block -->
+    <g transform="translate(14, 50)">
+      <rect width="182" height="110" rx="8" fill="#0C1322" stroke="#1E2D4A"/>
+      <text x="12" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#F1F5F9">Queried Elements:</text>
+      <g transform="translate(12, 34)">
+        <rect width="36" height="20" rx="4" fill="#1E293B"/><text x="18" y="14" text-anchor="middle" font-family="monospace" font-size="10" fill="#38BDF8">&lt;p&gt;</text>
+        <rect x="42" y="0" width="56" height="20" rx="4" fill="#1E293B"/><text x="70" y="14" text-anchor="middle" font-family="monospace" font-size="10" fill="#38BDF8">&lt;h1-6&gt;</text>
+        <rect x="104" y="0" width="40" height="20" rx="4" fill="#1E293B"/><text x="124" y="14" text-anchor="middle" font-family="monospace" font-size="10" fill="#38BDF8">&lt;li&gt;</text>
+        <rect x="0" y="26" width="84" height="20" rx="4" fill="#1E293B"/><text x="42" y="40" text-anchor="middle" font-family="monospace" font-size="10" fill="#38BDF8">&lt;blockquote&gt;</text>
+        <rect x="90" y="26" width="60" height="20" rx="4" fill="#1E293B"/><text x="120" y="40" text-anchor="middle" font-family="monospace" font-size="10" fill="#38BDF8">&lt;td&gt;, &lt;th&gt;</text>
+      </g>
+      <text x="12" y="98" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#64748B">Batch traversed on parse/change</text>
+    </g>
+
+    <!-- Trigger source -->
+    <g transform="translate(14, 175)">
+      <rect width="182" height="120" rx="8" fill="#0C1322" stroke="#1E2D4A"/>
+      <text x="12" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#F1F5F9">Execution Triggers:</text>
+      <text x="12" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">• Initial Preview Load</text>
+      <text x="12" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">• MutationObserver Event</text>
+      <text x="12" y="80" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">• Mode Switch (⌥R / ⌥E)</text>
+      <text x="12" y="98" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">• IDE Setting Broadcast</text>
+    </g>
+
+    <!-- Protection Bypass Branch -->
+    <g transform="translate(14, 310)">
+      <rect width="182" height="140" rx="8" fill="#17121E" stroke="#381D33"/>
+      <text x="12" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#FB7185">Code Block Guard</text>
+      <text x="12" y="42" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">
+        If element is <tspan font-family="monospace" fill="#F43F5E">&lt;pre&gt;</tspan> or <tspan font-family="monospace" fill="#F43F5E">.code-fence</tspan>:
+      </text>
+      <rect x="10" y="54" width="162" height="72" rx="6" fill="#0D0914" stroke="#4C1D38"/>
+      <text x="16" y="70" font-family="monospace" font-size="9" fill="#FB7185">BYPASS BiDi ANALYSIS</text>
+      <text x="16" y="86" font-family="monospace" font-size="8.5" fill="#E2E8F0">direction: ltr !important</text>
+      <text x="16" y="100" font-family="monospace" font-size="8.5" fill="#E2E8F0">unicode-bidi: isolate</text>
+      <text x="16" y="114" font-family="monospace" font-size="8.5" fill="#38BDF8">font: JetBrains Mono</text>
+    </g>
+  </g>
+
+  <!-- Arrow 1 -> 2 -->
+  <path d="M 270 200 L 320 200" stroke="#38BDF8" stroke-width="2" marker-end="url(#arrowCyan2)"/>
+
+  <!-- ==================== STEP 2: PROSE NORMALIZATION ==================== -->
+  <g transform="translate(320, 110)">
+    <rect width="230" height="470" rx="12" fill="url(#cardGrad2)" stroke="#1E293B" stroke-width="1.2" filter="url(#cardShadow2)"/>
+    <rect width="230" height="36" rx="12" fill="#141F33"/>
+    <rect y="26" width="230" height="10" fill="#141F33"/>
+    <text x="16" y="23" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#38BDF8">
+      2. Noise &amp; Code Stripping
+    </text>
+
+    <g transform="translate(14, 50)">
+      <rect width="202" height="74" rx="8" fill="#0C1322" stroke="#1E2D4A"/>
+      <text x="12" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#F1F5F9">Virtual Clone Extraction</text>
+      <text x="12" y="40" font-family="monospace" font-size="9.5" fill="#818CF8">var clone = el.cloneNode(true)</text>
+      <text x="12" y="58" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#94A3B8">Prevents mutation of original DOM</text>
+    </g>
+
+    <g transform="translate(14, 138)">
+      <rect width="202" height="150" rx="8" fill="#0C1322" stroke="#1E2D4A"/>
+      <text x="12" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#F1F5F9">Noise Filters (Stripped):</text>
+
+      <g transform="translate(10, 32)">
+        <rect width="182" height="24" rx="4" fill="#162035"/>
+        <text x="8" y="16" font-family="monospace" font-size="9" fill="#FB7185">clone.querySelectorAll('code')</text>
+      </g>
+      <g transform="translate(10, 60)">
+        <rect width="182" height="24" rx="4" fill="#162035"/>
+        <text x="8" y="16" font-family="monospace" font-size="9" fill="#FB7185">replace(/\[[xX\s]?\]/g, '')</text>
+      </g>
+      <g transform="translate(10, 88)">
+        <rect width="182" height="24" rx="4" fill="#162035"/>
+        <text x="8" y="16" font-family="monospace" font-size="9" fill="#FB7185">replace(/\[.*?\]/g, '')</text>
+      </g>
+      <g transform="translate(10, 116)">
+        <rect width="182" height="24" rx="4" fill="#162035"/>
+        <text x="8" y="16" font-family="monospace" font-size="9" fill="#FB7185">replace(/https?:\/\/\S+/g, '')</text>
+      </g>
+    </g>
+
+    <g transform="translate(14, 302)">
+      <rect width="202" height="148" rx="8" fill="#10192A" stroke="#1E3250"/>
+      <text x="12" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#38BDF8">Why Stripping Matters:</text>
+      <text x="12" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">
+        Inline English code like:
+      </text>
+      <rect x="12" y="52" width="178" height="24" rx="4" fill="#0A0E17"/>
+      <text x="18" y="68" font-family="monospace" font-size="8.5" fill="#F1F5F9">متغیر `userToken` مقدار دارد</text>
+      <text x="12" y="94" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">
+        Without stripping, the English token could skew direction. Stripping leaves purely Persian prose for 100% accurate classification.
+      </text>
+    </g>
+  </g>
+
+  <!-- Arrow 2 -> 3 -->
+  <path d="M 550 200 L 600 200" stroke="#38BDF8" stroke-width="2" marker-end="url(#arrowCyan2)"/>
+
+  <!-- ==================== STEP 3: UNICODE REGEX EVALUATION ==================== -->
+  <g transform="translate(600, 110)">
+    <rect width="230" height="470" rx="12" fill="url(#cardGrad2)" stroke="#1E293B" stroke-width="1.2" filter="url(#cardShadow2)"/>
+    <rect width="230" height="36" rx="12" fill="#141F33"/>
+    <rect y="26" width="230" height="10" fill="#141F33"/>
+    <text x="16" y="23" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#38BDF8">
+      3. Unicode BiDi Classifier
+    </text>
+
+    <!-- RegEx Card -->
+    <g transform="translate(14, 50)">
+      <rect width="202" height="120" rx="8" fill="#0C1322" stroke="#1E2D4A"/>
+      <text x="12" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#F1F5F9">Persian / Arabic Unicode:</text>
+      <rect x="10" y="32" width="182" height="52" rx="5" fill="#151D2F" stroke="#253557"/>
+      <text x="16" y="48" font-family="monospace" font-size="8" fill="#34D399">/[\u0600-\u06FF\u0750-\u077F</text>
+      <text x="16" y="62" font-family="monospace" font-size="8" fill="#34D399">\u08A0-\u08FF\uFB50-\uFDFF</text>
+      <text x="16" y="76" font-family="monospace" font-size="8" fill="#34D399">\uFE70-\uFEFF]/</text>
+      <text x="12" y="104" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#64748B">Instant O(N) regex evaluation</text>
+    </g>
+
+    <!-- Decision Tree Branches -->
+    <g transform="translate(14, 185)">
+      <!-- Branch RTL -->
+      <rect width="202" height="125" rx="8" fill="#0B1C19" stroke="#154A3B"/>
+      <circle cx="24" cy="22" r="6" fill="#34D399"/>
+      <text x="36" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" font-weight="700" fill="#34D399">MATCH (Persian/Arabic)</text>
+      <text x="12" y="50" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">• Apply <tspan font-family="monospace" fill="#34D399">dir="rtl"</tspan></text>
+      <text x="12" y="68" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">• Add <tspan font-family="monospace" fill="#34D399">.persian-dir-rtl</tspan></text>
+      <text x="12" y="86" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">• Font: <tspan fill="#38BDF8">Vazirmatn</tspan> font stack</text>
+      <text x="12" y="104" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">• Quotes border on right edge</text>
+    </g>
+
+    <g transform="translate(14, 325)">
+      <!-- Branch LTR -->
+      <rect width="202" height="125" rx="8" fill="#0C1425" stroke="#1E2F52"/>
+      <circle cx="24" cy="22" r="6" fill="#38BDF8"/>
+      <text x="36" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" font-weight="700" fill="#38BDF8">NO MATCH (Latin/English)</text>
+      <text x="12" y="50" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">• Apply <tspan font-family="monospace" fill="#38BDF8">dir="ltr"</tspan></text>
+      <text x="12" y="68" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">• Add <tspan font-family="monospace" fill="#38BDF8">.persian-dir-ltr</tspan></text>
+      <text x="12" y="86" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">• Font: <tspan fill="#818CF8">JetBrains Mono / Inter</tspan></text>
+      <text x="12" y="104" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#94A3B8">• Quotes border on left edge</text>
+    </g>
+  </g>
+
+  <!-- Split Arrows 3 -> 4 -->
+  <path d="M 830 240 L 880 210" stroke="#34D399" stroke-width="2" marker-end="url(#arrowEmerald2)"/>
+  <path d="M 830 380 L 880 400" stroke="#38BDF8" stroke-width="2" marker-end="url(#arrowCyan2)"/>
+
+  <!-- ==================== STEP 4: PREVIEW DOM RENDERING ==================== -->
+  <g transform="translate(880, 110)">
+    <rect width="200" height="470" rx="12" fill="url(#cardGrad2)" stroke="#1E293B" stroke-width="1.2" filter="url(#cardShadow2)"/>
+    <rect width="200" height="36" rx="12" fill="#141F33"/>
+    <rect y="26" width="200" height="10" fill="#141F33"/>
+    <text x="16" y="23" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#38BDF8">
+      4. Rendered Results
+    </text>
+
+    <!-- Simulated Preview Frame -->
+    <g transform="translate(12, 50)">
+      <rect width="176" height="400" rx="8" fill="#0A0E17" stroke="#1E293B"/>
+
+      <!-- Window dots -->
+      <circle cx="14" cy="14" r="3.5" fill="#EF4444"/>
+      <circle cx="24" cy="14" r="3.5" fill="#F59E0B"/>
+      <circle cx="34" cy="14" r="3.5" fill="#10B981"/>
+      <line x1="0" y1="26" x2="176" y2="26" stroke="#1E293B"/>
+
+      <!-- Simulated RTL Heading -->
+      <g transform="translate(10, 38)">
+        <rect x="30" y="0" width="126" height="12" rx="3" fill="#34D399" opacity="0.8"/>
+        <text x="156" y="20" text-anchor="end" font-family="system-ui, -apple-system, sans-serif" font-size="8" fill="#64748B">[RTL Header]</text>
+      </g>
+
+      <!-- Simulated RTL Paragraph -->
+      <g transform="translate(10, 68)">
+        <rect x="10" y="0" width="146" height="7" rx="2" fill="#CBD5E1" opacity="0.7"/>
+        <rect x="30" y="11" width="126" height="7" rx="2" fill="#CBD5E1" opacity="0.7"/>
+        <rect x="70" y="22" width="86" height="7" rx="2" fill="#CBD5E1" opacity="0.7"/>
+      </g>
+
+      <!-- Simulated Code Block (LTR) -->
+      <g transform="translate(10, 114)">
+        <rect width="156" height="66" rx="5" fill="#121824" stroke="#1E2D4A"/>
+        <rect x="8" y="10" width="70" height="6" rx="2" fill="#38BDF8" opacity="0.9"/>
+        <rect x="8" y="22" width="110" height="6" rx="2" fill="#94A3B8" opacity="0.6"/>
+        <rect x="8" y="34" width="85" height="6" rx="2" fill="#A5B4FC" opacity="0.8"/>
+        <rect x="8" y="46" width="40" height="6" rx="2" fill="#34D399" opacity="0.8"/>
+        <text x="146" y="58" text-anchor="end" font-family="monospace" font-size="7" fill="#F59E0B">LTR</text>
+      </g>
+
+      <!-- Simulated English Paragraph (LTR) -->
+      <g transform="translate(10, 196)">
+        <rect x="0" y="0" width="140" height="7" rx="2" fill="#CBD5E1" opacity="0.7"/>
+        <rect x="0" y="11" width="110" height="7" rx="2" fill="#CBD5E1" opacity="0.7"/>
+      </g>
+
+      <!-- Simulated Quote Block (RTL border) -->
+      <g transform="translate(10, 230)">
+        <rect width="156" height="42" rx="4" fill="#0F1626"/>
+        <rect x="152" y="0" width="4" height="42" rx="1" fill="#6366F1"/>
+        <rect x="20" y="10" width="120" height="7" rx="2" fill="#A5B4FC" opacity="0.8"/>
+        <rect x="40" y="22" width="100" height="7" rx="2" fill="#A5B4FC" opacity="0.8"/>
+      </g>
+
+      <!-- Bottom Floating Badge -->
+      <g transform="translate(10, 355)">
+        <rect width="84" height="18" rx="9" fill="#111722" stroke="#1EB4EB" stroke-width="0.8"/>
+        <circle cx="8" cy="9" r="4" fill="#1EB4EB"/>
+        <text x="18" y="12" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="600" fill="#F1F5F9">Auto RTL</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Footer text -->
+  <g transform="translate(60, 615)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748B">
+      Unicode BiDi Range: \u0600-\u06FF, \u0750-\u077F, \u08A0-\u08FF, \uFB50-\uFDFF, \uFE70-\uFEFF • Preserves LTR Fences &amp; Monospace Fonts
+    </text>
+  </g>
+</svg>

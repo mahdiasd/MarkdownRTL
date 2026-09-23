@@ -1,0 +1,317 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 680" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090D16"/>
+      <stop offset="50%" stop-color="#0E1422"/>
+      <stop offset="100%" stop-color="#070A10"/>
+    </linearGradient>
+
+    <!-- Bento Card Glass Gradient -->
+    <linearGradient id="bentoCardBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111624"/>
+      <stop offset="100%" stop-color="#0B0F19"/>
+    </linearGradient>
+
+    <!-- Accent Gradients -->
+    <linearGradient id="cyanGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="cardBorderGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="50%" stop-color="#38BDF8" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="widgetShadow" x="-15%" y="-10%" width="130%" height="125%">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+    <filter id="glowPill" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Markers -->
+    <marker id="arrowCyan3" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <polygon points="0 1, 7 4, 0 7" fill="#38BDF8"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1140" height="680" rx="16" fill="url(#bgGrad3)" stroke="#1E293B" stroke-width="1.5"/>
+
+  <!-- Background Decorative Grid Lines -->
+  <g opacity="0.06" stroke="#94A3B8" stroke-width="1">
+    <line x1="200" y1="0" x2="200" y2="680" stroke-dasharray="4 6"/>
+    <line x1="580" y1="0" x2="580" y2="680" stroke-dasharray="4 6"/>
+    <line x1="900" y1="0" x2="900" y2="680" stroke-dasharray="4 6"/>
+    <line x1="0" y1="180" x2="1140" y2="180" stroke-dasharray="4 6"/>
+    <line x1="0" y1="480" x2="1140" y2="480" stroke-dasharray="4 6"/>
+  </g>
+
+  <!-- ==================== HEADER ==================== -->
+  <g transform="translate(60, 40)">
+    <rect x="0" y="0" width="38" height="38" rx="10" fill="url(#cyanGrad3)" />
+    <path d="M12 24 h14 M19 12 v14" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+    
+    <text x="50" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#F8FAFC" letter-spacing="-0.02em">
+      In-Preview Live Bento Control Card
+    </text>
+    <text x="50" y="37" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="400" fill="#94A3B8">
+      Zero-friction floating UI widget embedded inside the Markdown preview engine with live CSS variable tuning
+    </text>
+  </g>
+
+  <!-- ==================== MAIN CARD UI MOCKUP (CENTER-LEFT) ==================== -->
+  <g transform="translate(70, 105)" filter="url(#widgetShadow)">
+    
+    <!-- Bento Card Container -->
+    <rect width="360" height="495" rx="14" fill="url(#bentoCardBg)" stroke="#222C3F" stroke-width="1.2"/>
+    <path d="M 0 14 Q 0 0 14 0 L 346 0 Q 360 0 360 14" fill="none" stroke="url(#cardBorderGrad)" stroke-width="1.8"/>
+
+    <!-- Header Section -->
+    <g transform="translate(0, 0)">
+      <rect width="360" height="46" rx="14" fill="#141B29"/>
+      <rect y="32" width="360" height="14" fill="#141B29"/>
+      <line x1="0" y1="46" x2="360" y2="46" stroke="#1D2638" stroke-width="1"/>
+
+      <!-- Brand icon -->
+      <rect x="14" y="11" width="24" height="24" rx="6" fill="#1E2B40" stroke="#253550"/>
+      <path d="M19 18 h14 M19 23 h14 M26 18 v10" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round"/>
+
+      <text x="46" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" font-weight="700" fill="#F1F5F9">
+        Markdown RTL
+      </text>
+
+      <!-- Badge -->
+      <rect x="156" y="14" width="40" height="18" rx="4" fill="#18233D" stroke="#273860"/>
+      <text x="176" y="27" text-anchor="middle" font-family="monospace" font-size="10" font-weight="600" fill="#818CF8">v1.3</text>
+
+      <!-- Close Button -->
+      <rect x="306" y="13" width="40" height="20" rx="4" fill="#182133" stroke="#233049"/>
+      <text x="326" y="27" text-anchor="middle" font-family="monospace" font-size="10" fill="#94A3B8">esc</text>
+    </g>
+
+    <!-- Card Body -->
+    <g transform="translate(14, 58)">
+      
+      <!-- 1. Toggles Grid -->
+      <g transform="translate(0, 0)">
+        <!-- Toggle 1: Enabled -->
+        <rect width="160" height="40" rx="8" fill="#121724" stroke="#1F283B"/>
+        <text x="12" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#E2E8F0">Enabled</text>
+        <rect x="66" y="12" width="22" height="16" rx="3" fill="#192233"/>
+        <text x="77" y="24" text-anchor="middle" font-family="monospace" font-size="9" fill="#818CF8">⌥E</text>
+        <!-- Switch (ON) -->
+        <rect x="114" y="12" width="34" height="16" rx="8" fill="#1EB4EB"/>
+        <circle cx="139" cy="20" r="6" fill="#FFFFFF"/>
+
+        <!-- Toggle 2: Force RTL -->
+        <rect x="172" y="0" width="160" height="40" rx="8" fill="#121724" stroke="#1F283B"/>
+        <text x="184" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#E2E8F0">Force RTL</text>
+        <rect x="250" y="12" width="22" height="16" rx="3" fill="#192233"/>
+        <text x="261" y="24" text-anchor="middle" font-family="monospace" font-size="9" fill="#818CF8">⌥R</text>
+        <!-- Switch (OFF) -->
+        <rect x="286" y="12" width="34" height="16" rx="8" fill="#252F42"/>
+        <circle cx="297" cy="20" r="6" fill="#94A3B8"/>
+      </g>
+
+      <!-- 2. Font Stack Bento Box -->
+      <g transform="translate(0, 52)">
+        <text x="2" y="12" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#64748B">FONTS</text>
+
+        <rect y="20" width="332" height="152" rx="8" fill="#121724" stroke="#1F283B"/>
+
+        <!-- Persian Font Row -->
+        <g transform="translate(10, 30)">
+          <text x="0" y="18" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" font-weight="500" fill="#94A3B8">FA/AR</text>
+          <rect x="52" y="2" width="258" height="28" rx="6" fill="#0B0F19" stroke="#1EB4EB" stroke-width="1.2"/>
+          <text x="64" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" fill="#38BDF8">Vazirmatn</text>
+          <path d="M294 14 l4 4 l4 -4" stroke="#64748B" stroke-width="1.5" fill="none"/>
+        </g>
+
+        <!-- English Font Row -->
+        <g transform="translate(10, 74)">
+          <text x="0" y="18" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" font-weight="500" fill="#94A3B8">EN</text>
+          <rect x="52" y="2" width="258" height="28" rx="6" fill="#0B0F19" stroke="#1C2436"/>
+          <text x="64" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" fill="#CBD5E1">JetBrains Mono</text>
+          <path d="M294 14 l4 4 l4 -4" stroke="#64748B" stroke-width="1.5" fill="none"/>
+        </g>
+
+        <!-- Code Font Row -->
+        <g transform="translate(10, 118)">
+          <text x="0" y="18" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" font-weight="500" fill="#94A3B8">Code</text>
+          <rect x="52" y="2" width="258" height="28" rx="6" fill="#0B0F19" stroke="#1C2436"/>
+          <text x="64" y="20" font-family="monospace" font-size="11" fill="#CBD5E1">JetBrains Mono</text>
+          <path d="M294 14 l4 4 l4 -4" stroke="#64748B" stroke-width="1.5" fill="none"/>
+        </g>
+      </g>
+
+      <!-- 3. Typography Metrics Steppers -->
+      <g transform="translate(0, 240)">
+        <text x="2" y="12" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#64748B">TYPOGRAPHY</text>
+
+        <!-- Metric 1: Line Height -->
+        <rect y="20" width="160" height="42" rx="8" fill="#121724" stroke="#1F283B"/>
+        <text x="12" y="46" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" font-weight="500" fill="#94A3B8">Line</text>
+        <g transform="translate(56, 30)">
+          <rect width="22" height="22" rx="4" fill="#1B2335"/><text x="11" y="16" text-anchor="middle" font-size="14" fill="#CBD5E1">-</text>
+          <rect x="28" y="0" width="40" height="22" rx="4" fill="#18233C" stroke="#28395E"/>
+          <text x="48" y="15" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#818CF8">1.8x</text>
+          <rect x="74" y="0" width="22" height="22" rx="4" fill="#1B2335"/><text x="85" y="16" text-anchor="middle" font-size="14" fill="#CBD5E1">+</text>
+        </g>
+
+        <!-- Metric 2: Font Size -->
+        <rect x="172" y="20" width="160" height="42" rx="8" fill="#121724" stroke="#1F283B"/>
+        <text x="184" y="46" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" font-weight="500" fill="#94A3B8">Size</text>
+        <g transform="translate(228, 30)">
+          <rect width="22" height="22" rx="4" fill="#1B2335"/><text x="11" y="16" text-anchor="middle" font-size="14" fill="#CBD5E1">-</text>
+          <rect x="28" y="0" width="40" height="22" rx="4" fill="#18233C" stroke="#28395E"/>
+          <text x="48" y="15" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#818CF8">16px</text>
+          <rect x="74" y="0" width="22" height="22" rx="4" fill="#1B2335"/><text x="85" y="16" text-anchor="middle" font-size="14" fill="#CBD5E1">+</text>
+        </g>
+      </g>
+
+      <!-- 4. Footer Section -->
+      <g transform="translate(0, 318)">
+        <line x1="-14" y1="0" x2="346" y2="0" stroke="#1D2638" stroke-width="1"/>
+        <rect y="10" width="105" height="28" rx="6" fill="#131B29" stroke="#1F2A3F"/>
+        <text x="52" y="28" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">Reset Defaults</text>
+
+        <rect x="212" y="10" width="120" height="28" rx="6" fill="#131B29" stroke="#1F2A3F"/>
+        <polygon points="226 17, 228 22, 233 22, 229 25, 230 30, 226 27, 222 30, 223 25, 219 22, 224 22" fill="#F59E0B"/>
+        <text x="272" y="28" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#F1F5F9">Star on GitHub</text>
+      </g>
+    </g>
+
+    <!-- Floating Capsule Pill (Closed trigger state preview) -->
+    <g transform="translate(14, 442)">
+      <rect width="180" height="34" rx="17" fill="#111722" stroke="#1EB4EB" stroke-width="1.4" filter="url(#glowPill)"/>
+      <circle cx="18" cy="17" r="7" fill="#1EB4EB"/>
+      <text x="34" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#F8FAFC">Markdown RTL</text>
+      <rect x="136" y="8" width="32" height="18" rx="4" fill="#1B263B"/>
+      <text x="152" y="21" text-anchor="middle" font-family="monospace" font-size="10" font-weight="600" fill="#818CF8">⌥R</text>
+    </g>
+  </g>
+
+  <!-- ==================== CALLOUTS & ARCHITECTURAL HIGHLIGHTS (RIGHT) ==================== -->
+  
+  <!-- Callout 1: Live Combobox & System Font Discovery -->
+  <g transform="translate(480, 110)">
+    <rect width="590" height="150" rx="12" fill="#111827" stroke="#1E2D4A" stroke-width="1.2"/>
+    <rect x="16" y="16" width="30" height="30" rx="8" fill="#1E2D48"/>
+    <circle cx="31" cy="31" r="6" fill="#38BDF8"/>
+    <text x="58" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#F1F5F9">
+      Smart Searchable Font Combobox
+    </text>
+    <text x="58" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748B">
+      Zero lag, system-wide font resolution via java.awt.GraphicsEnvironment
+    </text>
+
+    <!-- Simulated Dropdown list -->
+    <g transform="translate(20, 60)">
+      <rect width="260" height="74" rx="6" fill="#0B0F19" stroke="#253552"/>
+      <text x="12" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="600" fill="#64748B">RECOMMENDED FONTS</text>
+      <rect x="6" y="22" width="248" height="22" rx="4" fill="#172744"/>
+      <text x="14" y="37" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#38BDF8">✓ Vazirmatn (Bundled TTF)</text>
+      <text x="14" y="58" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">Sahel, Shabnam, IRANSans, Tahoma...</text>
+    </g>
+
+    <g transform="translate(300, 64)">
+      <text x="0" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        • Preloaded with bundled Persian font files (Regular &amp; Bold).
+      </text>
+      <text x="0" y="36" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        • Type any system font name with instant live filtering.
+      </text>
+      <text x="0" y="56" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        • Supports custom font entries with automatic font stack fallback.
+      </text>
+    </g>
+  </g>
+
+  <!-- Callout 2: Reactive CSS Variables -->
+  <g transform="translate(480, 280)">
+    <rect width="590" height="150" rx="12" fill="#111827" stroke="#1E2D4A" stroke-width="1.2"/>
+    <rect x="16" y="16" width="30" height="30" rx="8" fill="#1E2D48"/>
+    <path d="M26 31 l4 4 l8 -8" stroke="#34D399" stroke-width="2" stroke-linecap="round"/>
+    <text x="58" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#F1F5F9">
+      Reactive CSS Variable Mutation Engine
+    </text>
+    <text x="58" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748B">
+      Modifies CSS custom properties dynamically with zero page reloads
+    </text>
+
+    <!-- Code box -->
+    <g transform="translate(20, 58)">
+      <rect width="260" height="76" rx="6" fill="#0B0F19" stroke="#1E293B"/>
+      <text x="12" y="20" font-family="monospace" font-size="10" fill="#818CF8">--pm-font-size: 16px;</text>
+      <text x="12" y="38" font-family="monospace" font-size="10" fill="#818CF8">--pm-line-height: 1.8;</text>
+      <text x="12" y="56" font-family="monospace" font-size="10" fill="#38BDF8">--pm-fa-font: 'Vazirmatn'...</text>
+    </g>
+
+    <g transform="translate(300, 64)">
+      <text x="0" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        • Changing line height or font size applies instantly to DOM.
+      </text>
+      <text x="0" y="36" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        • Headings (H1 to H6) automatically scale proportionally.
+      </text>
+      <text x="0" y="56" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        • State auto-saved to <tspan font-family="monospace" fill="#38BDF8">localStorage['pm_*']</tspan> immediately.
+      </text>
+    </g>
+  </g>
+
+  <!-- Callout 3: Keyboard Shortcuts & Synchronization -->
+  <g transform="translate(480, 450)">
+    <rect width="590" height="150" rx="12" fill="#111827" stroke="#1E2D4A" stroke-width="1.2"/>
+    <rect x="16" y="16" width="30" height="30" rx="8" fill="#1E2D48"/>
+    <rect x="23" y="23" width="16" height="16" rx="3" stroke="#F59E0B" stroke-width="1.8" fill="none"/>
+    <text x="58" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#F1F5F9">
+      Dual Synchronization &amp; Hotkeys
+    </text>
+    <text x="58" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748B">
+      Full synchronization between in-preview widget and IntelliJ Settings dialog
+    </text>
+
+    <!-- Shortcut Pills -->
+    <g transform="translate(20, 62)">
+      <rect width="80" height="26" rx="4" fill="#1E293B"/>
+      <text x="40" y="17" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#38BDF8">⌥R / Alt+R</text>
+      <text x="90" y="17" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#CBD5E1">Toggle Force RTL</text>
+
+      <g transform="translate(0, 36)">
+        <rect width="80" height="26" rx="4" fill="#1E293B"/>
+        <text x="40" y="17" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#38BDF8">⌥E / Alt+E</text>
+        <text x="90" y="17" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#CBD5E1">Toggle Plugin Enable</text>
+      </g>
+    </g>
+
+    <g transform="translate(300, 68)">
+      <text x="0" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        • Works via both in-preview clicks and global keyboard shortcuts.
+      </text>
+      <text x="0" y="36" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        • <tspan font-family="monospace" fill="#F1F5F9">Shift+Alt+R</tspan> also cycles direction globally from IDE menus.
+      </text>
+      <text x="0" y="56" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        • Press <tspan font-family="monospace" fill="#F1F5F9">Esc</tspan> at any time to instantly collapse the floating card.
+      </text>
+    </g>
+  </g>
+
+  <!-- Connectors from Card to Callouts -->
+  <path d="M 430 200 L 480 180" stroke="#38BDF8" stroke-width="1.8" stroke-dasharray="3 3" marker-end="url(#arrowCyan3)"/>
+  <path d="M 430 350 L 480 350" stroke="#818CF8" stroke-width="1.8" stroke-dasharray="3 3" marker-end="url(#arrowCyan3)"/>
+  <path d="M 430 480 L 480 500" stroke="#F59E0B" stroke-width="1.8" stroke-dasharray="3 3" marker-end="url(#arrowCyan3)"/>
+
+  <!-- Footer text -->
+  <g transform="translate(60, 655)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748B">
+      Designed with Raycast &amp; Linear aesthetic • Zero external dependencies • Fast, lightweight in-memory injection
+    </text>
+  </g>
+</svg>

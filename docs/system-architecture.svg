@@ -1,0 +1,322 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 680" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090D16"/>
+      <stop offset="50%" stop-color="#0E1422"/>
+      <stop offset="100%" stop-color="#070A10"/>
+    </linearGradient>
+
+    <!-- Card Gradients -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141C2E"/>
+      <stop offset="100%" stop-color="#0F1624"/>
+    </linearGradient>
+    <linearGradient id="cardGradHover" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1A243B"/>
+      <stop offset="100%" stop-color="#121A2B"/>
+    </linearGradient>
+
+    <!-- Accent Gradients -->
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="indigoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#4F46E5"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C084FC"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+
+    <!-- Subtle Glow Filters -->
+    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glowIndigo" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="cardShadow" x="-10%" y="-5%" width="120%" height="115%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Markers -->
+    <marker id="arrowCyan" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <polygon points="0 1, 8 4.5, 0 8" fill="#38BDF8"/>
+    </marker>
+    <marker id="arrowIndigo" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <polygon points="0 1, 8 4.5, 0 8" fill="#818CF8"/>
+    </marker>
+    <marker id="arrowEmerald" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <polygon points="0 1, 8 4.5, 0 8" fill="#34D399"/>
+    </marker>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1140" height="680" rx="16" fill="url(#bgGrad)" stroke="#1E293B" stroke-width="1.5"/>
+
+  <!-- Background Ambient Glows -->
+  <circle cx="200" cy="120" r="180" fill="#0284C7" opacity="0.06" filter="url(#glowCyan)"/>
+  <circle cx="570" cy="340" r="220" fill="#6366F1" opacity="0.07" filter="url(#glowIndigo)"/>
+  <circle cx="940" cy="460" r="200" fill="#059669" opacity="0.06" filter="url(#glowCyan)"/>
+
+  <!-- Grid Pattern Overlay -->
+  <g opacity="0.07" stroke="#94A3B8" stroke-width="1">
+    <line x1="60" y1="0" x2="60" y2="680" stroke-dasharray="4 6"/>
+    <line x1="200" y1="0" x2="200" y2="680" stroke-dasharray="4 6"/>
+    <line x1="380" y1="0" x2="380" y2="680" stroke-dasharray="4 6"/>
+    <line x1="570" y1="0" x2="570" y2="680" stroke-dasharray="4 6"/>
+    <line x1="760" y1="0" x2="760" y2="680" stroke-dasharray="4 6"/>
+    <line x1="940" y1="0" x2="940" y2="680" stroke-dasharray="4 6"/>
+    <line x1="1080" y1="0" x2="1080" y2="680" stroke-dasharray="4 6"/>
+    <line x1="0" y1="80" x2="1140" y2="80" stroke-dasharray="4 6"/>
+    <line x1="0" y1="220" x2="1140" y2="220" stroke-dasharray="4 6"/>
+    <line x1="0" y1="400" x2="1140" y2="400" stroke-dasharray="4 6"/>
+    <line x1="0" y1="580" x2="1140" y2="580" stroke-dasharray="4 6"/>
+  </g>
+
+  <!-- ==================== HEADER ==================== -->
+  <g transform="translate(60, 42)">
+    <!-- Brand Icon -->
+    <rect x="0" y="0" width="38" height="38" rx="10" fill="url(#cyanGrad)" />
+    <path d="M12 12 h14 M12 19 h14 M19 12 v14" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+    
+    <text x="50" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#F8FAFC" letter-spacing="-0.02em">
+      Markdown RTL Architecture
+    </text>
+    <text x="50" y="37" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="400" fill="#94A3B8">
+      End-to-End Execution Pipeline inside IntelliJ Platform &amp; Android Studio
+    </text>
+
+    <!-- Badges -->
+    <rect x="830" y="6" width="105" height="26" rx="6" fill="#131F37" stroke="#1E293B"/>
+    <text x="882" y="23" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#38BDF8">v1.3 Release</text>
+
+    <rect x="945" y="6" width="75" height="26" rx="6" fill="#17221A" stroke="#1E3A2F"/>
+    <text x="982" y="23" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#34D399">Chromium</text>
+  </g>
+
+  <!-- ==================== COLUMN 1: HOST IDE PLATFORM ==================== -->
+  <g transform="translate(50, 110)">
+    <!-- Container Box -->
+    <rect width="320" height="525" rx="14" fill="url(#cardGrad)" stroke="#1E293B" stroke-width="1.2" filter="url(#cardShadow)"/>
+    <rect width="320" height="42" rx="14" fill="#162035"/>
+    <rect y="30" width="320" height="12" fill="#162035"/>
+    
+    <!-- Title -->
+    <circle cx="24" cy="21" r="5" fill="#38BDF8"/>
+    <text x="36" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#E2E8F0">
+      1. Host Platform (IntelliJ / Android Studio)
+    </text>
+
+    <!-- Component 1: Markdown Editor -->
+    <g transform="translate(18, 56)">
+      <rect width="284" height="96" rx="10" fill="#0C1322" stroke="#1E2D4A" stroke-width="1"/>
+      <rect x="12" y="12" width="24" height="24" rx="6" fill="#1E293B"/>
+      <path d="M17 21 l4 4 l7 -7" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="44" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#F1F5F9">Markdown Editor &amp; Split Pane</text>
+      <text x="44" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" fill="#64748B">org.intellij.plugins.markdown</text>
+      <text x="14" y="66" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        Detects active .md document buffer and delegates rendering to JCEF Chromium preview panel.
+      </text>
+    </g>
+
+    <!-- Component 2: Startup Activity -->
+    <g transform="translate(18, 168)">
+      <rect width="284" height="92" rx="10" fill="#0C1322" stroke="#1E2D4A" stroke-width="1"/>
+      <rect x="12" y="12" width="24" height="24" rx="6" fill="#1E293B"/>
+      <circle cx="24" cy="24" r="5" stroke="#F59E0B" stroke-width="1.8" fill="none"/>
+      <text x="44" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#F1F5F9">Startup Activity</text>
+      <text x="44" y="38" font-family="monospace" font-size="10" fill="#F59E0B">PersianMarkdownStartupActivity</text>
+      <text x="14" y="64" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        Auto-verifies &amp; locks preview engine to JCEF Chromium (JCEFHtmlPanelProvider).
+      </text>
+    </g>
+
+    <!-- Component 3: Persistent Settings Service -->
+    <g transform="translate(18, 276)">
+      <rect width="284" height="110" rx="10" fill="#0C1322" stroke="#1E2D4A" stroke-width="1"/>
+      <rect x="12" y="12" width="24" height="24" rx="6" fill="#1E293B"/>
+      <path d="M19 18 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0" stroke="#818CF8" stroke-width="1.8" fill="none"/>
+      <text x="44" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#F1F5F9">Settings Service &amp; EventBus</text>
+      <text x="44" y="38" font-family="monospace" font-size="10" fill="#818CF8">PersianMarkdownSettings.xml</text>
+      <text x="14" y="64" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        Global application service storing font preferences, line heights, and element switches. Broadcasts via Topic bus.
+      </text>
+    </g>
+
+    <!-- Component 4: Action & Shortcuts -->
+    <g transform="translate(18, 402)">
+      <rect width="284" height="106" rx="10" fill="#0C1322" stroke="#1E2D4A" stroke-width="1"/>
+      <text x="14" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#F1F5F9">Actions &amp; Keyboard Shortcuts</text>
+      <g transform="translate(14, 38)">
+        <rect width="118" height="24" rx="4" fill="#1E293B"/>
+        <text x="59" y="16" text-anchor="middle" font-family="monospace" font-size="10.5" font-weight="700" fill="#38BDF8">Shift+Alt+R</text>
+        <rect x="128" y="0" width="128" height="24" rx="4" fill="#1E293B"/>
+        <text x="192" y="16" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#CBD5E1">Cycle Direction</text>
+      </g>
+      <text x="14" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        Integrated in Markdown Toolbar, Floating Bar, and Editor Context Menu.
+      </text>
+    </g>
+  </g>
+
+  <!-- ==================== CONNECTOR 1 -> 2 ==================== -->
+  <path d="M 370 270 L 410 270" stroke="#38BDF8" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrowCyan)"/>
+  <path d="M 370 410 L 410 410" stroke="#818CF8" stroke-width="2" marker-end="url(#arrowIndigo)"/>
+
+  <!-- ==================== COLUMN 2: PLUGIN EXTENSION & GENERATOR ==================== -->
+  <g transform="translate(410, 110)">
+    <rect width="320" height="525" rx="14" fill="url(#cardGrad)" stroke="#1E293B" stroke-width="1.2" filter="url(#cardShadow)"/>
+    <rect width="320" height="42" rx="14" fill="#162035"/>
+    <rect y="30" width="320" height="12" fill="#162035"/>
+
+    <circle cx="24" cy="21" r="5" fill="#818CF8"/>
+    <text x="36" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#E2E8F0">
+      2. Plugin Extension &amp; Generation
+    </text>
+
+    <!-- Component: Preview Extension Provider -->
+    <g transform="translate(18, 56)">
+      <rect width="284" height="106" rx="10" fill="#0C1322" stroke="#253557" stroke-width="1"/>
+      <text x="14" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#818CF8">BrowserPreviewExtensionProvider</text>
+      <text x="14" y="40" font-family="monospace" font-size="10" fill="#64748B">Priority: AFTER_ALL (Topmost)</text>
+      <text x="14" y="64" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#94A3B8">
+        Implements ResourceProvider interface. Listens to Topic message bus to trigger non-blocking preview hot-reloads.
+      </text>
+      <rect x="14" y="80" width="120" height="18" rx="4" fill="#1A2642"/>
+      <text x="74" y="93" text-anchor="middle" font-family="monospace" font-size="9" fill="#A5B4FC">reloadWithOffset(0)</text>
+    </g>
+
+    <!-- Component: CssGenerator Core -->
+    <g transform="translate(18, 178)">
+      <rect width="284" height="200" rx="10" fill="#0C1322" stroke="#253557" stroke-width="1"/>
+      <rect x="12" y="12" width="260" height="26" rx="6" fill="#131F38"/>
+      <text x="22" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" font-weight="700" fill="#38BDF8">CssGenerator Dynamic Pipeline</text>
+
+      <!-- Subcard 1: Base64 Fonts -->
+      <g transform="translate(12, 46)">
+        <rect width="260" height="42" rx="6" fill="#111728" stroke="#1E2A40"/>
+        <text x="10" y="18" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#F1F5F9">Base64 Embedded Fonts</text>
+        <text x="10" y="32" font-family="monospace" font-size="9.5" fill="#34D399">Vazirmatn (Reg/Bold) + JetBrains Mono</text>
+      </g>
+
+      <!-- Subcard 2: Dynamic CSS -->
+      <g transform="translate(12, 94)">
+        <rect width="260" height="42" rx="6" fill="#111728" stroke="#1E2A40"/>
+        <text x="10" y="18" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#F1F5F9">CSS Variables &amp; Layout Rules</text>
+        <text x="10" y="32" font-family="monospace" font-size="9.5" fill="#38BDF8">--pm-fa-font, --pm-en-font, --pm-code</text>
+      </g>
+
+      <!-- Subcard 3: Dynamic JS Script -->
+      <g transform="translate(12, 142)">
+        <rect width="260" height="46" rx="6" fill="#111728" stroke="#1E2A40"/>
+        <text x="10" y="18" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#F1F5F9">Dynamic BiDi Heuristic Script</text>
+        <text x="10" y="34" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#94A3B8">In-memory JS bundle containing Bento UI &amp; regex</text>
+      </g>
+    </g>
+
+    <!-- Component: Virtual Resource Provider -->
+    <g transform="translate(18, 394)">
+      <rect width="284" height="114" rx="10" fill="#0C1322" stroke="#253557" stroke-width="1"/>
+      <text x="14" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#F1F5F9">Resource Delivery</text>
+      <g transform="translate(14, 34)">
+        <rect width="256" height="28" rx="6" fill="#142036"/>
+        <text x="10" y="18" font-family="monospace" font-size="10.5" fill="#38BDF8">GET persianMarkdown/persian.css</text>
+      </g>
+      <g transform="translate(14, 70)">
+        <rect width="256" height="28" rx="6" fill="#142036"/>
+        <text x="10" y="18" font-family="monospace" font-size="10.5" fill="#818CF8">GET persianMarkdown/persian.js</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== CONNECTOR 2 -> 3 ==================== -->
+  <path d="M 730 430 L 770 430" stroke="#38BDF8" stroke-width="2" marker-end="url(#arrowCyan)"/>
+  <path d="M 730 460 L 770 460" stroke="#818CF8" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrowIndigo)"/>
+
+  <!-- ==================== COLUMN 3: CHROMIUM JCEF RUNTIME ==================== -->
+  <g transform="translate(770, 110)">
+    <rect width="320" height="525" rx="14" fill="url(#cardGrad)" stroke="#1E293B" stroke-width="1.2" filter="url(#cardShadow)"/>
+    <rect width="320" height="42" rx="14" fill="#162035"/>
+    <rect y="30" width="320" height="12" fill="#162035"/>
+
+    <circle cx="24" cy="21" r="5" fill="#34D399"/>
+    <text x="36" y="25" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#E2E8F0">
+      3. JCEF Chromium Preview Runtime
+    </text>
+
+    <!-- Component: BiDi DOM Engine -->
+    <g transform="translate(18, 56)">
+      <rect width="284" height="116" rx="10" fill="#0C1322" stroke="#1B382B" stroke-width="1"/>
+      <text x="14" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#34D399">BiDi Heuristic Analyzer</text>
+      <text x="14" y="42" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" fill="#94A3B8">
+        Scans DOM block elements (<tspan fill="#38BDF8">p, h1-6, li, blockquote</tspan>).
+      </text>
+      <text x="14" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" fill="#94A3B8">
+        • Strips code tags, checkboxes &amp; URLs
+      </text>
+      <text x="14" y="78" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" fill="#94A3B8">
+        • Persian / Arabic Unicode regex check
+      </text>
+      <text x="14" y="96" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" fill="#34D399">
+        • Sets dir="rtl" &amp; applies font dynamically
+      </text>
+    </g>
+
+    <!-- Component: Strict Code Monospace Isolation -->
+    <g transform="translate(18, 186)">
+      <rect width="284" height="106" rx="10" fill="#0C1322" stroke="#1B382B" stroke-width="1"/>
+      <text x="14" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#F8FAFC">Code Block Protection Guard</text>
+      <text x="14" y="48" font-family="monospace" font-size="10" fill="#F59E0B">pre, .code-fence {</text>
+      <text x="24" y="64" font-family="monospace" font-size="10" fill="#E2E8F0">direction: ltr !important;</text>
+      <text x="24" y="78" font-family="monospace" font-size="10" fill="#E2E8F0">unicode-bidi: isolate !important;</text>
+      <text x="14" y="94" font-family="monospace" font-size="10" fill="#F59E0B">}</text>
+    </g>
+
+    <!-- Component: Live Bento Widget in Preview -->
+    <g transform="translate(18, 308)">
+      <rect width="284" height="200" rx="10" fill="#0C1322" stroke="#253557" stroke-width="1"/>
+      <rect x="12" y="10" width="260" height="26" rx="6" fill="#141E33"/>
+      <text x="22" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" font-weight="700" fill="#38BDF8">In-Preview Bento Control Card</text>
+      
+      <!-- Trigger Pill representation -->
+      <g transform="translate(14, 46)">
+        <rect width="130" height="24" rx="12" fill="#111722" stroke="#1EB4EB" stroke-width="1.2"/>
+        <circle cx="12" cy="12" r="6" fill="#1EB4EB"/>
+        <text x="26" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="600" fill="#F8FAFC">Markdown RTL</text>
+      </g>
+      <text x="156" y="62" font-family="monospace" font-size="10" fill="#64748B">[⌥R / ⌥E]</text>
+
+      <text x="14" y="94" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" fill="#94A3B8">
+        • Searchable system font comboboxes
+      </text>
+      <text x="14" y="112" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" fill="#94A3B8">
+        • Real-time font size &amp; line height steppers
+      </text>
+      <text x="14" y="130" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" fill="#94A3B8">
+        • MutationObserver live keystroke sync
+      </text>
+      <text x="14" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" fill="#94A3B8">
+        • localStorage persistence between sessions
+      </text>
+      <rect x="14" y="164" width="256" height="24" rx="4" fill="#162238"/>
+      <text x="142" y="180" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="600" fill="#38BDF8">Instant CSS Variables Reaction</text>
+    </g>
+  </g>
+
+  <!-- ==================== FOOTER ==================== -->
+  <g transform="translate(60, 655)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748B">
+      Markdown RTL Plugin • High-Performance BiDi Typography Engine • Compatible with IntelliJ IDEA &amp; Android Studio
+    </text>
+  </g>
+</svg>

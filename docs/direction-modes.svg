@@ -1,0 +1,270 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 640" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090D16"/>
+      <stop offset="50%" stop-color="#0E1422"/>
+      <stop offset="100%" stop-color="#070A10"/>
+    </linearGradient>
+
+    <!-- Column Card Gradients -->
+    <linearGradient id="colAutoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141F33"/>
+      <stop offset="100%" stop-color="#0D1322"/>
+    </linearGradient>
+    <linearGradient id="colForceRtlGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1A182E"/>
+      <stop offset="100%" stop-color="#100F1F"/>
+    </linearGradient>
+    <linearGradient id="colForceLtrGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#151C2A"/>
+      <stop offset="100%" stop-color="#0F141E"/>
+    </linearGradient>
+
+    <!-- Accent Gradients -->
+    <linearGradient id="cyanGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A78BFA"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+
+    <!-- Card Shadow -->
+    <filter id="colShadow" x="-10%" y="-5%" width="120%" height="115%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.65"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1140" height="640" rx="16" fill="url(#bgGrad4)" stroke="#1E293B" stroke-width="1.5"/>
+
+  <!-- Background Decorative Grid Lines -->
+  <g opacity="0.06" stroke="#94A3B8" stroke-width="1">
+    <line x1="380" y1="0" x2="380" y2="640" stroke-dasharray="4 6"/>
+    <line x1="760" y1="0" x2="760" y2="640" stroke-dasharray="4 6"/>
+    <line x1="0" y1="120" x2="1140" y2="120" stroke-dasharray="4 6"/>
+    <line x1="0" y1="560" x2="1140" y2="560" stroke-dasharray="4 6"/>
+  </g>
+
+  <!-- ==================== HEADER ==================== -->
+  <g transform="translate(60, 40)">
+    <rect x="0" y="0" width="38" height="38" rx="10" fill="url(#purpleGrad4)" />
+    <path d="M10 20 h18 M16 14 l-6 6 l6 6 M22 14 l6 6 l-6 6" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <text x="50" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#F8FAFC" letter-spacing="-0.02em">
+      Direction Modes Visual Comparison
+    </text>
+    <text x="50" y="37" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="400" fill="#94A3B8">
+      How Markdown RTL adapts to multilingual documents, pure RTL documents, and technical notes
+    </text>
+  </g>
+
+  <!-- ==================== COLUMN 1: AUTO BI-DIRECTIONAL (DEFAULT) ==================== -->
+  <g transform="translate(60, 105)" filter="url(#colShadow)">
+    <rect width="320" height="470" rx="12" fill="url(#colAutoGrad)" stroke="#1E3252" stroke-width="1.4"/>
+    <rect width="320" height="50" rx="12" fill="#16253F"/>
+    <rect y="36" width="320" height="14" fill="#16253F"/>
+    <line x1="0" y1="50" x2="320" y2="50" stroke="#253A5E" stroke-width="1"/>
+
+    <!-- Header badge -->
+    <circle cx="24" cy="25" r="5" fill="#38BDF8"/>
+    <text x="36" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#F1F5F9">
+      Auto RTL (Default)
+    </text>
+    <rect x="236" y="16" width="68" height="18" rx="4" fill="#0C1B33" stroke="#23467D"/>
+    <text x="270" y="29" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" font-weight="600" fill="#38BDF8">Smart BiDi</text>
+
+    <!-- Document simulation inside -->
+    <g transform="translate(16, 64)">
+      <!-- Persian Title (RTL) -->
+      <g transform="translate(0, 0)">
+        <rect x="40" y="0" width="248" height="18" rx="4" fill="#1E365D"/>
+        <text x="280" y="14" text-anchor="end" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#38BDF8">راهنمای شروع به کار (RTL)</text>
+      </g>
+
+      <!-- Persian Paragraph (RTL) -->
+      <g transform="translate(0, 30)">
+        <rect x="10" y="0" width="278" height="8" rx="2" fill="#CBD5E1" opacity="0.8"/>
+        <rect x="50" y="13" width="238" height="8" rx="2" fill="#CBD5E1" opacity="0.8"/>
+        <text x="280" y="32" text-anchor="end" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#94A3B8">پاراگراف فارسی با فونت وزیرمتن راست‌چین</text>
+      </g>
+
+      <!-- Code Fence (Strictly LTR) -->
+      <g transform="translate(0, 80)">
+        <rect width="288" height="74" rx="6" fill="#090E18" stroke="#1E2B42"/>
+        <text x="12" y="18" font-family="monospace" font-size="9.5" fill="#F59E0B">```bash</text>
+        <text x="12" y="34" font-family="monospace" font-size="9.5" fill="#34D399">$ git clone repo.git</text>
+        <text x="12" y="50" font-family="monospace" font-size="9.5" fill="#CBD5E1">$ ./gradlew runIde</text>
+        <text x="12" y="66" font-family="monospace" font-size="9.5" fill="#F59E0B">```</text>
+        <rect x="226" y="8" width="52" height="16" rx="3" fill="#1C283E"/>
+        <text x="252" y="19" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#38BDF8">LTR Safe</text>
+      </g>
+
+      <!-- English Subheading & Text (LTR) -->
+      <g transform="translate(0, 168)">
+        <rect x="0" y="0" width="180" height="14" rx="3" fill="#1E2F4C"/>
+        <text x="6" y="11" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#E2E8F0">Installation Guide (LTR)</text>
+        <rect x="0" y="22" width="270" height="8" rx="2" fill="#94A3B8" opacity="0.7"/>
+        <rect x="0" y="35" width="210" height="8" rx="2" fill="#94A3B8" opacity="0.7"/>
+      </g>
+
+      <!-- Persian Blockquote (RTL border right) -->
+      <g transform="translate(0, 230)">
+        <rect width="288" height="42" rx="4" fill="#0D1628"/>
+        <rect x="284" y="0" width="4" height="42" rx="1" fill="#6366F1"/>
+        <text x="274" y="18" text-anchor="end" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#A5B4FC">نکته مهم: خط مرزی در سمت راست قرار دارد</text>
+        <text x="274" y="32" text-anchor="end" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#818CF8">Right-sided quote border</text>
+      </g>
+
+      <!-- Summary Pill -->
+      <g transform="translate(0, 310)">
+        <rect width="288" height="74" rx="8" fill="#0C1526" stroke="#1C2E4C"/>
+        <text x="12" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#38BDF8">Element-by-Element Analysis</text>
+        <text x="12" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#94A3B8">• Persian blocks automatically aligned right</text>
+        <text x="12" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#94A3B8">• English blocks automatically aligned left</text>
+        <text x="12" y="66" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#34D399">• Monospace code blocks protected LTR</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== COLUMN 2: FORCE RTL ==================== -->
+  <g transform="translate(410, 105)" filter="url(#colShadow)">
+    <rect width="320" height="470" rx="12" fill="url(#colForceRtlGrad)" stroke="#3B2A58" stroke-width="1.4"/>
+    <rect width="320" height="50" rx="12" fill="#251A3B"/>
+    <rect y="36" width="320" height="14" fill="#251A3B"/>
+    <line x1="0" y1="50" x2="320" y2="50" stroke="#3D2B60" stroke-width="1"/>
+
+    <circle cx="24" cy="25" r="5" fill="#C084FC"/>
+    <text x="36" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#F1F5F9">
+      Force RTL Mode
+    </text>
+    <rect x="236" y="16" width="68" height="18" rx="4" fill="#1C1130" stroke="#482578"/>
+    <text x="270" y="29" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" font-weight="600" fill="#C084FC">All Right</text>
+
+    <!-- Document simulation inside -->
+    <g transform="translate(16, 64)">
+      <!-- Title (RTL) -->
+      <g transform="translate(0, 0)">
+        <rect x="40" y="0" width="248" height="18" rx="4" fill="#3B225C"/>
+        <text x="280" y="14" text-anchor="end" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#C084FC">تمامی بخش‌ها راست‌چین (RTL)</text>
+      </g>
+
+      <!-- Paragraph (RTL) -->
+      <g transform="translate(0, 30)">
+        <rect x="10" y="0" width="278" height="8" rx="2" fill="#CBD5E1" opacity="0.8"/>
+        <rect x="50" y="13" width="238" height="8" rx="2" fill="#CBD5E1" opacity="0.8"/>
+        <text x="280" y="32" text-anchor="end" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#94A3B8">حتی متون انگلیسی به سمت راست متمایل می‌شوند</text>
+      </g>
+
+      <!-- Code Fence (STILL STRICTLY LTR) -->
+      <g transform="translate(0, 80)">
+        <rect width="288" height="74" rx="6" fill="#090E18" stroke="#2E1C44"/>
+        <text x="12" y="18" font-family="monospace" font-size="9.5" fill="#F59E0B">```kotlin</text>
+        <text x="12" y="34" font-family="monospace" font-size="9.5" fill="#38BDF8">val mode = DirectionMode.FORCE_RTL</text>
+        <text x="12" y="50" font-family="monospace" font-size="9.5" fill="#CBD5E1">preview.reload()</text>
+        <text x="12" y="66" font-family="monospace" font-size="9.5" fill="#F59E0B">```</text>
+        <rect x="226" y="8" width="52" height="16" rx="3" fill="#1C283E"/>
+        <text x="252" y="19" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#34D399">LTR Safe</text>
+      </g>
+
+      <!-- English Subheading & Text (Forced Right) -->
+      <g transform="translate(0, 168)">
+        <rect x="108" y="0" width="180" height="14" rx="3" fill="#341C52"/>
+        <text x="280" y="11" text-anchor="end" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#E2E8F0">English Section (Forced RTL)</text>
+        <rect x="18" y="22" width="270" height="8" rx="2" fill="#94A3B8" opacity="0.7"/>
+        <rect x="78" y="35" width="210" height="8" rx="2" fill="#94A3B8" opacity="0.7"/>
+      </g>
+
+      <!-- Quote (RTL border right) -->
+      <g transform="translate(0, 230)">
+        <rect width="288" height="42" rx="4" fill="#181226"/>
+        <rect x="284" y="0" width="4" height="42" rx="1" fill="#C084FC"/>
+        <text x="274" y="18" text-anchor="end" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#E9D5FF">تمام بلوک‌های نقل قول دارای بردر راست</text>
+        <text x="274" y="32" text-anchor="end" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#C084FC">Right-sided quote border enforced</text>
+      </g>
+
+      <!-- Summary Pill -->
+      <g transform="translate(0, 310)">
+        <rect width="288" height="74" rx="8" fill="#161026" stroke="#3A225E"/>
+        <text x="12" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#C084FC">Enforced RTL Document Scope</text>
+        <text x="12" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#94A3B8">• Best for 100% Persian/Arabic articles</text>
+        <text x="12" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#94A3B8">• Lists &amp; bullets aligned to right margin</text>
+        <text x="12" y="66" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#34D399">• Code blocks remain 100% LTR preserved</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== COLUMN 3: FORCE LTR ==================== -->
+  <g transform="translate(760, 105)" filter="url(#colShadow)">
+    <rect width="320" height="470" rx="12" fill="url(#colForceLtrGrad)" stroke="#1E2A3C" stroke-width="1.4"/>
+    <rect width="320" height="50" rx="12" fill="#151E2D"/>
+    <rect y="36" width="320" height="14" fill="#151E2D"/>
+    <line x1="0" y1="50" x2="320" y2="50" stroke="#223046" stroke-width="1"/>
+
+    <circle cx="24" cy="25" r="5" fill="#94A3B8"/>
+    <text x="36" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#F1F5F9">
+      Force LTR Mode
+    </text>
+    <rect x="236" y="16" width="68" height="18" rx="4" fill="#0E1624" stroke="#1E2F46"/>
+    <text x="270" y="29" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" font-weight="600" fill="#94A3B8">Standard</text>
+
+    <!-- Document simulation inside -->
+    <g transform="translate(16, 64)">
+      <!-- Title (LTR) -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="220" height="18" rx="4" fill="#1B283E"/>
+        <text x="8" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#E2E8F0">Standard LTR Document</text>
+      </g>
+
+      <!-- Paragraph (LTR) -->
+      <g transform="translate(0, 30)">
+        <rect x="0" y="0" width="278" height="8" rx="2" fill="#CBD5E1" opacity="0.8"/>
+        <rect x="0" y="13" width="238" height="8" rx="2" fill="#CBD5E1" opacity="0.8"/>
+        <text x="0" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#94A3B8">Standard left-to-right alignment for English docs</text>
+      </g>
+
+      <!-- Code Fence (LTR) -->
+      <g transform="translate(0, 80)">
+        <rect width="288" height="74" rx="6" fill="#090E18" stroke="#1E2B42"/>
+        <text x="12" y="18" font-family="monospace" font-size="9.5" fill="#F59E0B">```json</text>
+        <text x="12" y="34" font-family="monospace" font-size="9.5" fill="#38BDF8">{"direction": "ltr"}</text>
+        <text x="12" y="50" font-family="monospace" font-size="9.5" fill="#CBD5E1">{"status": "ok"}</text>
+        <text x="12" y="66" font-family="monospace" font-size="9.5" fill="#F59E0B">```</text>
+      </g>
+
+      <!-- Another LTR Subheading -->
+      <g transform="translate(0, 168)">
+        <rect x="0" y="0" width="160" height="14" rx="3" fill="#1B283E"/>
+        <text x="6" y="11" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#E2E8F0">English Prose &amp; Specs</text>
+        <rect x="0" y="22" width="270" height="8" rx="2" fill="#94A3B8" opacity="0.7"/>
+        <rect x="0" y="35" width="200" height="8" rx="2" fill="#94A3B8" opacity="0.7"/>
+      </g>
+
+      <!-- Quote (LTR border left) -->
+      <g transform="translate(0, 230)">
+        <rect width="288" height="42" rx="4" fill="#0C1422"/>
+        <rect x="0" y="0" width="4" height="42" rx="1" fill="#38BDF8"/>
+        <text x="14" y="18" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#BAE6FD">Standard left quote border</text>
+        <text x="14" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#7DD3FC">Classic Western Markdown layout</text>
+      </g>
+
+      <!-- Summary Pill -->
+      <g transform="translate(0, 310)">
+        <rect width="288" height="74" rx="8" fill="#0B1320" stroke="#1A283C"/>
+        <text x="12" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#94A3B8">Native LTR Fallback</text>
+        <text x="12" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#64748B">• Pure English documentation</text>
+        <text x="12" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#64748B">• Standard indentation and bullet alignment</text>
+        <text x="12" y="66" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" fill="#64748B">• Switchable instantly with Shift+Alt+R</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Footer text -->
+  <g transform="translate(60, 615)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#64748B">
+      Toggle instantly across all modes using the Floating Bento Widget (⌥R), Editor Toolbar, or Global Shortcut (Shift + Alt + R)
+    </text>
+  </g>
+</svg>

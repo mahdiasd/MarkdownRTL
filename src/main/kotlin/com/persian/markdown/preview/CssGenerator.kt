@@ -319,7 +319,7 @@ object CssGenerator {
                 line-height: 1.2 !important;
             }
 
-            /* Floating Trigger Capsule Pill */
+            /* Floating Trigger Rounded Button (Concentric 10px radius matching squircle icon) */
             #pm-trigger {
                 position: relative !important;
                 display: inline-flex !important;
@@ -327,7 +327,7 @@ object CssGenerator {
                 gap: 7px !important;
                 padding: 3px 11px 3px 4px !important;
                 height: 28px !important;
-                border-radius: 9999px !important;
+                border-radius: 10px !important;
                 background: #111722 !important;
                 border: 1px solid rgba(30, 180, 235, 0.35) !important;
                 box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(30, 180, 235, 0.15), inset 0 1px 0 rgba(142, 217, 245, 0.12) !important;
@@ -746,17 +746,17 @@ object CssGenerator {
                 text-align: center !important;
             }
 
-            /* Metrics & Layout Grid */
+            /* Metrics & Layout Stack (Two Separate Lines) */
             .pm-metrics-grid {
-                display: grid !important;
-                grid-template-columns: 1fr 1fr !important;
+                display: flex !important;
+                flex-direction: column !important;
                 gap: 5px !important;
             }
             .pm-metric-card {
                 background: #121722 !important;
                 border-radius: 6px !important;
                 border: 1px solid #1E2536 !important;
-                padding: 4px 7px !important;
+                padding: 4px 8px !important;
                 height: 28px !important;
                 display: flex !important;
                 align-items: center !important;
@@ -1288,7 +1288,7 @@ object CssGenerator {
                                         '</svg>' +
                                     '</div>' +
                                     '<span class="pm-header-title">Markdown RTL</span>' +
-                                    '<span class="pm-header-badge">v1.3</span>' +
+                                    '<span class="pm-header-badge">v1.0</span>' +
                                 '</div>' +
                                 '<div class="pm-header-right">' +
                                     '<button id="pm-close-btn" type="button" title="Close (ESC)">esc</button>' +
@@ -1353,25 +1353,25 @@ object CssGenerator {
                                 '<div class="pm-section-title">Typography</div>' +
                                 '<div class="pm-metrics-grid">' +
                                     '<div class="pm-metric-card">' +
-                                        '<span class="pm-metric-label">Line</span>' +
-                                        '<div class="pm-stepper-group">' +
-                                            '<button type="button" class="pm-stepper-btn" id="pm-dec-lh">-</button>' +
-                                            '<span class="pm-metric-val" id="pm-lh-val">' + defaultLh.toFixed(1) + 'x</span>' +
-                                            '<button type="button" class="pm-stepper-btn" id="pm-inc-lh">+</button>' +
-                                        '</div>' +
-                                    '</div>' +
-                                    '<div class="pm-metric-card">' +
-                                        '<span class="pm-metric-label">Size</span>' +
+                                        '<span class="pm-metric-label">Font Size</span>' +
                                         '<div class="pm-stepper-group">' +
                                             '<button type="button" class="pm-stepper-btn" id="pm-dec-fs">-</button>' +
                                             '<span class="pm-metric-val" id="pm-fs-val">' + defaultFs + 'px</span>' +
                                             '<button type="button" class="pm-stepper-btn" id="pm-inc-fs">+</button>' +
                                         '</div>' +
                                     '</div>' +
+                                    '<div class="pm-metric-card">' +
+                                        '<span class="pm-metric-label">Line Height</span>' +
+                                        '<div class="pm-stepper-group">' +
+                                            '<button type="button" class="pm-stepper-btn" id="pm-dec-lh">-</button>' +
+                                            '<span class="pm-metric-val" id="pm-lh-val">' + defaultLh.toFixed(1) + 'x</span>' +
+                                            '<button type="button" class="pm-stepper-btn" id="pm-inc-lh">+</button>' +
+                                        '</div>' +
+                                    '</div>' +
                                 '</div>' +
                             '</div>' +
                             '<div id="pm-footer">' +
-                                '<button id="pm-reset-btn" type="button">Reset Defaults</button>' +
+                                '<button id="pm-reset-btn" type="button">Reset to default</button>' +
                                 '<a href="https://github.com/mahdiasd/MarkdownRTL" class="pm-github-btn" title="Star Markdown RTL on GitHub">' +
                                     '<svg viewBox="0 0 24 24" class="pm-star-icon">' +
                                         '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>' +
