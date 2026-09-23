@@ -319,7 +319,7 @@ object CssGenerator {
                 line-height: 1.2 !important;
             }
 
-            /* Floating Trigger Capsule Pill (Matching Stitch Redesign Exactly) */
+            /* Floating Trigger Capsule Pill */
             #pm-trigger {
                 position: relative !important;
                 display: inline-flex !important;
@@ -339,7 +339,7 @@ object CssGenerator {
             #pm-trigger:hover {
                 border-color: #384152 !important;
                 background: #1C2027 !important;
-                box-shadow: 0 10px 28px rgba(0, 0, 0, 0.8), 0 3px 10px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+                box-shadow: 0 10px 28px rgba(0, 0, 0, 0.75), 0 3px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
                 transform: translateY(-1px) !important;
             }
             #pm-trigger:active {
@@ -348,17 +348,17 @@ object CssGenerator {
             #persian-markdown-switcher.pm-open #pm-trigger {
                 border-color: #10B981 !important;
                 background: #1C2027 !important;
-                box-shadow: 0 0 16px rgba(16, 185, 129, 0.35), 0 8px 24px rgba(0, 0, 0, 0.7) !important;
+                box-shadow: 0 0 14px rgba(16, 185, 129, 0.35), 0 8px 24px rgba(0, 0, 0, 0.7) !important;
             }
 
-            /* Glowing Squircle Icon Box (replacing green dot) - delicate & roomy */
+            /* Glowing Squircle Icon Box (with airy padding for icon) */
             #pm-status-dot {
                 width: 20px !important;
                 height: 20px !important;
                 border-radius: 6px !important;
                 background: rgba(16, 185, 129, 0.09) !important;
                 border: 1.5px solid #10B981 !important;
-                box-shadow: 0 0 10px rgba(16, 185, 129, 0.45), inset 0 0 4px rgba(16, 185, 129, 0.15) !important;
+                box-shadow: 0 0 10px rgba(16, 185, 129, 0.4), inset 0 0 3px rgba(16, 185, 129, 0.15) !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
@@ -369,12 +369,12 @@ object CssGenerator {
                 width: 10px !important;
                 height: 10px !important;
                 stroke: #10B981 !important;
-                stroke-width: 2.2 !important;
+                stroke-width: 2 !important;
                 display: block !important;
                 transition: stroke 0.2s ease, transform 0.15s ease !important;
             }
             #pm-trigger:hover #pm-status-dot:not(.pm-disabled-dot) {
-                box-shadow: 0 0 14px rgba(16, 185, 129, 0.65), inset 0 0 5px rgba(16, 185, 129, 0.25) !important;
+                box-shadow: 0 0 14px rgba(16, 185, 129, 0.6), inset 0 0 4px rgba(16, 185, 129, 0.25) !important;
                 border-color: #34D399 !important;
             }
             #pm-trigger:hover #pm-status-dot:not(.pm-disabled-dot) svg {
@@ -392,7 +392,7 @@ object CssGenerator {
             /* Markdown RTL Text Label */
             #pm-current-label {
                 font-size: 11.5px !important;
-                font-weight: 500 !important;
+                font-weight: 600 !important;
                 color: #F1F5F9 !important;
                 letter-spacing: -0.01em !important;
                 white-space: nowrap !important;
@@ -1254,7 +1254,6 @@ object CssGenerator {
                                 '</svg>' +
                             '</div>' +
                             '<span id="pm-current-label">Markdown RTL</span>' +
-                            '<kbd id="pm-trigger-kbd">⌥R</kbd>' +
                         '</div>' +
                         '<div id="pm-card">' +
                             '<div id="pm-header">' +

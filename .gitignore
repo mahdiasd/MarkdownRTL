@@ -6,3 +6,4 @@ build/
 .kotlin/
 out/
 .DS_Store
+*.log
