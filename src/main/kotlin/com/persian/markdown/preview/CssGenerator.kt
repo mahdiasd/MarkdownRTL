@@ -346,47 +346,39 @@ object CssGenerator {
                 transform: scale(0.97) !important;
             }
             #persian-markdown-switcher.pm-open #pm-trigger {
-                border-color: #10B981 !important;
+                border-color: #FB793A !important;
                 background: #1C2027 !important;
-                box-shadow: 0 0 14px rgba(16, 185, 129, 0.35), 0 8px 24px rgba(0, 0, 0, 0.7) !important;
+                box-shadow: 0 0 14px rgba(251, 121, 58, 0.35), 0 8px 24px rgba(0, 0, 0, 0.7) !important;
             }
 
-            /* Glowing Squircle Icon Box (with airy padding for icon) */
+            /* Squircle Icon Box with Align Horizontal Center SVG */
             #pm-status-dot {
                 width: 20px !important;
                 height: 20px !important;
                 border-radius: 6px !important;
-                background: rgba(16, 185, 129, 0.09) !important;
-                border: 1.5px solid #10B981 !important;
-                box-shadow: 0 0 10px rgba(16, 185, 129, 0.4), inset 0 0 3px rgba(16, 185, 129, 0.15) !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
                 flex-shrink: 0 !important;
                 transition: all 0.2s ease !important;
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                overflow: visible !important;
             }
             #pm-status-dot svg {
-                width: 10px !important;
-                height: 10px !important;
-                stroke: #10B981 !important;
-                stroke-width: 2 !important;
+                width: 20px !important;
+                height: 20px !important;
                 display: block !important;
-                transition: stroke 0.2s ease, transform 0.15s ease !important;
-            }
-            #pm-trigger:hover #pm-status-dot:not(.pm-disabled-dot) {
-                box-shadow: 0 0 14px rgba(16, 185, 129, 0.6), inset 0 0 4px rgba(16, 185, 129, 0.25) !important;
-                border-color: #34D399 !important;
+                transition: transform 0.18s ease, filter 0.2s ease !important;
+                filter: drop-shadow(0 0 5px rgba(251, 121, 58, 0.4)) !important;
             }
             #pm-trigger:hover #pm-status-dot:not(.pm-disabled-dot) svg {
-                stroke: #34D399 !important;
+                transform: scale(1.08) !important;
+                filter: drop-shadow(0 0 8px rgba(251, 121, 58, 0.75)) !important;
             }
             #pm-status-dot.pm-disabled-dot {
-                border-color: #475569 !important;
-                background: transparent !important;
-                box-shadow: none !important;
-            }
-            #pm-status-dot.pm-disabled-dot svg {
-                stroke: #64748B !important;
+                filter: grayscale(1) opacity(0.35) !important;
             }
 
             /* Markdown RTL Text Label */
@@ -1246,11 +1238,33 @@ object CssGenerator {
                     switcher.innerHTML = 
                         '<div id="pm-trigger" title="Markdown RTL (⌥R)">' +
                             '<div id="pm-status-dot">' +
-                                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">' +
-                                    '<line x1="4" y1="6" x2="20" y2="6"></line>' +
-                                    '<polyline points="8 9 4 12 8 15"></polyline>' +
-                                    '<line x1="4" y1="12" x2="20" y2="12"></line>' +
-                                    '<line x1="4" y1="18" x2="20" y2="18"></line>' +
+                                '<svg viewBox="0 0 28 28" fill="none">' +
+                                    '<defs>' +
+                                        '<clipPath id="pm_clip0"><rect width="28" height="28" fill="#fff"/></clipPath>' +
+                                        '<clipPath id="pm_clip1"><rect width="28" height="28" fill="#fff"/></clipPath>' +
+                                        '<radialGradient id="pm_radial1" cx="0" cy="0" r="1" gradientTransform="rotate(49.209 -2.729 10.385)scale(21.6848 13.4873)" gradientUnits="userSpaceOnUse">' +
+                                            '<stop stop-color="#FDBC9C"/>' +
+                                            '<stop offset=".5" stop-color="#FB793A"/>' +
+                                        '</radialGradient>' +
+                                        '<linearGradient id="pm_linear0" x1="14" x2="14" y1="19" y2="25" gradientUnits="userSpaceOnUse">' +
+                                            '<stop stop-color="#FB793A" stop-opacity="0"/>' +
+                                            '<stop offset="1" stop-color="#FB793A"/>' +
+                                        '</linearGradient>' +
+                                        '<filter id="pm_blur0" width="28" height="14" x="0" y="15" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">' +
+                                            '<feFlood flood-opacity="0" result="BackgroundImageFix"/>' +
+                                            '<feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>' +
+                                            '<feGaussianBlur result="effect1_foregroundBlur" stdDeviation="2"/>' +
+                                        '</filter>' +
+                                    '</defs>' +
+                                    '<g clip-path="url(#pm_clip0)">' +
+                                        '<g clip-path="url(#pm_clip1)">' +
+                                            '<path fill="#FB793A" fill-opacity=".2" d="M0 14C0 2.471 2.471 0 14 0C25.529 0 28 2.471 28 14C28 25.529 25.529 28 14 28C2.471 28 0 25.529 0 14Z"/>' +
+                                            '<g filter="url(#pm_blur0)" opacity=".6">' +
+                                                '<ellipse cx="14" cy="22" fill="url(#pm_linear0)" rx="10" ry="3"/>' +
+                                            '</g>' +
+                                        '</g>' +
+                                        '<path fill="url(#pm_radial1)" d="M18.5827 7.33317H14.8327V6.49984C14.8327 6.0415 14.4577 5.6665 13.9993 5.6665C13.541 5.6665 13.166 6.0415 13.166 6.49984V7.33317H9.41602C8.04102 7.33317 6.91602 8.45817 6.91602 9.83317V10.6665C6.91602 12.0415 8.04102 13.1665 9.41602 13.1665H13.166V14.8332H11.0827C9.70768 14.8332 8.58268 15.9582 8.58268 17.3332V18.1665C8.58268 19.5415 9.70768 20.6665 11.0827 20.6665H13.166V21.4998C13.166 21.9582 13.541 22.3332 13.9993 22.3332C14.4577 22.3332 14.8327 21.9582 14.8327 21.4998V20.6665H16.916C18.291 20.6665 19.416 19.5415 19.416 18.1665V17.3332C19.416 15.9582 18.291 14.8332 16.916 14.8332H14.8327V13.1665H18.5827C19.9577 13.1665 21.0827 12.0415 21.0827 10.6665V9.83317C21.0827 8.45817 19.9577 7.33317 18.5827 7.33317ZM17.7493 17.3332V18.1665C17.7493 18.6248 17.3743 18.9998 16.916 18.9998H11.0827C10.6243 18.9998 10.2493 18.6248 10.2493 18.1665V17.3332C10.2493 16.8748 10.6243 16.4998 11.0827 16.4998H16.916C17.3743 16.4998 17.7493 16.8748 17.7493 17.3332ZM19.416 10.6665C19.416 11.1248 19.041 11.4998 18.5827 11.4998H9.41602C8.95768 11.4998 8.58268 11.1248 8.58268 10.6665V9.83317C8.58268 9.37484 8.95768 8.99984 9.41602 8.99984H18.5827C19.041 8.99984 19.416 9.37484 19.416 9.83317V10.6665Z"/>' +
+                                    '</g>' +
                                 '</svg>' +
                             '</div>' +
                             '<span id="pm-current-label">Markdown RTL</span>' +
