@@ -231,8 +231,7 @@ MarkdownRTL/
 │   │   │   │   └── ToggleDirectionAction.kt       # Shortcut & toolbar direction toggler
 │   │   │   ├── preview/
 │   │   │   │   ├── CssGenerator.kt                # CSS & JS dynamic bundle generator
-│   │   │   │   ├── PersianMarkdownBrowserExtension.kt # JCEF browser provider & resource server
-│   │   │   │   └── PersianMarkdownStylesProvider.kt   # Style provider hook
+│   │   │   │   └── PersianMarkdownBrowserExtension.kt # JCEF browser provider & resource server
 │   │   │   ├── settings/
 │   │   │   │   ├── DirectionMode.kt               # Direction enum (Auto, Force RTL, Force LTR)
 │   │   │   │   ├── PersianMarkdownConfigurable.kt # IDE Settings dialog UI panel
