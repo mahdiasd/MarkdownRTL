@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markdown RTL - Live UI Preview</title>
+    <title>Markdown RTL - Live UI Preview (Sky Blue Theme)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: #111419;
+            background: #0E131B;
             color: #E2E8F0;
             min-height: 100vh;
             display: flex;
@@ -26,8 +26,8 @@
 
         /* Top Simulation Bar */
         .preview-topbar {
-            background: #181C24;
-            border-bottom: 1px solid #282E3D;
+            background: #151C27;
+            border-bottom: 1px solid #243044;
             padding: 10px 20px;
             display: flex;
             align-items: center;
@@ -54,13 +54,13 @@
         .dot-green { background: #10B981; }
 
         .ide-filename {
-            color: #CBD5E1;
+            color: #E0F2FE;
             font-family: "JetBrains Mono", monospace;
             font-weight: 500;
-            background: #202634;
+            background: #1C2738;
             padding: 3px 8px;
             border-radius: 4px;
-            border: 1px solid #2D3748;
+            border: 1px solid #2C3E5A;
         }
 
         .preview-controls {
@@ -69,9 +69,9 @@
             gap: 12px;
         }
         .preview-btn {
-            background: #252D3D;
-            color: #E2E8F0;
-            border: 1px solid #374151;
+            background: #1C2738;
+            color: #BAE6FD;
+            border: 1px solid #2C3E5A;
             padding: 5px 12px;
             border-radius: 6px;
             font-size: 12px;
@@ -80,8 +80,9 @@
             transition: all 0.15s ease;
         }
         .preview-btn:hover {
-            background: #2E384D;
-            border-color: #4B5563;
+            background: #233247;
+            border-color: #38BDF8;
+            color: #FFFFFF;
         }
 
         /* Simulated Markdown Document Container */
@@ -105,7 +106,7 @@
             color: #F8FAFC;
             font-size: 26px;
             margin-bottom: 16px;
-            border-bottom: 1px solid #282E3D;
+            border-bottom: 1px solid #243044;
             padding-bottom: 8px;
         }
         .markdown-body h2 {
@@ -126,21 +127,21 @@
         }
 
         .code-box {
-            background: #181C24;
-            border: 1px solid #282E3D;
+            background: #131A26;
+            border: 1px solid #233147;
             border-radius: 8px;
             padding: 14px 16px;
             margin: 16px 0;
             font-family: "JetBrains Mono", monospace;
             font-size: 13px;
-            color: #93C5FD;
+            color: #7DD3FC;
             direction: ltr !important;
             text-align: left !important;
             overflow-x: auto;
         }
         .inline-code {
-            background: #202634;
-            color: #FB923C;
+            background: #1C2738;
+            color: #38BDF8;
             font-family: "JetBrains Mono", monospace;
             padding: 2px 6px;
             border-radius: 4px;
@@ -160,7 +161,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
         }
 
-        /* Floating Trigger Capsule Pill */
+        /* Floating Trigger Capsule Pill (Matching Align-Vertical-Top Sky Blue Theme) */
         #pm-trigger {
             position: relative !important;
             display: inline-flex !important;
@@ -169,29 +170,29 @@
             padding: 3px 11px 3px 4px !important;
             height: 28px !important;
             border-radius: 9999px !important;
-            background: #171A20 !important;
-            border: 1px solid #282D36 !important;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+            background: #111722 !important;
+            border: 1px solid rgba(30, 180, 235, 0.35) !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(30, 180, 235, 0.15), inset 0 1px 0 rgba(142, 217, 245, 0.12) !important;
             cursor: pointer !important;
             transition: all 0.15s ease !important;
             outline: none !important;
         }
         #pm-trigger:hover {
-            border-color: #384152 !important;
-            background: #1C2027 !important;
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.75), 0 3px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+            border-color: #1EB4EB !important;
+            background: #162030 !important;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.75), 0 3px 12px rgba(30, 180, 235, 0.35), inset 0 1px 0 rgba(142, 217, 245, 0.22) !important;
             transform: translateY(-1px) !important;
         }
         #pm-trigger:active {
             transform: scale(0.97) !important;
         }
         #persian-markdown-switcher.pm-open #pm-trigger {
-            border-color: #FB793A !important;
-            background: #1C2027 !important;
-            box-shadow: 0 0 14px rgba(251, 121, 58, 0.35), 0 8px 24px rgba(0, 0, 0, 0.7) !important;
+            border-color: #1EB4EB !important;
+            background: #162030 !important;
+            box-shadow: 0 0 16px rgba(30, 180, 235, 0.45), 0 8px 24px rgba(0, 0, 0, 0.7) !important;
         }
 
-        /* Squircle Icon Box with Align Horizontal Center SVG */
+        /* Squircle Icon Box with Align Vertical Top SVG */
         #pm-status-dot {
             width: 20px !important;
             height: 20px !important;
@@ -211,11 +212,11 @@
             height: 20px !important;
             display: block !important;
             transition: transform 0.18s ease, filter 0.2s ease !important;
-            filter: drop-shadow(0 0 5px rgba(251, 121, 58, 0.4)) !important;
+            filter: drop-shadow(0 0 5px rgba(30, 180, 235, 0.45)) !important;
         }
         #pm-trigger:hover #pm-status-dot:not(.pm-disabled-dot) svg {
             transform: scale(1.08) !important;
-            filter: drop-shadow(0 0 8px rgba(251, 121, 58, 0.75)) !important;
+            filter: drop-shadow(0 0 9px rgba(30, 180, 235, 0.8)) !important;
         }
         #pm-status-dot.pm-disabled-dot {
             filter: grayscale(1) opacity(0.35) !important;
@@ -225,7 +226,7 @@
         #pm-current-label {
             font-size: 11.5px !important;
             font-weight: 600 !important;
-            color: #F1F5F9 !important;
+            color: #F0F9FF !important;
             letter-spacing: -0.01em !important;
             white-space: nowrap !important;
             line-height: 1 !important;
@@ -241,10 +242,10 @@
             left: 0 !important;
             width: 270px !important;
             max-width: calc(100vw - 24px) !important;
-            background: rgba(13, 17, 25, 0.97) !important;
+            background: rgba(13, 18, 27, 0.97) !important;
             backdrop-filter: blur(20px) saturate(180%) !important;
             border-radius: 12px !important;
-            border: 1px solid #202737 !important;
+            border: 1px solid #1F2A3D !important;
             box-shadow: 0 20px 48px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.06) !important;
             display: flex !important;
             flex-direction: column !important;
@@ -257,6 +258,17 @@
             color: #F1F5F9 !important;
             overflow: visible !important;
         }
+        #pm-card::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            height: 1px !important;
+            background: linear-gradient(to right, transparent, rgba(30, 180, 235, 0.5), transparent) !important;
+            pointer-events: none !important;
+            border-radius: 12px 12px 0 0 !important;
+        }
         #persian-markdown-switcher.pm-open #pm-card {
             opacity: 1 !important;
             visibility: visible !important;
@@ -267,7 +279,7 @@
         /* Header */
         #pm-header {
             padding: 6px 9px !important;
-            border-bottom: 1px solid #1A212E !important;
+            border-bottom: 1px solid #1A2436 !important;
             display: flex !important;
             align-items: center !important;
             justify-content: space-between !important;
@@ -281,12 +293,12 @@
             width: 20px !important;
             height: 20px !important;
             border-radius: 5px !important;
-            background: linear-gradient(135deg, rgba(251, 121, 58, 0.2), rgba(245, 158, 11, 0.15)) !important;
-            border: 1px solid rgba(251, 121, 58, 0.4) !important;
+            background: linear-gradient(135deg, rgba(30, 180, 235, 0.2), rgba(142, 217, 245, 0.15)) !important;
+            border: 1px solid rgba(30, 180, 235, 0.4) !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            color: #FB793A !important;
+            color: #1EB4EB !important;
         }
         .pm-brand-icon-box svg {
             width: 12px !important;
@@ -300,14 +312,14 @@
         .pm-header-badge {
             font-size: 10px !important;
             color: #94A3B8 !important;
-            background: #1C2333 !important;
-            border: 1px solid #2B354C !important;
+            background: #172233 !important;
+            border: 1px solid #283750 !important;
             padding: 1px 4px !important;
             border-radius: 4px !important;
         }
         #pm-close-btn {
-            background: #171E2B !important;
-            border: 1px solid #2A3345 !important;
+            background: #141C2B !important;
+            border: 1px solid #25334A !important;
             color: #94A3B8 !important;
             font-size: 10.5px !important;
             font-family: inherit !important;
@@ -318,7 +330,7 @@
         }
         #pm-close-btn:hover {
             color: #F1F5F9 !important;
-            border-color: #3B82F6 !important;
+            border-color: #38BDF8 !important;
         }
 
         /* Body */
@@ -336,8 +348,8 @@
             gap: 6px !important;
         }
         .pm-toggle-card {
-            background: #131822 !important;
-            border: 1px solid #1F2736 !important;
+            background: #101622 !important;
+            border: 1px solid #1C273A !important;
             border-radius: 7px !important;
             padding: 5px 7px !important;
             display: flex !important;
@@ -376,7 +388,7 @@
         .pm-switch-track {
             position: absolute !important;
             top: 0; left: 0; right: 0; bottom: 0 !important;
-            background: #252D3D !important;
+            background: #202B3D !important;
             border-radius: 9999px !important;
             transition: all 0.15s ease !important;
         }
@@ -392,7 +404,7 @@
             transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
         }
         .pm-switch input:checked + .pm-switch-track {
-            background: #6366F1 !important;
+            background: #1EB4EB !important;
         }
         .pm-switch input:checked + .pm-switch-track:before {
             transform: translateX(10px) !important;
@@ -412,8 +424,8 @@
 
         /* Bento Card Containers */
         .pm-bento-card {
-            background: #131822 !important;
-            border: 1px solid #1F2736 !important;
+            background: #101622 !important;
+            border: 1px solid #1C273A !important;
             border-radius: 7px !important;
             padding: 5px 7px !important;
             display: flex !important;
@@ -441,8 +453,8 @@
         }
         .pm-font-search-input {
             width: 100% !important;
-            background: #0E121A !important;
-            border: 1px solid #232C3D !important;
+            background: #0B1017 !important;
+            border: 1px solid #202B3D !important;
             border-radius: 5px !important;
             padding: 3px 20px 3px 7px !important;
             font-size: 11.5px !important;
@@ -453,7 +465,8 @@
             transition: border-color 0.15s ease !important;
         }
         .pm-font-search-input:focus {
-            border-color: #6366F1 !important;
+            border-color: #1EB4EB !important;
+            box-shadow: 0 0 0 1px rgba(30, 180, 235, 0.3) !important;
         }
         .pm-combobox-arrow {
             position: absolute !important;
@@ -473,8 +486,8 @@
             top: calc(100% + 3px) !important;
             left: 0 !important;
             right: 0 !important;
-            background: #11151E !important;
-            border: 1px solid #2B3448 !important;
+            background: #0F1520 !important;
+            border: 1px solid #25334A !important;
             border-radius: 6px !important;
             max-height: 120px !important;
             overflow-y: auto !important;
@@ -492,8 +505,8 @@
             cursor: pointer !important;
         }
         .pm-dropdown-item:hover, .pm-dropdown-item.pm-selected {
-            background: #1F2739 !important;
-            color: #A5B4FC !important;
+            background: rgba(30, 180, 235, 0.22) !important;
+            color: #8ED9F5 !important;
         }
 
         /* Typography Stepper Row */
@@ -509,8 +522,8 @@
         .pm-stepper-controls {
             display: flex !important;
             align-items: center !important;
-            background: #0E121A !important;
-            border: 1px solid #232C3D !important;
+            background: #0B1017 !important;
+            border: 1px solid #202B3D !important;
             border-radius: 5px !important;
             overflow: hidden !important;
             height: 23px !important;
@@ -528,7 +541,7 @@
             justify-content: center !important;
         }
         .pm-step-btn:hover {
-            background: #1E2535 !important;
+            background: #182233 !important;
             color: #F1F5F9 !important;
         }
         .pm-step-val {
@@ -542,8 +555,8 @@
         /* Footer */
         #pm-footer {
             padding: 5px 9px 6px 9px !important;
-            background: #0A0D14 !important;
-            border-top: 1px solid #181F2C !important;
+            background: #090D14 !important;
+            border-top: 1px solid #182233 !important;
             display: flex !important;
             align-items: center !important;
             justify-content: space-between !important;
@@ -566,14 +579,14 @@
         }
         #pm-reset-btn:hover {
             color: #94A3B8 !important;
-            background: #141924 !important;
+            background: #131A26 !important;
         }
         #pm-star-btn {
             color: #94A3B8 !important;
         }
         #pm-star-btn:hover {
             color: #F8FAFC !important;
-            background: #141924 !important;
+            background: #131A26 !important;
         }
         #pm-star-btn svg {
             width: 12px !important;
@@ -610,22 +623,22 @@
         <div class="markdown-body" id="md-content" style="direction: rtl; text-align: right; font-family: 'Vazirmatn', sans-serif;">
             <h1>پروژه مارک‌داون فارسی و دوجهته (Markdown RTL)</h1>
             <p>
-                این پیش‌نمایش تعاملی نشان‌دهنده ظاهر و عملکرد دقیق افزونه در پنجره پیش‌نمایش Android Studio و IntelliJ IDEA است.
-                آیکون جدید <span class="inline-code">align-horizontal-center.svg</span> با رنگ گرم مرجانی/نارنجی جایگزین آیکون سبز قبلی شده است.
+                این پیش‌نمایش تعاملی با تم اختصاصی رنگ فیروزه‌ای/آبی آسمانی (<span class="inline-code">#1EB4EB</span>) و آیکون جدید <span class="inline-code">align-vertical-top.svg</span> به‌روزرسانی شده است.
+                رنگ کادر و هاله‌های دکمه کپسولی نیز دقیقاً مطابق این آیکون تنظیم گردیده است.
             </p>
 
             <h2>ویژگی‌های کلیدی افزونه</h2>
             <ul>
                 <li>تشخیص هوشمند پاراگراف‌های فارسی، عربی و انگلیسی بر اساس نویسه اول.</li>
                 <li>حفظ کامل چیدمان چپ‌به‌راست برای کدهای برنامه‌نویسی و بلوک‌های <span class="inline-code">code</span>.</li>
-                <li>دکمه شناور جمع‌وجور کپسولی در گوشه پایین سمت چپ.</li>
+                <li>دکمه شناور جمع‌وجور کپسولی در گوشه پایین سمت چپ با نور ملایم آسمانی.</li>
             </ul>
 
             <div class="code-box">
-<span style="color: #F472B6;">def</span> <span style="color: #60A5FA;">detect_text_direction</span>(text: str) -> str:
+<span style="color: #38BDF8;">def</span> <span style="color: #7DD3FC;">detect_text_direction</span>(text: str) -> str:
     <span style="color: #6EE7B7;"># Detects whether the paragraph is RTL or LTR</span>
     first_char = text.strip()[<span style="color: #FCD34D;">0</span>]
-    <span style="color: #F472B6;">return</span> <span style="color: #A78BFA;">"rtl"</span> <span style="color: #F472B6;">if</span> is_persian(first_char) <span style="color: #F472B6;">else</span> <span style="color: #A78BFA;">"ltr"</span>
+    <span style="color: #38BDF8;">return</span> <span style="color: #8ED9F5;">"rtl"</span> <span style="color: #38BDF8;">if</span> is_persian(first_char) <span style="color: #38BDF8;">else</span> <span style="color: #8ED9F5;">"ltr"</span>
             </div>
 
             <p>
@@ -641,14 +654,21 @@
                 <svg viewBox="0 0 28 28" fill="none">
                     <defs>
                         <clipPath id="pm_clip0"><rect width="28" height="28" fill="#fff"/></clipPath>
-                        <clipPath id="pm_clip1"><rect width="28" height="28" fill="#fff"/></clipPath>
-                        <radialGradient id="pm_radial1" cx="0" cy="0" r="1" gradientTransform="rotate(49.209 -2.729 10.385)scale(21.6848 13.4873)" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FDBC9C"/>
-                            <stop offset=".5" stop-color="#FB793A"/>
+                        <radialGradient id="pm_radial1" cx="0" cy="0" r="1" gradientTransform="matrix(15.00002 14.77582 -9.28916 9.43011 6.5 6.5)" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#8ED9F5"/>
+                            <stop offset=".5" stop-color="#1EB4EB"/>
+                        </radialGradient>
+                        <radialGradient id="pm_radial2" cx="0" cy="0" r="1" gradientTransform="matrix(2.25 8.86549 -1.39337 5.65804 9.5 11)" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#8ED9F5"/>
+                            <stop offset=".5" stop-color="#1EB4EB"/>
+                        </radialGradient>
+                        <radialGradient id="pm_radial3" cx="0" cy="0" r="1" gradientTransform="matrix(2.25 6.1098 -1.39337 3.89933 16.25 11)" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#8ED9F5"/>
+                            <stop offset=".5" stop-color="#1EB4EB"/>
                         </radialGradient>
                         <linearGradient id="pm_linear0" x1="14" x2="14" y1="19" y2="25" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FB793A" stop-opacity="0"/>
-                            <stop offset="1" stop-color="#FB793A"/>
+                            <stop stop-color="#1EB4EB" stop-opacity="0"/>
+                            <stop offset="1" stop-color="#1EB4EB"/>
                         </linearGradient>
                         <filter id="pm_blur0" width="28" height="14" x="0" y="15" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
                             <feFlood flood-opacity="0" result="BackgroundImageFix"/>
@@ -657,13 +677,13 @@
                         </filter>
                     </defs>
                     <g clip-path="url(#pm_clip0)">
-                        <g clip-path="url(#pm_clip1)">
-                            <path fill="#FB793A" fill-opacity=".2" d="M0 14C0 2.471 2.471 0 14 0C25.529 0 28 2.471 28 14C28 25.529 25.529 28 14 28C2.471 28 0 25.529 0 14Z"/>
-                            <g filter="url(#pm_blur0)" opacity=".6">
-                                <ellipse cx="14" cy="22" fill="url(#pm_linear0)" rx="10" ry="3"/>
-                            </g>
+                        <path fill="#1EB4EB" fill-opacity=".2" d="M0 14C0 2.471 2.471 0 14 0C25.529 0 28 2.471 28 14C28 25.529 25.529 28 14 28C2.471 28 0 25.529 0 14Z"/>
+                        <g filter="url(#pm_blur0)" opacity=".6">
+                            <ellipse cx="14" cy="22" fill="url(#pm_linear0)" rx="10" ry="3"/>
                         </g>
-                        <path fill="url(#pm_radial1)" d="M18.5827 7.33317H14.8327V6.49984C14.8327 6.0415 14.4577 5.6665 13.9993 5.6665C13.541 5.6665 13.166 6.0415 13.166 6.49984V7.33317H9.41602C8.04102 7.33317 6.91602 8.45817 6.91602 9.83317V10.6665C6.91602 12.0415 8.04102 13.1665 9.41602 13.1665H13.166V14.8332H11.0827C9.70768 14.8332 8.58268 15.9582 8.58268 17.3332V18.1665C8.58268 19.5415 9.70768 20.6665 11.0827 20.6665H13.166V21.4998C13.166 21.9582 13.541 22.3332 13.9993 22.3332C14.4577 22.3332 14.8327 21.9582 14.8327 21.4998V20.6665H16.916C18.291 20.6665 19.416 19.5415 19.416 18.1665V17.3332C19.416 15.9582 18.291 14.8332 16.916 14.8332H14.8327V13.1665H18.5827C19.9577 13.1665 21.0827 12.0415 21.0827 10.6665V9.83317C21.0827 8.45817 19.9577 7.33317 18.5827 7.33317ZM17.7493 17.3332V18.1665C17.7493 18.6248 17.3743 18.9998 16.916 18.9998H11.0827C10.6243 18.9998 10.2493 18.6248 10.2493 18.1665V17.3332C10.2493 16.8748 10.6243 16.4998 11.0827 16.4998H16.916C17.3743 16.4998 17.7493 16.8748 17.7493 17.3332ZM19.416 10.6665C19.416 11.1248 19.041 11.4998 18.5827 11.4998H9.41602C8.95768 11.4998 8.58268 11.1248 8.58268 10.6665V9.83317C8.58268 9.37484 8.95768 8.99984 9.41602 8.99984H18.5827C19.041 8.99984 19.416 9.37484 19.416 9.83317V10.6665Z"/>
+                        <path fill="url(#pm_radial1)" d="M17.75 9.5H17C15.7625 9.5 14.75 10.5125 14.75 11.75V16.4525C14.75 17.69 15.7625 18.7025 17 18.7025H17.75C18.9875 18.7025 20 17.69 20 16.4525V11.75C20 10.5125 18.9875 9.5 17.75 9.5ZM18.5 16.4525C18.5 16.865 18.1625 17.2025 17.75 17.2025H17C16.5875 17.2025 16.25 16.865 16.25 16.4525V11.75C16.25 11.3375 16.5875 11 17 11H17.75C18.1625 11 18.5 11.3375 18.5 11.75V16.4525ZM20.75 6.5H7.25C6.8375 6.5 6.5 6.8375 6.5 7.25C6.5 7.6625 6.8375 8 7.25 8H20.75C21.1625 8 21.5 7.6625 21.5 7.25C21.5 6.8375 21.1625 6.5 20.75 6.5ZM11 9.5H10.25C9.0125 9.5 8 10.5125 8 11.75V19.25C8 20.4875 9.0125 21.5 10.25 21.5H11C12.2375 21.5 13.25 20.4875 13.25 19.25V11.75C13.25 10.5125 12.2375 9.5 11 9.5ZM11.75 19.25C11.75 19.6625 11.4125 20 11 20H10.25C9.8375 20 9.5 19.6625 9.5 19.25V11.75C9.5 11.3375 9.8375 11 10.25 11H11C11.4125 11 11.75 11.3375 11.75 11.75V19.25Z"/>
+                        <path fill="url(#pm_radial2)" fill-opacity=".4" d="M11 11H10.25C9.83579 11 9.5 11.3358 9.5 11.75V19.25C9.5 19.6642 9.83579 20 10.25 20H11C11.4142 20 11.75 19.6642 11.75 19.25V11.75C11.75 11.3358 11.4142 11 11 11Z"/>
+                        <path fill="url(#pm_radial3)" fill-opacity=".4" d="M17.75 11H17C16.5858 11 16.25 11.3358 16.25 11.75V16.4525C16.25 16.8667 16.5858 17.2025 17 17.2025H17.75C18.1642 17.2025 18.5 16.8667 18.5 16.4525V11.75C18.5 11.3358 18.1642 11 17.75 11Z"/>
                     </g>
                 </svg>
             </div>

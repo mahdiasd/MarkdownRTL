@@ -328,30 +328,30 @@ object CssGenerator {
                 padding: 3px 11px 3px 4px !important;
                 height: 28px !important;
                 border-radius: 9999px !important;
-                background: #171A20 !important;
-                border: 1px solid #282D36 !important;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+                background: #111722 !important;
+                border: 1px solid rgba(30, 180, 235, 0.35) !important;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(30, 180, 235, 0.15), inset 0 1px 0 rgba(142, 217, 245, 0.12) !important;
                 cursor: pointer !important;
                 transition: all 0.15s ease !important;
                 outline: none !important;
                 user-select: none !important;
             }
             #pm-trigger:hover {
-                border-color: #384152 !important;
-                background: #1C2027 !important;
-                box-shadow: 0 10px 28px rgba(0, 0, 0, 0.75), 0 3px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+                border-color: #1EB4EB !important;
+                background: #162030 !important;
+                box-shadow: 0 10px 28px rgba(0, 0, 0, 0.75), 0 3px 12px rgba(30, 180, 235, 0.35), inset 0 1px 0 rgba(142, 217, 245, 0.22) !important;
                 transform: translateY(-1px) !important;
             }
             #pm-trigger:active {
                 transform: scale(0.97) !important;
             }
             #persian-markdown-switcher.pm-open #pm-trigger {
-                border-color: #FB793A !important;
-                background: #1C2027 !important;
-                box-shadow: 0 0 14px rgba(251, 121, 58, 0.35), 0 8px 24px rgba(0, 0, 0, 0.7) !important;
+                border-color: #1EB4EB !important;
+                background: #162030 !important;
+                box-shadow: 0 0 16px rgba(30, 180, 235, 0.45), 0 8px 24px rgba(0, 0, 0, 0.7) !important;
             }
 
-            /* Squircle Icon Box with Align Horizontal Center SVG */
+            /* Squircle Icon Box with Align Vertical Top SVG */
             #pm-status-dot {
                 width: 20px !important;
                 height: 20px !important;
@@ -371,11 +371,11 @@ object CssGenerator {
                 height: 20px !important;
                 display: block !important;
                 transition: transform 0.18s ease, filter 0.2s ease !important;
-                filter: drop-shadow(0 0 5px rgba(251, 121, 58, 0.4)) !important;
+                filter: drop-shadow(0 0 5px rgba(30, 180, 235, 0.45)) !important;
             }
             #pm-trigger:hover #pm-status-dot:not(.pm-disabled-dot) svg {
                 transform: scale(1.08) !important;
-                filter: drop-shadow(0 0 8px rgba(251, 121, 58, 0.75)) !important;
+                filter: drop-shadow(0 0 9px rgba(30, 180, 235, 0.8)) !important;
             }
             #pm-status-dot.pm-disabled-dot {
                 filter: grayscale(1) opacity(0.35) !important;
@@ -385,7 +385,7 @@ object CssGenerator {
             #pm-current-label {
                 font-size: 11.5px !important;
                 font-weight: 600 !important;
-                color: #F1F5F9 !important;
+                color: #F0F9FF !important;
                 letter-spacing: -0.01em !important;
                 white-space: nowrap !important;
                 line-height: 1 !important;
@@ -425,7 +425,7 @@ object CssGenerator {
                 left: 0 !important;
                 right: 0 !important;
                 height: 1px !important;
-                background: linear-gradient(to right, transparent, rgba(99, 102, 241, 0.4), transparent) !important;
+                background: linear-gradient(to right, transparent, rgba(30, 180, 235, 0.5), transparent) !important;
                 pointer-events: none !important;
                 border-radius: 12px 12px 0 0 !important;
             }
@@ -455,8 +455,8 @@ object CssGenerator {
                 width: 18px !important;
                 height: 18px !important;
                 border-radius: 5px !important;
-                background: linear-gradient(to bottom, #1E2536, #141924) !important;
-                border: 1px solid #283348 !important;
+                background: linear-gradient(135deg, rgba(30, 180, 235, 0.18), rgba(142, 217, 245, 0.1)) !important;
+                border: 1px solid rgba(30, 180, 235, 0.35) !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
@@ -465,7 +465,7 @@ object CssGenerator {
             .pm-brand-icon-box svg {
                 width: 10px !important;
                 height: 10px !important;
-                color: #818CF8 !important;
+                color: #1EB4EB !important;
             }
             .pm-header-title {
                 font-size: 13px !important;
@@ -590,7 +590,7 @@ object CssGenerator {
                 box-shadow: 0 1px 2px rgba(0,0,0,0.3) !important;
             }
             .pm-switch input:checked + .pm-switch-track {
-                background: #4F46E5 !important;
+                background: #1EB4EB !important;
             }
             .pm-switch input:checked + .pm-switch-track::after {
                 transform: translateX(10px) !important;
@@ -657,9 +657,9 @@ object CssGenerator {
                 line-height: 1 !important;
             }
             .pm-font-search-input:focus {
-                border-color: #6366F1 !important;
+                border-color: #1EB4EB !important;
                 background: #111622 !important;
-                box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25) !important;
+                box-shadow: 0 0 0 1px rgba(30, 180, 235, 0.3) !important;
             }
             .pm-combobox-arrow {
                 position: absolute !important;
@@ -730,8 +730,8 @@ object CssGenerator {
                 color: #FFFFFF !important;
             }
             .pm-dropdown-item.pm-selected {
-                background: rgba(99, 102, 241, 0.22) !important;
-                color: #A5B4FC !important;
+                background: rgba(30, 180, 235, 0.22) !important;
+                color: #8ED9F5 !important;
                 font-weight: 500 !important;
             }
             .pm-dropdown-item.pm-dropdown-custom {
@@ -1241,14 +1241,21 @@ object CssGenerator {
                                 '<svg viewBox="0 0 28 28" fill="none">' +
                                     '<defs>' +
                                         '<clipPath id="pm_clip0"><rect width="28" height="28" fill="#fff"/></clipPath>' +
-                                        '<clipPath id="pm_clip1"><rect width="28" height="28" fill="#fff"/></clipPath>' +
-                                        '<radialGradient id="pm_radial1" cx="0" cy="0" r="1" gradientTransform="rotate(49.209 -2.729 10.385)scale(21.6848 13.4873)" gradientUnits="userSpaceOnUse">' +
-                                            '<stop stop-color="#FDBC9C"/>' +
-                                            '<stop offset=".5" stop-color="#FB793A"/>' +
+                                        '<radialGradient id="pm_radial1" cx="0" cy="0" r="1" gradientTransform="matrix(15.00002 14.77582 -9.28916 9.43011 6.5 6.5)" gradientUnits="userSpaceOnUse">' +
+                                            '<stop stop-color="#8ED9F5"/>' +
+                                            '<stop offset=".5" stop-color="#1EB4EB"/>' +
+                                        '</radialGradient>' +
+                                        '<radialGradient id="pm_radial2" cx="0" cy="0" r="1" gradientTransform="matrix(2.25 8.86549 -1.39337 5.65804 9.5 11)" gradientUnits="userSpaceOnUse">' +
+                                            '<stop stop-color="#8ED9F5"/>' +
+                                            '<stop offset=".5" stop-color="#1EB4EB"/>' +
+                                        '</radialGradient>' +
+                                        '<radialGradient id="pm_radial3" cx="0" cy="0" r="1" gradientTransform="matrix(2.25 6.1098 -1.39337 3.89933 16.25 11)" gradientUnits="userSpaceOnUse">' +
+                                            '<stop stop-color="#8ED9F5"/>' +
+                                            '<stop offset=".5" stop-color="#1EB4EB"/>' +
                                         '</radialGradient>' +
                                         '<linearGradient id="pm_linear0" x1="14" x2="14" y1="19" y2="25" gradientUnits="userSpaceOnUse">' +
-                                            '<stop stop-color="#FB793A" stop-opacity="0"/>' +
-                                            '<stop offset="1" stop-color="#FB793A"/>' +
+                                            '<stop stop-color="#1EB4EB" stop-opacity="0"/>' +
+                                            '<stop offset="1" stop-color="#1EB4EB"/>' +
                                         '</linearGradient>' +
                                         '<filter id="pm_blur0" width="28" height="14" x="0" y="15" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">' +
                                             '<feFlood flood-opacity="0" result="BackgroundImageFix"/>' +
@@ -1257,13 +1264,13 @@ object CssGenerator {
                                         '</filter>' +
                                     '</defs>' +
                                     '<g clip-path="url(#pm_clip0)">' +
-                                        '<g clip-path="url(#pm_clip1)">' +
-                                            '<path fill="#FB793A" fill-opacity=".2" d="M0 14C0 2.471 2.471 0 14 0C25.529 0 28 2.471 28 14C28 25.529 25.529 28 14 28C2.471 28 0 25.529 0 14Z"/>' +
-                                            '<g filter="url(#pm_blur0)" opacity=".6">' +
-                                                '<ellipse cx="14" cy="22" fill="url(#pm_linear0)" rx="10" ry="3"/>' +
-                                            '</g>' +
+                                        '<path fill="#1EB4EB" fill-opacity=".2" d="M0 14C0 2.471 2.471 0 14 0C25.529 0 28 2.471 28 14C28 25.529 25.529 28 14 28C2.471 28 0 25.529 0 14Z"/>' +
+                                        '<g filter="url(#pm_blur0)" opacity=".6">' +
+                                            '<ellipse cx="14" cy="22" fill="url(#pm_linear0)" rx="10" ry="3"/>' +
                                         '</g>' +
-                                        '<path fill="url(#pm_radial1)" d="M18.5827 7.33317H14.8327V6.49984C14.8327 6.0415 14.4577 5.6665 13.9993 5.6665C13.541 5.6665 13.166 6.0415 13.166 6.49984V7.33317H9.41602C8.04102 7.33317 6.91602 8.45817 6.91602 9.83317V10.6665C6.91602 12.0415 8.04102 13.1665 9.41602 13.1665H13.166V14.8332H11.0827C9.70768 14.8332 8.58268 15.9582 8.58268 17.3332V18.1665C8.58268 19.5415 9.70768 20.6665 11.0827 20.6665H13.166V21.4998C13.166 21.9582 13.541 22.3332 13.9993 22.3332C14.4577 22.3332 14.8327 21.9582 14.8327 21.4998V20.6665H16.916C18.291 20.6665 19.416 19.5415 19.416 18.1665V17.3332C19.416 15.9582 18.291 14.8332 16.916 14.8332H14.8327V13.1665H18.5827C19.9577 13.1665 21.0827 12.0415 21.0827 10.6665V9.83317C21.0827 8.45817 19.9577 7.33317 18.5827 7.33317ZM17.7493 17.3332V18.1665C17.7493 18.6248 17.3743 18.9998 16.916 18.9998H11.0827C10.6243 18.9998 10.2493 18.6248 10.2493 18.1665V17.3332C10.2493 16.8748 10.6243 16.4998 11.0827 16.4998H16.916C17.3743 16.4998 17.7493 16.8748 17.7493 17.3332ZM19.416 10.6665C19.416 11.1248 19.041 11.4998 18.5827 11.4998H9.41602C8.95768 11.4998 8.58268 11.1248 8.58268 10.6665V9.83317C8.58268 9.37484 8.95768 8.99984 9.41602 8.99984H18.5827C19.041 8.99984 19.416 9.37484 19.416 9.83317V10.6665Z"/>' +
+                                        '<path fill="url(#pm_radial1)" d="M17.75 9.5H17C15.7625 9.5 14.75 10.5125 14.75 11.75V16.4525C14.75 17.69 15.7625 18.7025 17 18.7025H17.75C18.9875 18.7025 20 17.69 20 16.4525V11.75C20 10.5125 18.9875 9.5 17.75 9.5ZM18.5 16.4525C18.5 16.865 18.1625 17.2025 17.75 17.2025H17C16.5875 17.2025 16.25 16.865 16.25 16.4525V11.75C16.25 11.3375 16.5875 11 17 11H17.75C18.1625 11 18.5 11.3375 18.5 11.75V16.4525ZM20.75 6.5H7.25C6.8375 6.5 6.5 6.8375 6.5 7.25C6.5 7.6625 6.8375 8 7.25 8H20.75C21.1625 8 21.5 7.6625 21.5 7.25C21.5 6.8375 21.1625 6.5 20.75 6.5ZM11 9.5H10.25C9.0125 9.5 8 10.5125 8 11.75V19.25C8 20.4875 9.0125 21.5 10.25 21.5H11C12.2375 21.5 13.25 20.4875 13.25 19.25V11.75C13.25 10.5125 12.2375 9.5 11 9.5ZM11.75 19.25C11.75 19.6625 11.4125 20 11 20H10.25C9.8375 20 9.5 19.6625 9.5 19.25V11.75C9.5 11.3375 9.8375 11 10.25 11H11C11.4125 11 11.75 11.3375 11.75 11.75V19.25Z"/>' +
+                                        '<path fill="url(#pm_radial2)" fill-opacity=".4" d="M11 11H10.25C9.83579 11 9.5 11.3358 9.5 11.75V19.25C9.5 19.6642 9.83579 20 10.25 20H11C11.4142 20 11.75 19.6642 11.75 19.25V11.75C11.75 11.3358 11.4142 11 11 11Z"/>' +
+                                        '<path fill="url(#pm_radial3)" fill-opacity=".4" d="M17.75 11H17C16.5858 11 16.25 11.3358 16.25 11.75V16.4525C16.25 16.8667 16.5858 17.2025 17 17.2025H17.75C18.1642 17.2025 18.5 16.8667 18.5 16.4525V11.75C18.5 11.3358 18.1642 11 17.75 11Z"/>' +
                                     '</g>' +
                                 '</svg>' +
                             '</div>' +
