@@ -12,20 +12,25 @@ class PersianMarkdownStartupActivity : ProjectActivity {
     }
 
     companion object {
-        private const val JCEF_CLASS_NAME = "com.intellij.markdown.jcef.preview.JCEFHtmlPanelProvider"
+        private const val JCEF_FALLBACK_CLASS_NAME = "org.intellij.plugins.markdown.ui.preview.jcef.JCEFHtmlPanelProvider"
 
         fun ensureJcefPreview(project: Project) {
             if (project.isDisposed) return
             try {
                 val settings = MarkdownSettings.getInstance(project)
                 val currentInfo = settings.previewPanelProviderInfo
-                if (currentInfo.className != JCEF_CLASS_NAME) {
-                    val jcefProvider = MarkdownHtmlPanelProvider.ProviderInfo(
+
+                val realJcefProvider = MarkdownHtmlPanelProvider.getAvailableProviders()
+                    .firstOrNull { it.providerInfo.className.contains("jcef", ignoreCase = true) }
+                    ?.providerInfo
+                    ?: MarkdownHtmlPanelProvider.ProviderInfo(
                         "Chromium browser",
-                        JCEF_CLASS_NAME
+                        JCEF_FALLBACK_CLASS_NAME
                     )
+
+                if (currentInfo.className != realJcefProvider.className) {
                     settings.update {
-                        it.previewPanelProviderInfo = jcefProvider
+                        it.previewPanelProviderInfo = realJcefProvider
                     }
                 }
             } catch (e: Exception) {
