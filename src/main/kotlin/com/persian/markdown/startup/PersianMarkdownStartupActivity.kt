@@ -15,6 +15,7 @@ class PersianMarkdownStartupActivity : ProjectActivity {
         private const val JCEF_CLASS_NAME = "com.intellij.markdown.jcef.preview.JCEFHtmlPanelProvider"
 
         fun ensureJcefPreview(project: Project) {
+            if (project.isDisposed) return
             try {
                 val settings = MarkdownSettings.getInstance(project)
                 val currentInfo = settings.previewPanelProviderInfo
@@ -27,7 +28,10 @@ class PersianMarkdownStartupActivity : ProjectActivity {
                         it.previewPanelProviderInfo = jcefProvider
                     }
                 }
-            } catch (_: Throwable) {
+            } catch (e: Exception) {
+                if (e is java.util.concurrent.CancellationException) {
+                    throw e
+                }
             }
         }
     }

@@ -33,52 +33,65 @@ object CssGenerator {
         }
     }
 
+    private val cachedBundledVazirFontCss: String by lazy {
+        buildString {
+            if (bundledRegularFontBase64 != null) {
+                append("""
+                    @font-face {
+                        font-family: 'PersianMarkdownBundledVazir';
+                        src: url('data:font/truetype;charset=utf-8;base64,${bundledRegularFontBase64}') format('truetype');
+                        font-weight: 400;
+                        font-style: normal;
+                    }
+                """.trimIndent()).append("\n")
+
+                if (bundledBoldFontBase64 != null) {
+                    append("""
+                        @font-face {
+                            font-family: 'PersianMarkdownBundledVazir';
+                            src: url('data:font/truetype;charset=utf-8;base64,${bundledBoldFontBase64}') format('truetype');
+                            font-weight: 700;
+                            font-style: normal;
+                        }
+                    """.trimIndent()).append("\n")
+                }
+            }
+        }
+    }
+
+    private val cachedBundledJbFontCss: String by lazy {
+        buildString {
+            if (bundledJbRegularFontBase64 != null) {
+                append("""
+                    @font-face {
+                        font-family: 'PersianMarkdownBundledJBMono';
+                        src: url('data:font/truetype;charset=utf-8;base64,${bundledJbRegularFontBase64}') format('truetype');
+                        font-weight: 400;
+                        font-style: normal;
+                    }
+                """.trimIndent()).append("\n")
+
+                if (bundledJbBoldFontBase64 != null) {
+                    append("""
+                        @font-face {
+                            font-family: 'PersianMarkdownBundledJBMono';
+                            src: url('data:font/truetype;charset=utf-8;base64,${bundledJbBoldFontBase64}') format('truetype');
+                            font-weight: 700;
+                            font-style: normal;
+                        }
+                    """.trimIndent()).append("\n")
+                }
+            }
+        }
+    }
+
     fun generateCss(state: PersianMarkdownState): String {
         val sb = StringBuilder()
 
-        if (state.useBundledFont && bundledRegularFontBase64 != null) {
-            sb.append("""
-                @font-face {
-                    font-family: 'PersianMarkdownBundledVazir';
-                    src: url('data:font/truetype;charset=utf-8;base64,${bundledRegularFontBase64}') format('truetype');
-                    font-weight: 400;
-                    font-style: normal;
-                }
-            """.trimIndent()).append("\n")
-
-            if (bundledBoldFontBase64 != null) {
-                sb.append("""
-                    @font-face {
-                        font-family: 'PersianMarkdownBundledVazir';
-                        src: url('data:font/truetype;charset=utf-8;base64,${bundledBoldFontBase64}') format('truetype');
-                        font-weight: 700;
-                        font-style: normal;
-                    }
-                """.trimIndent()).append("\n")
-            }
+        if (state.useBundledFont) {
+            sb.append(cachedBundledVazirFontCss)
         }
-
-        if (bundledJbRegularFontBase64 != null) {
-            sb.append("""
-                @font-face {
-                    font-family: 'PersianMarkdownBundledJBMono';
-                    src: url('data:font/truetype;charset=utf-8;base64,${bundledJbRegularFontBase64}') format('truetype');
-                    font-weight: 400;
-                    font-style: normal;
-                }
-            """.trimIndent()).append("\n")
-
-            if (bundledJbBoldFontBase64 != null) {
-                sb.append("""
-                    @font-face {
-                        font-family: 'PersianMarkdownBundledJBMono';
-                        src: url('data:font/truetype;charset=utf-8;base64,${bundledJbBoldFontBase64}') format('truetype');
-                        font-weight: 700;
-                        font-style: normal;
-                    }
-                """.trimIndent()).append("\n")
-            }
-        }
+        sb.append(cachedBundledJbFontCss)
 
         val faFontStack = buildString {
             if (state.useBundledFont && bundledRegularFontBase64 != null) {
@@ -1026,14 +1039,6 @@ object CssGenerator {
                     return name.trim().replace(/['"]/g, '');
                 }
 
-                function cleanFontName(name) {
-                    if (!name) return '';
-                    if (name.indexOf(',') !== -1) {
-                        name = name.split(',')[0];
-                    }
-                    return name.trim().replace(/['"]/g, '');
-                }
-
                 function setupFontCombobox(type, inputEl, dropdownEl, suggestedList, initialVal, onSelect) {
                     var selected = cleanFontName(initialVal);
                     inputEl.value = selected;
@@ -1643,9 +1648,13 @@ object CssGenerator {
                 }
 
                 if (window.MutationObserver) {
+                    var debounceTimer = null;
                     var observer = new MutationObserver(function() {
-                        createSwitcherUI();
-                        applyDirections();
+                        if (debounceTimer) clearTimeout(debounceTimer);
+                        debounceTimer = setTimeout(function() {
+                            createSwitcherUI();
+                            applyDirections();
+                        }, 40);
                     });
                     var obsTarget = document.body || document.documentElement;
                     if (obsTarget) {

@@ -15,12 +15,12 @@ class PersianMarkdownBrowserExtension(
 
     init {
         connection.subscribe(PersianMarkdownSettingsListener.TOPIC, PersianMarkdownSettingsListener {
-            ApplicationManager.getApplication().invokeLater {
+            ApplicationManager.getApplication().invokeLater({
                 try {
                     panel.reloadWithOffset(0)
                 } catch (_: Exception) {
                 }
-            }
+            }, { ApplicationManager.getApplication().isDisposed })
         })
     }
 

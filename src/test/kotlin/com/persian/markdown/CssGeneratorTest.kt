@@ -113,6 +113,32 @@ class CssGeneratorTest {
     }
 
     @Test
+    fun testDirectionModeFromId() {
+        org.junit.Assert.assertEquals(DirectionMode.AUTO, DirectionMode.fromId("auto"))
+        org.junit.Assert.assertEquals(DirectionMode.FORCE_RTL, DirectionMode.fromId("force_rtl"))
+        org.junit.Assert.assertEquals(DirectionMode.FORCE_LTR, DirectionMode.fromId("force_ltr"))
+        org.junit.Assert.assertEquals(DirectionMode.AUTO, DirectionMode.fromId("invalid"))
+        org.junit.Assert.assertEquals(DirectionMode.AUTO, DirectionMode.fromId(null))
+    }
+
+    @Test
+    fun testCleanFontNameNotDuplicatedInScript() {
+        val state = PersianMarkdownState()
+        val js = CssGenerator.generateAutoDirScript(state)
+        val matches = Regex("""function cleanFontName""").findAll(js).count()
+        org.junit.Assert.assertEquals("cleanFontName should be defined exactly once", 1, matches)
+    }
+
+    @Test
+    fun testMutationObserverDebounced() {
+        val state = PersianMarkdownState()
+        val js = CssGenerator.generateAutoDirScript(state)
+        assertTrue(js.contains("debounceTimer"))
+        assertTrue(js.contains("clearTimeout(debounceTimer)"))
+        assertTrue(js.contains("setTimeout"))
+    }
+
+    @Test
     fun testDumpScriptToFile() {
         val state = PersianMarkdownState()
         val fonts = try {

@@ -84,7 +84,7 @@ class PersianMarkdownConfigurable : BoundConfigurable("Persian Markdown") {
                 row {
                     button("Ensure Chromium Preview Engine is Active") {
                         val projects = com.intellij.openapi.project.ProjectManager.getInstance().openProjects
-                        projects.forEach { project ->
+                        projects.filter { !it.isDisposed }.forEach { project ->
                             com.persian.markdown.startup.PersianMarkdownStartupActivity.ensureJcefPreview(project)
                         }
                         com.intellij.openapi.ui.Messages.showInfoMessage(
@@ -99,9 +99,11 @@ class PersianMarkdownConfigurable : BoundConfigurable("Persian Markdown") {
 
     override fun apply() {
         super.apply()
-        com.intellij.openapi.project.ProjectManager.getInstance().openProjects.forEach { project ->
-            com.persian.markdown.startup.PersianMarkdownStartupActivity.ensureJcefPreview(project)
-        }
+        com.intellij.openapi.project.ProjectManager.getInstance().openProjects
+            .filter { !it.isDisposed }
+            .forEach { project ->
+                com.persian.markdown.startup.PersianMarkdownStartupActivity.ensureJcefPreview(project)
+            }
         settings.notifyChanged()
     }
 }
