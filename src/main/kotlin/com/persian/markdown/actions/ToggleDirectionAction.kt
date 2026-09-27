@@ -15,22 +15,32 @@ class ToggleDirectionAction : AnAction() {
             com.persian.markdown.startup.PersianMarkdownStartupActivity.ensureJcefPreview(project)
         }
         val settings = PersianMarkdownSettings.getInstance()
-        val current = settings.state.directionMode
-        val next = when (current) {
-            DirectionMode.AUTO -> DirectionMode.FORCE_RTL
-            DirectionMode.FORCE_RTL -> DirectionMode.FORCE_LTR
-            DirectionMode.FORCE_LTR -> DirectionMode.AUTO
+        if (!settings.state.enabled) {
+            settings.state.enabled = true
+        } else {
+            val current = settings.state.directionMode
+            val next = when (current) {
+                DirectionMode.AUTO -> DirectionMode.FORCE_RTL
+                DirectionMode.FORCE_RTL -> DirectionMode.FORCE_LTR
+                DirectionMode.FORCE_LTR -> DirectionMode.AUTO
+            }
+            settings.state.directionMode = next
         }
-        settings.state.directionMode = next
         settings.notifyChanged()
     }
 
     override fun update(e: AnActionEvent) {
         val settings = PersianMarkdownSettings.getInstance()
-        val current = settings.state.directionMode
-        e.presentation.text = "RTL Direction: ${current.displayName}"
-        e.presentation.description = "Switch Markdown preview direction: currently ${current.displayName}"
-        e.presentation.icon = AllIcons.Actions.SplitVertically
+        if (!settings.state.enabled) {
+            e.presentation.text = "Markdown RTL: Disabled"
+            e.presentation.description = "Markdown RTL is currently disabled. Click to enable."
+            e.presentation.icon = AllIcons.Actions.Pause
+        } else {
+            val current = settings.state.directionMode
+            e.presentation.text = "RTL Direction: ${current.displayName}"
+            e.presentation.description = "Switch Markdown preview direction: currently ${current.displayName}"
+            e.presentation.icon = AllIcons.Actions.SplitVertically
+        }
     }
 
     override fun getActionUpdateThread(): ActionUpdateThread {

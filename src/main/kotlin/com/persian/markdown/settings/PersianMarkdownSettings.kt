@@ -9,6 +9,7 @@ import com.intellij.openapi.components.Storage
 import com.intellij.util.messages.Topic
 
 class PersianMarkdownState : BaseState() {
+    var enabled by property(true)
     var directionMode by enum(DirectionMode.AUTO)
     var fontFamily by string("Vazirmatn, -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif")
     var enFontFamily by string("JetBrains Mono, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif")

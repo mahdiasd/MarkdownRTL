@@ -2,84 +2,38 @@ package com.persian.markdown.settings
 
 import com.intellij.openapi.options.BoundConfigurable
 import com.intellij.openapi.ui.DialogPanel
+import com.intellij.openapi.ui.Messages
 import com.intellij.ui.dsl.builder.*
 
-class PersianMarkdownConfigurable : BoundConfigurable("Persian Markdown") {
+class PersianMarkdownConfigurable : BoundConfigurable("Markdown RTL") {
 
-    private val settings = PersianMarkdownSettings.getInstance()
-    private val state = settings.state
+    private val settings by lazy { PersianMarkdownSettings.getInstance() }
+    private val state get() = settings.state
 
     override fun createPanel(): DialogPanel {
         return panel {
-            group("Text Direction (RTL / LTR)") {
-                buttonsGroup {
-                    row {
-                        radioButton("Auto RTL (Detect direction per paragraph/block)", DirectionMode.AUTO)
-                            .comment("Automatically aligns Persian/Arabic text to right, English to left using BiDi heuristics.")
-                    }
-                    row {
-                        radioButton("Force RTL (Right-to-Left)", DirectionMode.FORCE_RTL)
-                            .comment("Forces all text in the preview to right-to-left.")
-                    }
-                    row {
-                        radioButton("Force LTR (Left-to-Right)", DirectionMode.FORCE_LTR)
-                            .comment("Standard left-to-right alignment.")
-                    }
-                }.bind(state::directionMode)
-
+            group("Interactive In-Preview Controller") {
                 row {
-                    checkBox("Preserve LTR for code blocks (pre, code)")
-                        .bindSelected(state::keepCodeLTR)
-                        .comment("Keeps code blocks and monospace snippets left-to-right.")
+                    text("Direction modes (<b>Auto</b>, <b>Force RTL</b>, <b>Force LTR</b>), master enable toggle, fonts, font size, and line height are controlled interactively directly inside the Markdown preview using the sleek floating widget at the bottom-left corner.")
+                }
+                row {
+                    text("Keyboard shortcuts available in Markdown preview:<br/>" +
+                            "• <b>⌥E</b> (Alt+E): Toggle Enable / Disable<br/>" +
+                            "• <b>⌥R</b> (Alt+R): Cycle between Auto, Force RTL, and Force LTR")
                 }
             }
 
-            group("Typography & Fonts") {
+            group("Typography") {
                 row {
                     checkBox("Use bundled high-quality Vazirmatn font")
                         .bindSelected(state::useBundledFont)
                         .comment("Includes embedded Vazirmatn (Regular & Bold) so no system font installation is required.")
                 }
-
-                row("Font Family:") {
-                    textField()
-                        .columns(COLUMNS_LARGE)
-                        .bindText(
-                            getter = { state.fontFamily ?: "" },
-                            setter = { state.fontFamily = it }
-                        )
-                        .comment("Fallback font stack (e.g. Vazirmatn, Shabnam, Tahoma, sans-serif)")
-                }
-
-                row("Font Size (px):") {
-                    spinner(10..40, step = 1)
-                        .bindIntValue(state::fontSize)
-                }
-
-                row("Line Height:") {
-                    spinner(1.0..3.0, step = 0.1)
-                        .bindValue(
-                            getter = { state.lineHeight.toDouble() },
-                            setter = { state.lineHeight = it.toFloat() }
-                        )
-                        .comment("Recommended line height for Persian readability is 1.7 - 2.0.")
-                }
-            }
-
-            group("Element Enhancements") {
-                row {
-                    checkBox("Scale and align headings (H1-H6) proportionally")
-                        .bindSelected(state::enhanceHeadings)
-                }
-                row {
-                    checkBox("Right-align quotes and lists in RTL")
-                        .bindSelected(state::enhanceQuotes)
-                }
             }
 
             group("Preview Engine Compatibility") {
                 row {
-                    text("Persian & RTL rendering requires the <b>Chromium browser (JCEF)</b> engine in Markdown preview.")
+                    text("Markdown RTL requires the <b>Chromium browser (JCEF)</b> engine for bidirectional rendering and interactive widget controls.")
                 }
                 row {
                     button("Ensure Chromium Preview Engine is Active") {
@@ -87,9 +41,9 @@ class PersianMarkdownConfigurable : BoundConfigurable("Persian Markdown") {
                         projects.filter { !it.isDisposed }.forEach { project ->
                             com.persian.markdown.startup.PersianMarkdownStartupActivity.ensureJcefPreview(project)
                         }
-                        com.intellij.openapi.ui.Messages.showInfoMessage(
+                        Messages.showInfoMessage(
                             "Markdown preview engine has been set to Chromium browser.",
-                            "Persian Markdown"
+                            "Markdown RTL"
                         )
                     }
                 }

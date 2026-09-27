@@ -94,14 +94,30 @@ class CssGeneratorTest {
         assertTrue(js.contains("Star on github"))
         assertTrue(js.contains("pm-close-btn"))
         assertTrue(js.contains("pm-opt-enabled"))
-        assertTrue(js.contains("pm-opt-force-rtl"))
+        assertTrue(js.contains("pm-master-card"))
+        assertTrue(js.contains("pm-controls-wrap"))
+        assertTrue(js.contains("pm-tab-auto"))
+        assertTrue(js.contains("pm-tab-force-rtl"))
+        assertTrue(js.contains("pm-tab-force-ltr"))
+        assertTrue(js.contains("pm-tooltip"))
         assertTrue(js.contains("pm-lh-val"))
         assertTrue(js.contains("pm-fs-val"))
         assertTrue(js.contains("pm-reset-btn"))
+        assertTrue(js.contains("pmUpdateSettings"))
         // Apply button removed as changes are instant
         org.junit.Assert.assertFalse(js.contains("pm-apply-btn"))
         // Check that settings gear button is NOT in header/toolbar
         org.junit.Assert.assertFalse(js.contains("aria-label=\"Settings\""))
+    }
+
+    @Test
+    fun testCssDisabledDeactivation() {
+        val state = PersianMarkdownState()
+        val css = CssGenerator.generateCss(state)
+        assertTrue(css.contains("html.pm-disabled"))
+        assertTrue(css.contains("direction: inherit !important"))
+        assertTrue(css.contains("font-family: inherit !important"))
+        assertTrue(css.contains("data-pm-mode"))
     }
 
     @Test
@@ -122,6 +138,12 @@ class CssGeneratorTest {
     }
 
     @Test
+    fun testConfigurableDisplayNameIsMarkdownRTL() {
+        val configurable = com.persian.markdown.settings.PersianMarkdownConfigurable()
+        org.junit.Assert.assertEquals("Markdown RTL", configurable.displayName)
+    }
+
+    @Test
     fun testCleanFontNameNotDuplicatedInScript() {
         val state = PersianMarkdownState()
         val js = CssGenerator.generateAutoDirScript(state)
@@ -136,6 +158,24 @@ class CssGeneratorTest {
         assertTrue(js.contains("debounceTimer"))
         assertTrue(js.contains("clearTimeout(debounceTimer)"))
         assertTrue(js.contains("setTimeout"))
+    }
+
+    @Test
+    fun testSwitcherPositioningAndTargetElement() {
+        val state = PersianMarkdownState()
+        val css = CssGenerator.generateCss(state)
+        val js = CssGenerator.generateAutoDirScript(state)
+
+        // CSS assertions
+        assertTrue(css.contains("bottom: 14px !important"))
+        assertTrue(css.contains("left: 14px !important"))
+        assertTrue(css.contains("position: fixed !important"))
+        assertTrue(css.contains("transform: none !important"))
+
+        // JS assertions
+        assertTrue(js.contains("var target = document.documentElement || document.body"))
+        assertTrue(js.contains("target.appendChild(switcher)"))
+        assertTrue(js.contains("afterPatchListeners"))
     }
 
     @Test

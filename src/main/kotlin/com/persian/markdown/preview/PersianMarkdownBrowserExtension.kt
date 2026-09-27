@@ -12,9 +12,68 @@ class PersianMarkdownBrowserExtension(
 ) : MarkdownBrowserPreviewExtension, ResourceProvider {
 
     private val connection = ApplicationManager.getApplication().messageBus.connect(this)
+    private var isUpdatingFromJs = false
 
     init {
+        try {
+            panel.browserPipe?.subscribe("pmUpdateSettings", object : org.intellij.plugins.markdown.ui.preview.BrowserPipe.Handler {
+                override fun messageReceived(data: String) {
+                    if (data.isBlank()) return
+                    ApplicationManager.getApplication().invokeLater {
+                        try {
+                            isUpdatingFromJs = true
+                            val settings = PersianMarkdownSettings.getInstance()
+                            val state = settings.state
+                            val params = data.split("&").associate { param ->
+                                val parts = param.split("=", limit = 2)
+                                val key = parts[0]
+                                val value = if (parts.size > 1) {
+                                    try {
+                                        java.net.URLDecoder.decode(parts[1], "UTF-8")
+                                    } catch (_: Exception) {
+                                        parts[1]
+                                    }
+                                } else ""
+                                key to value
+                            }
+
+                            params["enabled"]?.let {
+                                state.enabled = it.toBoolean()
+                            }
+                            params["mode"]?.let {
+                                state.directionMode = com.persian.markdown.settings.DirectionMode.fromId(it)
+                            }
+                            params["fontSize"]?.toIntOrNull()?.let {
+                                state.fontSize = it
+                            }
+                            params["lineHeight"]?.toFloatOrNull()?.let {
+                                state.lineHeight = it
+                            }
+                            params["faFont"]?.takeIf { it.isNotBlank() }?.let {
+                                state.fontFamily = it
+                            }
+                            params["enFont"]?.takeIf { it.isNotBlank() }?.let {
+                                state.enFontFamily = it
+                            }
+                            params["codeFont"]?.takeIf { it.isNotBlank() }?.let {
+                                state.codeFontFamily = it
+                            }
+
+                            settings.notifyChanged()
+                        } catch (_: Exception) {
+                        } finally {
+                            ApplicationManager.getApplication().invokeLater {
+                                isUpdatingFromJs = false
+                            }
+                        }
+                    }
+                }
+            })
+        } catch (_: Exception) {
+        }
+
         connection.subscribe(PersianMarkdownSettingsListener.TOPIC, PersianMarkdownSettingsListener {
+            if (isUpdatingFromJs) return@PersianMarkdownSettingsListener
             ApplicationManager.getApplication().invokeLater({
                 try {
                     panel.reloadWithOffset(0)

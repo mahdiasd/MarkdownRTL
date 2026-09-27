@@ -137,12 +137,12 @@ object CssGenerator {
             body:not(#persian-markdown-switcher) {
                 padding-bottom: 85px !important;
             }
-            p:not(#persian-markdown-switcher *),
-            li:not(#persian-markdown-switcher *),
-            blockquote:not(#persian-markdown-switcher *),
-            table:not(#persian-markdown-switcher *),
-            td:not(#persian-markdown-switcher *),
-            th:not(#persian-markdown-switcher *) {
+            html:not(.pm-disabled) p:not(#persian-markdown-switcher *),
+            html:not(.pm-disabled) li:not(#persian-markdown-switcher *),
+            html:not(.pm-disabled) blockquote:not(#persian-markdown-switcher *),
+            html:not(.pm-disabled) table:not(#persian-markdown-switcher *),
+            html:not(.pm-disabled) td:not(#persian-markdown-switcher *),
+            html:not(.pm-disabled) th:not(#persian-markdown-switcher *) {
                 font-family: $faFontStack !important;
                 font-family: var(--pm-fa-font, $faFontStack) !important;
                 font-size: ${fs}px !important;
@@ -154,119 +154,126 @@ object CssGenerator {
 
         if (state.enhanceHeadings) {
             sb.append("""
-                h1:not(#persian-markdown-switcher *),
-                h2:not(#persian-markdown-switcher *),
-                h3:not(#persian-markdown-switcher *),
-                h4:not(#persian-markdown-switcher *),
-                h5:not(#persian-markdown-switcher *),
-                h6:not(#persian-markdown-switcher *) {
+                html:not(.pm-disabled) h1:not(#persian-markdown-switcher *),
+                html:not(.pm-disabled) h2:not(#persian-markdown-switcher *),
+                html:not(.pm-disabled) h3:not(#persian-markdown-switcher *),
+                html:not(.pm-disabled) h4:not(#persian-markdown-switcher *),
+                html:not(.pm-disabled) h5:not(#persian-markdown-switcher *),
+                html:not(.pm-disabled) h6:not(#persian-markdown-switcher *) {
                     font-family: var(--pm-fa-font, $faFontStack) !important;
                 }
-                h1:not(#persian-markdown-switcher *) { font-size: calc(var(--pm-font-size, ${fs}px) * 1.75) !important; line-height: 1.3 !important; }
-                h2:not(#persian-markdown-switcher *) { font-size: calc(var(--pm-font-size, ${fs}px) * 1.50) !important; line-height: 1.35 !important; }
-                h3:not(#persian-markdown-switcher *) { font-size: calc(var(--pm-font-size, ${fs}px) * 1.25) !important; line-height: 1.4 !important; }
-                h4:not(#persian-markdown-switcher *) { font-size: calc(var(--pm-font-size, ${fs}px) * 1.12) !important; line-height: 1.4 !important; }
-                h5:not(#persian-markdown-switcher *), h6:not(#persian-markdown-switcher *) { font-size: var(--pm-font-size, ${fs}px) !important; line-height: 1.4 !important; }
+                html:not(.pm-disabled) h1:not(#persian-markdown-switcher *) { font-size: calc(var(--pm-font-size, ${fs}px) * 1.75) !important; line-height: 1.3 !important; }
+                html:not(.pm-disabled) h2:not(#persian-markdown-switcher *) { font-size: calc(var(--pm-font-size, ${fs}px) * 1.50) !important; line-height: 1.35 !important; }
+                html:not(.pm-disabled) h3:not(#persian-markdown-switcher *) { font-size: calc(var(--pm-font-size, ${fs}px) * 1.25) !important; line-height: 1.4 !important; }
+                html:not(.pm-disabled) h4:not(#persian-markdown-switcher *) { font-size: calc(var(--pm-font-size, ${fs}px) * 1.12) !important; line-height: 1.4 !important; }
+                html:not(.pm-disabled) h5:not(#persian-markdown-switcher *), html:not(.pm-disabled) h6:not(#persian-markdown-switcher *) { font-size: var(--pm-font-size, ${fs}px) !important; line-height: 1.4 !important; }
             """.trimIndent()).append("\n")
         }
 
-        when (state.directionMode) {
-            DirectionMode.FORCE_RTL -> {
-                sb.append("""
-                    body:not(#persian-markdown-switcher),
-                    p:not(#persian-markdown-switcher *),
-                    h1:not(#persian-markdown-switcher *),
-                    h2:not(#persian-markdown-switcher *),
-                    h3:not(#persian-markdown-switcher *),
-                    h4:not(#persian-markdown-switcher *),
-                    h5:not(#persian-markdown-switcher *),
-                    h6:not(#persian-markdown-switcher *),
-                    ul:not(#persian-markdown-switcher *),
-                    ol:not(#persian-markdown-switcher *),
-                    blockquote:not(#persian-markdown-switcher *),
-                    table:not(#persian-markdown-switcher *),
-                    tr:not(#persian-markdown-switcher *),
-                    td:not(#persian-markdown-switcher *),
-                    th:not(#persian-markdown-switcher *) {
-                        direction: rtl !important;
-                        text-align: right !important;
-                    }
-                    ul:not(#persian-markdown-switcher *), ol:not(#persian-markdown-switcher *) {
-                        padding-right: 1.8em !important;
-                        padding-left: 0 !important;
-                    }
-                    blockquote:not(#persian-markdown-switcher *) {
-                        border-right: 4px solid #1EB4EB !important;
-                        border-left: none !important;
-                        padding-right: 1em !important;
-                        padding-left: 0 !important;
-                    }
-                """.trimIndent()).append("\n")
+        // Direction rules driven by [data-pm-mode] on <html> and active BiDi markers
+        sb.append("""
+            /* --- Mode: Force RTL --- */
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) body,
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) p:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) h1:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) h2:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) h3:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) h4:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) h5:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) h6:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) ul:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) ol:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) blockquote:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) table:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) tr:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) td:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) th:not(#persian-markdown-switcher *) {
+                direction: rtl !important;
+                text-align: right !important;
+                font-family: var(--pm-fa-font, $faFontStack) !important;
             }
-            DirectionMode.FORCE_LTR -> {
-                sb.append("""
-                    body:not(#persian-markdown-switcher),
-                    p:not(#persian-markdown-switcher *),
-                    h1:not(#persian-markdown-switcher *),
-                    h2:not(#persian-markdown-switcher *),
-                    h3:not(#persian-markdown-switcher *),
-                    h4:not(#persian-markdown-switcher *),
-                    h5:not(#persian-markdown-switcher *),
-                    h6:not(#persian-markdown-switcher *),
-                    ul:not(#persian-markdown-switcher *),
-                    ol:not(#persian-markdown-switcher *),
-                    blockquote:not(#persian-markdown-switcher *),
-                    table:not(#persian-markdown-switcher *),
-                    tr:not(#persian-markdown-switcher *),
-                    td:not(#persian-markdown-switcher *),
-                    th:not(#persian-markdown-switcher *) {
-                        direction: ltr !important;
-                        text-align: left !important;
-                        font-family: var(--pm-en-font, $enFontStack) !important;
-                    }
-                    ul:not(#persian-markdown-switcher *), ol:not(#persian-markdown-switcher *) {
-                        padding-left: 1.8em !important;
-                        padding-right: 0 !important;
-                    }
-                    blockquote:not(#persian-markdown-switcher *) {
-                        border-left: 4px solid #1EB4EB !important;
-                        border-right: none !important;
-                        padding-left: 1em !important;
-                        padding-right: 0 !important;
-                    }
-                """.trimIndent()).append("\n")
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) ul:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) ol:not(#persian-markdown-switcher *) {
+                padding-right: 1.8em !important;
+                padding-left: 0 !important;
             }
-            DirectionMode.AUTO -> {
-                sb.append("""
-                    [dir="rtl"]:not(#persian-markdown-switcher):not(#persian-markdown-switcher *),
-                    .persian-dir-rtl:not(#persian-markdown-switcher):not(#persian-markdown-switcher *) {
-                        direction: rtl !important;
-                        text-align: right !important;
-                        font-family: var(--pm-fa-font, $faFontStack) !important;
-                    }
-                    [dir="ltr"]:not(#persian-markdown-switcher):not(#persian-markdown-switcher *),
-                    .persian-dir-ltr:not(#persian-markdown-switcher):not(#persian-markdown-switcher *) {
-                        direction: ltr !important;
-                        text-align: left !important;
-                        font-family: var(--pm-en-font, $enFontStack) !important;
-                    }
-                    blockquote[dir="rtl"]:not(#persian-markdown-switcher *),
-                    blockquote.persian-dir-rtl:not(#persian-markdown-switcher *) {
-                        border-right: 4px solid #1EB4EB !important;
-                        border-left: none !important;
-                        padding-right: 1em !important;
-                        padding-left: 0 !important;
-                    }
-                    ul[dir="rtl"]:not(#persian-markdown-switcher *),
-                    ol[dir="rtl"]:not(#persian-markdown-switcher *),
-                    ul.persian-dir-rtl:not(#persian-markdown-switcher *),
-                    ol.persian-dir-rtl:not(#persian-markdown-switcher *) {
-                        padding-right: 1.8em !important;
-                        padding-left: 0 !important;
-                    }
-                """.trimIndent()).append("\n")
+            html[data-pm-mode="force_rtl"]:not(.pm-disabled) blockquote:not(#persian-markdown-switcher *) {
+                border-right: 4px solid #1EB4EB !important;
+                border-left: none !important;
+                padding-right: 1em !important;
+                padding-left: 0 !important;
             }
-        }
+
+            /* --- Mode: Force LTR --- */
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) body,
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) p:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) h1:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) h2:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) h3:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) h4:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) h5:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) h6:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) ul:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) ol:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) blockquote:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) table:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) tr:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) td:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) th:not(#persian-markdown-switcher *) {
+                direction: ltr !important;
+                text-align: left !important;
+                font-family: var(--pm-en-font, $enFontStack) !important;
+            }
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) ul:not(#persian-markdown-switcher *),
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) ol:not(#persian-markdown-switcher *) {
+                padding-left: 1.8em !important;
+                padding-right: 0 !important;
+            }
+            html[data-pm-mode="force_ltr"]:not(.pm-disabled) blockquote:not(#persian-markdown-switcher *) {
+                border-left: 4px solid #1EB4EB !important;
+                border-right: none !important;
+                padding-left: 1em !important;
+                padding-right: 0 !important;
+            }
+
+            /* --- Mode: Auto BiDi (Default) --- */
+            html:not([data-pm-mode="force_rtl"]):not([data-pm-mode="force_ltr"]):not(.pm-disabled) [dir="rtl"]:not(#persian-markdown-switcher):not(#persian-markdown-switcher *),
+            html:not([data-pm-mode="force_rtl"]):not([data-pm-mode="force_ltr"]):not(.pm-disabled) .persian-dir-rtl:not(#persian-markdown-switcher):not(#persian-markdown-switcher *),
+            html[data-pm-mode="auto"]:not(.pm-disabled) [dir="rtl"]:not(#persian-markdown-switcher):not(#persian-markdown-switcher *),
+            html[data-pm-mode="auto"]:not(.pm-disabled) .persian-dir-rtl:not(#persian-markdown-switcher):not(#persian-markdown-switcher *) {
+                direction: rtl !important;
+                text-align: right !important;
+                font-family: var(--pm-fa-font, $faFontStack) !important;
+            }
+            html:not([data-pm-mode="force_rtl"]):not([data-pm-mode="force_ltr"]):not(.pm-disabled) [dir="ltr"]:not(#persian-markdown-switcher):not(#persian-markdown-switcher *),
+            html:not([data-pm-mode="force_rtl"]):not([data-pm-mode="force_ltr"]):not(.pm-disabled) .persian-dir-ltr:not(#persian-markdown-switcher):not(#persian-markdown-switcher *),
+            html[data-pm-mode="auto"]:not(.pm-disabled) [dir="ltr"]:not(#persian-markdown-switcher):not(#persian-markdown-switcher *),
+            html[data-pm-mode="auto"]:not(.pm-disabled) .persian-dir-ltr:not(#persian-markdown-switcher):not(#persian-markdown-switcher *) {
+                direction: ltr !important;
+                text-align: left !important;
+                font-family: var(--pm-en-font, $enFontStack) !important;
+            }
+            html:not([data-pm-mode="force_rtl"]):not([data-pm-mode="force_ltr"]):not(.pm-disabled) blockquote[dir="rtl"]:not(#persian-markdown-switcher *),
+            html:not([data-pm-mode="force_rtl"]):not([data-pm-mode="force_ltr"]):not(.pm-disabled) blockquote.persian-dir-rtl:not(#persian-markdown-switcher *),
+            html[data-pm-mode="auto"]:not(.pm-disabled) blockquote[dir="rtl"]:not(#persian-markdown-switcher *),
+            html[data-pm-mode="auto"]:not(.pm-disabled) blockquote.persian-dir-rtl:not(#persian-markdown-switcher *) {
+                border-right: 4px solid #1EB4EB !important;
+                border-left: none !important;
+                padding-right: 1em !important;
+                padding-left: 0 !important;
+            }
+            html:not([data-pm-mode="force_rtl"]):not([data-pm-mode="force_ltr"]):not(.pm-disabled) ul[dir="rtl"]:not(#persian-markdown-switcher *),
+            html:not([data-pm-mode="force_rtl"]):not([data-pm-mode="force_ltr"]):not(.pm-disabled) ol[dir="rtl"]:not(#persian-markdown-switcher *),
+            html:not([data-pm-mode="force_rtl"]):not([data-pm-mode="force_ltr"]):not(.pm-disabled) ul.persian-dir-rtl:not(#persian-markdown-switcher *),
+            html:not([data-pm-mode="force_rtl"]):not([data-pm-mode="force_ltr"]):not(.pm-disabled) ol.persian-dir-rtl:not(#persian-markdown-switcher *),
+            html[data-pm-mode="auto"]:not(.pm-disabled) ul[dir="rtl"]:not(#persian-markdown-switcher *),
+            html[data-pm-mode="auto"]:not(.pm-disabled) ol[dir="rtl"]:not(#persian-markdown-switcher *),
+            html[data-pm-mode="auto"]:not(.pm-disabled) ul.persian-dir-rtl:not(#persian-markdown-switcher *),
+            html[data-pm-mode="auto"]:not(.pm-disabled) ol.persian-dir-rtl:not(#persian-markdown-switcher *) {
+                padding-right: 1.8em !important;
+                padding-left: 0 !important;
+            }
+        """.trimIndent()).append("\n")
 
         // Code blocks: strictly LTR, left-aligned, isolated
         sb.append("""
@@ -292,27 +299,53 @@ object CssGenerator {
             a:not(#persian-markdown-switcher *) {
                 unicode-bidi: isolate !important;
             }
-            html.pm-disabled [dir="rtl"]:not(#persian-markdown-switcher *),
-            html.pm-disabled .persian-dir-rtl:not(#persian-markdown-switcher *) {
-                direction: ltr !important;
-                text-align: left !important;
+
+            /* --- Complete styling deactivation when disabled --- */
+            html.pm-disabled p:not(#persian-markdown-switcher *),
+            html.pm-disabled h1:not(#persian-markdown-switcher *),
+            html.pm-disabled h2:not(#persian-markdown-switcher *),
+            html.pm-disabled h3:not(#persian-markdown-switcher *),
+            html.pm-disabled h4:not(#persian-markdown-switcher *),
+            html.pm-disabled h5:not(#persian-markdown-switcher *),
+            html.pm-disabled h6:not(#persian-markdown-switcher *),
+            html.pm-disabled li:not(#persian-markdown-switcher *),
+            html.pm-disabled blockquote:not(#persian-markdown-switcher *),
+            html.pm-disabled table:not(#persian-markdown-switcher *),
+            html.pm-disabled tr:not(#persian-markdown-switcher *),
+            html.pm-disabled td:not(#persian-markdown-switcher *),
+            html.pm-disabled th:not(#persian-markdown-switcher *),
+            html.pm-disabled pre:not(#persian-markdown-switcher *),
+            html.pm-disabled code:not(#persian-markdown-switcher *),
+            html.pm-disabled kbd:not(#persian-markdown-switcher *),
+            html.pm-disabled samp:not(#persian-markdown-switcher *),
+            html.pm-disabled tt:not(#persian-markdown-switcher *) {
+                direction: inherit !important;
+                text-align: inherit !important;
+                font-family: inherit !important;
+                font-size: inherit !important;
+                line-height: inherit !important;
             }
             html.pm-disabled blockquote:not(#persian-markdown-switcher *) {
-                border-left: 4px solid #1EB4EB !important;
+                border-left: inherit !important;
                 border-right: none !important;
-                padding-left: 1em !important;
-                padding-right: 0 !important;
+                padding-left: inherit !important;
+                padding-right: inherit !important;
             }
             html.pm-disabled ul:not(#persian-markdown-switcher *),
             html.pm-disabled ol:not(#persian-markdown-switcher *) {
-                padding-left: 1.8em !important;
-                padding-right: 0 !important;
+                padding-left: inherit !important;
+                padding-right: inherit !important;
             }
         """.trimIndent()).append("\n")
 
         // Styles for Linear / Raycast Bento Switcher in preview (bottom-left popup)
         sb.append("""
             /* --- Isolated Floating Switcher & Dialog --- */
+            html {
+                transform: none !important;
+                filter: none !important;
+                contain: none !important;
+            }
             #persian-markdown-switcher,
             #persian-markdown-switcher * {
                 box-sizing: border-box !important;
@@ -324,12 +357,16 @@ object CssGenerator {
             }
             #persian-markdown-switcher {
                 position: fixed !important;
-                bottom: 12px !important;
-                left: 12px !important;
+                bottom: 14px !important;
+                left: 14px !important;
+                right: auto !important;
+                top: auto !important;
                 z-index: 2147483647 !important;
                 user-select: none !important;
                 -webkit-user-select: none !important;
                 line-height: 1.2 !important;
+                transform: none !important;
+                margin: 0 !important;
             }
 
             /* Floating Trigger Rounded Button (Concentric 10px radius matching squircle icon) */
@@ -337,9 +374,9 @@ object CssGenerator {
                 position: relative !important;
                 display: inline-flex !important;
                 align-items: center !important;
-                gap: 7px !important;
-                padding: 3px 11px 3px 4px !important;
-                height: 28px !important;
+                gap: 8px !important;
+                padding: 4px 13px 4px 5px !important;
+                height: 32px !important;
                 border-radius: 10px !important;
                 background: #111722 !important;
                 border: 1px solid rgba(30, 180, 235, 0.35) !important;
@@ -366,9 +403,9 @@ object CssGenerator {
 
             /* Squircle Icon Box with Align Vertical Top SVG */
             #pm-status-dot {
-                width: 20px !important;
-                height: 20px !important;
-                border-radius: 6px !important;
+                width: 22px !important;
+                height: 22px !important;
+                border-radius: 6.5px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
@@ -380,8 +417,8 @@ object CssGenerator {
                 overflow: visible !important;
             }
             #pm-status-dot svg {
-                width: 20px !important;
-                height: 20px !important;
+                width: 22px !important;
+                height: 22px !important;
                 display: block !important;
                 transition: transform 0.18s ease, filter 0.2s ease !important;
                 filter: drop-shadow(0 0 5px rgba(30, 180, 235, 0.45)) !important;
@@ -396,7 +433,7 @@ object CssGenerator {
 
             /* Markdown RTL Text Label */
             #pm-current-label {
-                font-size: 11.5px !important;
+                font-size: 12px !important;
                 font-weight: 600 !important;
                 color: #F0F9FF !important;
                 letter-spacing: -0.01em !important;
@@ -407,17 +444,17 @@ object CssGenerator {
                 color: #94A3B8 !important;
             }
 
-            /* Popover Compact Bento Card */
+            /* Popover Bento Card */
             #pm-card {
                 position: absolute !important;
-                bottom: calc(100% + 8px) !important;
+                bottom: calc(100% + 9px) !important;
                 left: 0 !important;
-                width: 270px !important;
+                width: 285px !important;
                 max-width: calc(100vw - 24px) !important;
                 background: rgba(13, 17, 25, 0.97) !important;
                 backdrop-filter: blur(20px) saturate(180%) !important;
                 -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-                border-radius: 12px !important;
+                border-radius: 13px !important;
                 border: 1px solid #202737 !important;
                 box-shadow: 0 20px 48px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.06) !important;
                 display: flex !important;
@@ -440,7 +477,7 @@ object CssGenerator {
                 height: 1px !important;
                 background: linear-gradient(to right, transparent, rgba(30, 180, 235, 0.5), transparent) !important;
                 pointer-events: none !important;
-                border-radius: 12px 12px 0 0 !important;
+                border-radius: 13px 13px 0 0 !important;
             }
             #persian-markdown-switcher.pm-open #pm-card {
                 opacity: 1 !important;
@@ -451,23 +488,23 @@ object CssGenerator {
 
             /* Header */
             #pm-header {
-                padding: 6px 9px !important;
+                padding: 7px 10px !important;
                 border-bottom: 1px solid #1A212E !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: space-between !important;
                 background: rgba(16, 20, 29, 0.8) !important;
-                border-radius: 12px 12px 0 0 !important;
+                border-radius: 13px 13px 0 0 !important;
             }
             .pm-header-left {
                 display: flex !important;
                 align-items: center !important;
-                gap: 6px !important;
+                gap: 7px !important;
             }
             .pm-brand-icon-box {
-                width: 18px !important;
-                height: 18px !important;
-                border-radius: 5px !important;
+                width: 20px !important;
+                height: 20px !important;
+                border-radius: 6px !important;
                 background: linear-gradient(135deg, rgba(30, 180, 235, 0.18), rgba(142, 217, 245, 0.1)) !important;
                 border: 1px solid rgba(30, 180, 235, 0.35) !important;
                 display: flex !important;
@@ -476,21 +513,21 @@ object CssGenerator {
                 flex-shrink: 0 !important;
             }
             .pm-brand-icon-box svg {
-                width: 10px !important;
-                height: 10px !important;
+                width: 11px !important;
+                height: 11px !important;
                 color: #1EB4EB !important;
             }
             .pm-header-title {
-                font-size: 13px !important;
+                font-size: 13.5px !important;
                 font-weight: 600 !important;
                 color: #F1F5F9 !important;
                 line-height: 1 !important;
             }
             .pm-header-badge {
-                padding: 1.5px 5px !important;
+                padding: 2px 6px !important;
                 background: rgba(30, 180, 235, 0.15) !important;
                 border: 1px solid rgba(30, 180, 235, 0.3) !important;
-                font-size: 10px !important;
+                font-size: 10.5px !important;
                 font-family: 'JetBrains Mono', monospace !important;
                 font-weight: 500 !important;
                 color: #8ED9F5 !important;
@@ -498,8 +535,8 @@ object CssGenerator {
                 line-height: 1 !important;
             }
             #pm-close-btn {
-                height: 20px !important;
-                padding: 0 6px !important;
+                height: 22px !important;
+                padding: 0 7px !important;
                 border-radius: 4px !important;
                 display: flex !important;
                 align-items: center !important;
@@ -508,7 +545,7 @@ object CssGenerator {
                 background: transparent !important;
                 border: 1px solid transparent !important;
                 font-family: 'JetBrains Mono', monospace !important;
-                font-size: 10.5px !important;
+                font-size: 11px !important;
                 cursor: pointer !important;
                 transition: all 0.15s !important;
                 line-height: 1 !important;
@@ -521,42 +558,196 @@ object CssGenerator {
 
             /* Card Body */
             #pm-body {
-                padding: 6px 7px !important;
+                padding: 7px 8px !important;
                 display: flex !important;
                 flex-direction: column !important;
-                gap: 5px !important;
+                gap: 6px !important;
                 overflow: visible !important;
             }
 
-            /* Toggle Controls */
-            .pm-toggle-grid {
-                display: grid !important;
-                grid-template-columns: 1fr 1fr !important;
-                gap: 5px !important;
-            }
-            .pm-toggle-card {
+            /* Master Enable Card */
+            .pm-master-card {
                 display: flex !important;
                 align-items: center !important;
                 justify-content: space-between !important;
-                padding: 4px 8px !important;
-                height: 28px !important;
-                border-radius: 6px !important;
+                padding: 5px 9px !important;
+                height: 31px !important;
+                border-radius: 7px !important;
                 background: #121722 !important;
                 border: 1px solid #1E2536 !important;
             }
-            .pm-toggle-label-wrap {
+            .pm-master-label-wrap {
                 display: flex !important;
                 align-items: center !important;
-                gap: 4px !important;
+                gap: 6px !important;
             }
-            .pm-toggle-title {
+            .pm-master-title {
                 font-size: 11.5px !important;
                 font-weight: 500 !important;
-                color: #CBD5E1 !important;
+                color: #F1F5F9 !important;
                 line-height: 1 !important;
             }
+
+            /* Controls Container (which dims when disabled) */
+            #pm-controls-wrap {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 6px !important;
+                transition: opacity 0.2s ease, filter 0.2s ease !important;
+            }
+            #pm-controls-wrap.pm-controls-disabled {
+                opacity: 0.35 !important;
+                pointer-events: none !important;
+                filter: grayscale(0.6) !important;
+            }
+
+            /* Direction Mode 3-Segment Tab Bar */
+            .pm-tabs-bar {
+                display: flex !important;
+                align-items: center !important;
+                background: #0E131E !important;
+                border: 1px solid #1E2536 !important;
+                border-radius: 8px !important;
+                padding: 2.5px !important;
+                gap: 3px !important;
+                position: relative !important;
+            }
+            .pm-tab-btn {
+                flex: 1 !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 5px !important;
+                height: 27px !important;
+                padding: 0 5px !important;
+                border-radius: 6px !important;
+                background: transparent !important;
+                border: 1px solid transparent !important;
+                color: #8292A6 !important;
+                font-size: 11.5px !important;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+                font-weight: 500 !important;
+                cursor: pointer !important;
+                transition: all 0.15s ease !important;
+                outline: none !important;
+                user-select: none !important;
+                white-space: nowrap !important;
+                position: relative !important;
+            }
+            .pm-tab-btn:hover {
+                color: #F1F5F9 !important;
+                background: rgba(255, 255, 255, 0.04) !important;
+            }
+            .pm-tab-btn.pm-active {
+                background: #162031 !important;
+                color: #F0F9FF !important;
+                border: 1px solid #1EB4EB !important;
+                box-shadow: 0 0 10px rgba(30, 180, 235, 0.25) !important;
+                font-weight: 600 !important;
+            }
+
+            /* Info Icon (i) & Tooltip */
+            .pm-info-icon {
+                width: 13px !important;
+                height: 13px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                border-radius: 50% !important;
+                background: rgba(255, 255, 255, 0.08) !important;
+                color: #8292A6 !important;
+                font-size: 9px !important;
+                font-family: 'JetBrains Mono', monospace !important;
+                font-weight: 700 !important;
+                line-height: 1 !important;
+                flex-shrink: 0 !important;
+                cursor: help !important;
+                transition: all 0.15s ease !important;
+            }
+            .pm-tab-btn:hover .pm-info-icon,
+            .pm-info-icon:hover {
+                background: rgba(30, 180, 235, 0.25) !important;
+                color: #1EB4EB !important;
+            }
+
+            .pm-tooltip {
+                position: absolute !important;
+                bottom: calc(100% + 7px) !important;
+                background: #090D14 !important;
+                color: #E2E8F0 !important;
+                border: 1px solid #232D40 !important;
+                border-radius: 6px !important;
+                padding: 6px 9px !important;
+                font-size: 10.5px !important;
+                font-weight: 400 !important;
+                line-height: 1.35 !important;
+                white-space: normal !important;
+                width: 185px !important;
+                text-align: center !important;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85) !important;
+                pointer-events: none !important;
+                opacity: 0 !important;
+                visibility: hidden !important;
+                transform: translateY(4px) scale(0.96) !important;
+                transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s !important;
+                z-index: 1000 !important;
+            }
+            .pm-tooltip::after {
+                content: '' !important;
+                position: absolute !important;
+                top: 100% !important;
+                border-width: 4px !important;
+                border-style: solid !important;
+                border-color: #232D40 transparent transparent transparent !important;
+            }
+
+            /* Tooltip positioning per tab to prevent overflow */
+            #pm-tab-auto .pm-tooltip {
+                left: 0 !important;
+                transform: translateY(4px) scale(0.96) !important;
+            }
+            #pm-tab-auto:hover .pm-tooltip,
+            #pm-tab-auto .pm-info-icon:hover .pm-tooltip {
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: translateY(0) scale(1) !important;
+            }
+            #pm-tab-auto .pm-tooltip::after {
+                left: 20px !important;
+            }
+
+            #pm-tab-force-rtl .pm-tooltip {
+                left: 50% !important;
+                transform: translateX(-50%) translateY(4px) scale(0.96) !important;
+            }
+            #pm-tab-force-rtl:hover .pm-tooltip,
+            #pm-tab-force-rtl .pm-info-icon:hover .pm-tooltip {
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: translateX(-50%) translateY(0) scale(1) !important;
+            }
+            #pm-tab-force-rtl .pm-tooltip::after {
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+            }
+
+            #pm-tab-force-ltr .pm-tooltip {
+                right: 0 !important;
+                left: auto !important;
+                transform: translateY(4px) scale(0.96) !important;
+            }
+            #pm-tab-force-ltr:hover .pm-tooltip,
+            #pm-tab-force-ltr .pm-info-icon:hover .pm-tooltip {
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: translateY(0) scale(1) !important;
+            }
+            #pm-tab-force-ltr .pm-tooltip::after {
+                right: 20px !important;
+                left: auto !important;
+            }
             .pm-kbd-tag {
-                padding: 0 3px !important;
+                padding: 0 3.5px !important;
                 border-radius: 3px !important;
                 background: #1B2130 !important;
                 font-size: 9.5px !important;
@@ -570,8 +761,8 @@ object CssGenerator {
             .pm-switch {
                 position: relative !important;
                 display: inline-block !important;
-                width: 24px !important;
-                height: 14px !important;
+                width: 27px !important;
+                height: 16px !important;
                 flex-shrink: 0 !important;
                 cursor: pointer !important;
                 margin: 0 !important;
@@ -595,8 +786,8 @@ object CssGenerator {
                 position: absolute !important;
                 top: 2px !important;
                 left: 2px !important;
-                width: 10px !important;
-                height: 10px !important;
+                width: 12px !important;
+                height: 12px !important;
                 background: #FFFFFF !important;
                 border-radius: 50% !important;
                 transition: transform 0.15s ease !important;
@@ -606,12 +797,12 @@ object CssGenerator {
                 background: #1EB4EB !important;
             }
             .pm-switch input:checked + .pm-switch-track::after {
-                transform: translateX(10px) !important;
+                transform: translateX(11px) !important;
             }
 
-            /* Section Title - Clean, subtle, no uppercase screaming badge */
+            /* Section Title - Clean, subtle */
             .pm-section-title {
-                font-size: 10.5px !important;
+                font-size: 11px !important;
                 font-weight: 500 !important;
                 color: #64748B !important;
                 padding: 2px 2px 0 2px !important;
@@ -622,7 +813,7 @@ object CssGenerator {
             /* Bento Card Container */
             .pm-bento-card {
                 background: #121722 !important;
-                border-radius: 6px !important;
+                border-radius: 7px !important;
                 border: 1px solid #1E2536 !important;
                 overflow: visible !important;
             }
@@ -633,19 +824,19 @@ object CssGenerator {
                 display: flex !important;
                 align-items: center !important;
                 justify-content: space-between !important;
-                gap: 5px !important;
-                padding: 4px 7px !important;
+                gap: 6px !important;
+                padding: 5px 8px !important;
                 border-bottom: 1px solid #181F2C !important;
             }
             .pm-font-combobox:last-child {
                 border-bottom: none !important;
             }
             .pm-combobox-label {
-                font-size: 11px !important;
+                font-size: 11.5px !important;
                 font-weight: 500 !important;
                 color: #94A3B8 !important;
                 white-space: nowrap !important;
-                width: 40px !important;
+                width: 42px !important;
                 flex-shrink: 0 !important;
                 line-height: 1 !important;
             }
@@ -657,14 +848,14 @@ object CssGenerator {
             }
             .pm-font-search-input {
                 width: 100% !important;
-                height: 24px !important;
+                height: 26px !important;
                 background: #0C1018 !important;
                 border: 1px solid #1C2332 !important;
                 border-radius: 4px !important;
                 color: #E2E8F0 !important;
-                font-size: 11.5px !important;
+                font-size: 12px !important;
                 font-family: 'JetBrains Mono', -apple-system, sans-serif !important;
-                padding: 0 16px 0 6px !important;
+                padding: 0 18px 0 7px !important;
                 outline: none !important;
                 transition: all 0.12s ease !important;
                 line-height: 1 !important;
@@ -681,15 +872,15 @@ object CssGenerator {
                 transform: translateY(-50%) !important;
                 pointer-events: none !important;
                 color: #64748B !important;
-                width: 8px !important;
-                height: 8px !important;
+                width: 9px !important;
+                height: 9px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
             }
             .pm-combobox-arrow svg {
-                width: 8px !important;
-                height: 8px !important;
+                width: 9px !important;
+                height: 9px !important;
             }
 
             /* Floating Searchable Dropdown */
@@ -698,39 +889,39 @@ object CssGenerator {
                 top: calc(100% + 2px) !important;
                 left: 0 !important;
                 right: 0 !important;
-                max-height: 140px !important;
+                max-height: 150px !important;
                 overflow-y: auto !important;
                 background: #0E131E !important;
                 border: 1px solid #252F42 !important;
-                border-radius: 5px !important;
+                border-radius: 6px !important;
                 box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8) !important;
                 z-index: 999999 !important;
                 display: none;
-                padding: 2px !important;
+                padding: 3px !important;
             }
             .pm-combobox-dropdown.pm-open {
                 display: block !important;
             }
             .pm-combobox-dropdown::-webkit-scrollbar {
-                width: 3px !important;
+                width: 4px !important;
             }
             .pm-combobox-dropdown::-webkit-scrollbar-thumb {
                 background: #263145 !important;
                 border-radius: 2px !important;
             }
             .pm-dropdown-header {
-                font-size: 9.5px !important;
+                font-size: 10px !important;
                 font-weight: 600 !important;
                 color: #64748B !important;
-                padding: 3px 5px 2px 5px !important;
+                padding: 4px 6px 2px 6px !important;
                 user-select: none !important;
             }
             .pm-dropdown-item {
-                font-size: 11px !important;
+                font-size: 11.5px !important;
                 font-family: 'JetBrains Mono', -apple-system, sans-serif !important;
                 color: #CBD5E1 !important;
-                padding: 3px 6px !important;
-                border-radius: 3px !important;
+                padding: 4px 7px !important;
+                border-radius: 4px !important;
                 cursor: pointer !important;
                 white-space: nowrap !important;
                 overflow: hidden !important;
@@ -753,9 +944,9 @@ object CssGenerator {
                 margin-bottom: 2px !important;
             }
             .pm-dropdown-empty {
-                font-size: 10.5px !important;
+                font-size: 11px !important;
                 color: #64748B !important;
-                padding: 5px !important;
+                padding: 6px !important;
                 text-align: center !important;
             }
 
@@ -767,16 +958,16 @@ object CssGenerator {
             }
             .pm-metric-card {
                 background: #121722 !important;
-                border-radius: 6px !important;
+                border-radius: 7px !important;
                 border: 1px solid #1E2536 !important;
-                padding: 4px 8px !important;
-                height: 28px !important;
+                padding: 5px 9px !important;
+                height: 31px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: space-between !important;
             }
             .pm-metric-label {
-                font-size: 11px !important;
+                font-size: 11.5px !important;
                 font-weight: 500 !important;
                 color: #94A3B8 !important;
                 line-height: 1 !important;
@@ -784,17 +975,17 @@ object CssGenerator {
             .pm-stepper-group {
                 display: flex !important;
                 align-items: center !important;
-                gap: 3px !important;
+                gap: 4px !important;
             }
             .pm-stepper-btn {
-                width: 17px !important;
-                height: 17px !important;
-                border-radius: 3px !important;
+                width: 20px !important;
+                height: 20px !important;
+                border-radius: 4px !important;
                 background: #1A2130 !important;
                 color: #94A3B8 !important;
                 border: none !important;
                 cursor: pointer !important;
-                font-size: 12px !important;
+                font-size: 13px !important;
                 font-weight: 500 !important;
                 line-height: 1 !important;
                 display: flex !important;
@@ -812,31 +1003,31 @@ object CssGenerator {
             }
             .pm-metric-val {
                 font-family: 'JetBrains Mono', monospace !important;
-                font-size: 10.5px !important;
+                font-size: 11px !important;
                 color: #8ED9F5 !important;
                 font-weight: 500 !important;
-                padding: 1px 4px !important;
+                padding: 2px 5px !important;
                 background: rgba(30, 180, 235, 0.15) !important;
-                border-radius: 3px !important;
+                border-radius: 4px !important;
                 border: 1px solid rgba(30, 180, 235, 0.3) !important;
-                min-width: 32px !important;
+                min-width: 35px !important;
                 text-align: center !important;
                 line-height: 1.2 !important;
             }
 
-            /* Compact Footer */
+            /* Footer */
             #pm-footer {
-                padding: 5px 8px !important;
+                padding: 6px 9px !important;
                 background: rgba(16, 20, 29, 0.8) !important;
                 border-top: 1px solid #1A212E !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: space-between !important;
-                border-radius: 0 0 12px 12px !important;
+                border-radius: 0 0 13px 13px !important;
             }
             #pm-reset-btn {
-                padding: 3px 6px !important;
-                font-size: 11px !important;
+                padding: 3px 7px !important;
+                font-size: 11.5px !important;
                 color: #94A3B8 !important;
                 font-weight: 500 !important;
                 border-radius: 4px !important;
@@ -854,12 +1045,12 @@ object CssGenerator {
                 display: flex !important;
                 align-items: center !important;
                 gap: 5px !important;
-                padding: 3px 7px !important;
+                padding: 3px 8px !important;
                 border-radius: 4px !important;
                 background: transparent !important;
                 border: 1px solid transparent !important;
                 color: #94A3B8 !important;
-                font-size: 11px !important;
+                font-size: 11.5px !important;
                 font-weight: 500 !important;
                 text-decoration: none !important;
                 transition: all 0.12s !important;
@@ -901,6 +1092,7 @@ object CssGenerator {
         state: PersianMarkdownState,
         systemFonts: Array<String> = emptyArray()
     ): String {
+        val initialEnabled = state.enabled
         val initialMode = state.directionMode.id
         val defaultFontSize = state.fontSize
         val defaultLineHeight = state.lineHeight
@@ -923,12 +1115,26 @@ object CssGenerator {
                 var defaultFaFont = '${escapeJs(defaultFaFont)}';
                 var defaultEnFont = '${escapeJs(defaultEnFont)}';
                 var defaultCodeFont = '${escapeJs(defaultCodeFont)}';
-                var currentMode = '${escapeJs(initialMode)}';
+                function savePref(k, v) { try { localStorage.setItem('pm_' + k, v); } catch(e){} }
+                function getPref(k, def) { try { var v = localStorage.getItem('pm_' + k); return v !== null ? v : def; } catch(e){ return def; } }
+
+                var savedPrefEnabled = getPref('enabled', '$initialEnabled');
+                var isEnabled = savedPrefEnabled === '1' || savedPrefEnabled === 'true';
+                var currentMode = getPref('mode', '${escapeJs(initialMode)}');
+                if (currentMode !== 'auto' && currentMode !== 'force_rtl' && currentMode !== 'force_ltr') {
+                    currentMode = '${escapeJs(initialMode)}';
+                }
+                var currentFs = parseInt(getPref('font_size', defaultFs), 10) || defaultFs;
+                var currentLh = parseFloat(getPref('line_height', defaultLh)) || defaultLh;
                 var systemFonts = $systemFontsJson;
                 var persianRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
 
-                function savePref(k, v) { try { localStorage.setItem('pm_' + k, v); } catch(e){} }
-                function getPref(k, def) { try { var v = localStorage.getItem('pm_' + k); return v !== null ? v : def; } catch(e){ return def; } }
+                document.documentElement.setAttribute('data-pm-mode', currentMode);
+                if (!isEnabled) {
+                    document.documentElement.classList.add('pm-disabled');
+                } else {
+                    document.documentElement.classList.remove('pm-disabled');
+                }
 
                 function hasPersian(text) {
                     return text ? persianRegex.test(text) : false;
@@ -955,19 +1161,21 @@ object CssGenerator {
                 }
 
                 function resetDirections() {
-                    var elements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li, blockquote, td, th');
+                    var elements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li, blockquote, td, th, pre, code, kbd, samp, tt, a');
                     for (var i = 0; i < elements.length; i++) {
                         var el = elements[i];
-                        if (el.closest('pre, #persian-markdown-switcher')) continue;
+                        if (el.closest('#persian-markdown-switcher')) continue;
                         el.removeAttribute('dir');
                         el.classList.remove('persian-dir-rtl');
                         el.classList.remove('persian-dir-ltr');
+                        el.style.direction = '';
+                        el.style.textAlign = '';
+                        el.style.unicodeBidi = '';
                     }
                 }
 
                 function applyDirections() {
-                    var enabledInput = document.getElementById('pm-opt-enabled');
-                    if (enabledInput && !enabledInput.checked) {
+                    if (!isEnabled) {
                         resetDirections();
                         return;
                     }
@@ -1227,13 +1435,13 @@ object CssGenerator {
                 }
 
                 function createSwitcherUI() {
-                    var existing = document.getElementById('persian-markdown-switcher');
-                    var container = document.body || document.documentElement;
-                    if (!container) return;
+                    var target = document.documentElement || document.body;
+                    if (!target) return;
 
+                    var existing = document.getElementById('persian-markdown-switcher');
                     if (existing) {
-                        if (document.body && existing.parentElement !== document.body) {
-                            document.body.appendChild(existing);
+                        if (existing.parentElement !== target) {
+                            target.appendChild(existing);
                         }
                         return;
                     }
@@ -1300,77 +1508,90 @@ object CssGenerator {
                                 '</div>' +
                             '</div>' +
                             '<div id="pm-body">' +
-                                '<div class="pm-toggle-grid">' +
-                                    '<div class="pm-toggle-card">' +
-                                        '<div class="pm-toggle-label-wrap">' +
-                                            '<span class="pm-toggle-title">Enabled</span>' +
-                                            '<span class="pm-kbd-tag">⌥E</span>' +
-                                        '</div>' +
-                                        '<label class="pm-switch">' +
-                                            '<input type="checkbox" id="pm-opt-enabled" checked>' +
-                                            '<span class="pm-switch-track"></span>' +
-                                        '</label>' +
+                                '<div class="pm-master-card">' +
+                                    '<div class="pm-master-label-wrap">' +
+                                        '<span class="pm-master-title">Enable Markdown RTL</span>' +
+                                        '<span class="pm-kbd-tag">⌥E</span>' +
                                     '</div>' +
-                                    '<div class="pm-toggle-card">' +
-                                        '<div class="pm-toggle-label-wrap">' +
-                                            '<span class="pm-toggle-title">Force RTL</span>' +
-                                            '<span class="pm-kbd-tag">⌥R</span>' +
-                                        '</div>' +
-                                        '<label class="pm-switch">' +
-                                            '<input type="checkbox" id="pm-opt-force-rtl">' +
-                                            '<span class="pm-switch-track"></span>' +
-                                        '</label>' +
-                                    '</div>' +
+                                    '<label class="pm-switch">' +
+                                        '<input type="checkbox" id="pm-opt-enabled">' +
+                                        '<span class="pm-switch-track"></span>' +
+                                    '</label>' +
                                 '</div>' +
-                                '<div class="pm-section-title">Fonts</div>' +
-                                '<div class="pm-bento-card">' +
-                                    '<div class="pm-font-combobox" id="pm-combo-fa">' +
-                                        '<span class="pm-combobox-label">FA/AR</span>' +
-                                        '<div class="pm-combobox-input-wrap">' +
-                                            '<input type="text" class="pm-font-search-input" id="pm-input-fa" placeholder="Search font..." autocomplete="off" spellcheck="false">' +
-                                            '<div class="pm-combobox-arrow">' +
-                                                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>' +
+                                '<div id="pm-controls-wrap">' +
+                                    '<div class="pm-tabs-bar">' +
+                                        '<button type="button" class="pm-tab-btn" id="pm-tab-auto" data-mode="auto">' +
+                                            '<span>Auto</span>' +
+                                            '<span class="pm-info-icon">' +
+                                                'ⓘ' +
+                                                '<span class="pm-tooltip">Detects text direction per paragraph (Persian/Arabic → RTL, English/Code → LTR)</span>' +
+                                            '</span>' +
+                                        '</button>' +
+                                        '<button type="button" class="pm-tab-btn" id="pm-tab-force-rtl" data-mode="force_rtl">' +
+                                            '<span>Force RTL</span>' +
+                                            '<span class="pm-info-icon">' +
+                                                'ⓘ' +
+                                                '<span class="pm-tooltip">Forces all paragraphs and lists to render Right-to-Left</span>' +
+                                            '</span>' +
+                                        '</button>' +
+                                        '<button type="button" class="pm-tab-btn" id="pm-tab-force-ltr" data-mode="force_ltr">' +
+                                            '<span>Force LTR</span>' +
+                                            '<span class="pm-info-icon">' +
+                                                'ⓘ' +
+                                                '<span class="pm-tooltip">Forces all paragraphs and lists to render Left-to-Right</span>' +
+                                            '</span>' +
+                                        '</button>' +
+                                    '</div>' +
+                                    '<div class="pm-section-title">Fonts</div>' +
+                                    '<div class="pm-bento-card">' +
+                                        '<div class="pm-font-combobox" id="pm-combo-fa">' +
+                                            '<span class="pm-combobox-label">FA/AR</span>' +
+                                            '<div class="pm-combobox-input-wrap">' +
+                                                '<input type="text" class="pm-font-search-input" id="pm-input-fa" placeholder="Search font..." autocomplete="off" spellcheck="false">' +
+                                                '<div class="pm-combobox-arrow">' +
+                                                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>' +
+                                                '</div>' +
+                                                '<div class="pm-combobox-dropdown" id="pm-drop-fa"></div>' +
                                             '</div>' +
-                                            '<div class="pm-combobox-dropdown" id="pm-drop-fa"></div>' +
                                         '</div>' +
-                                    '</div>' +
-                                    '<div class="pm-font-combobox" id="pm-combo-en">' +
-                                        '<span class="pm-combobox-label">EN</span>' +
-                                        '<div class="pm-combobox-input-wrap">' +
-                                            '<input type="text" class="pm-font-search-input" id="pm-input-en" placeholder="Search font..." autocomplete="off" spellcheck="false">' +
-                                            '<div class="pm-combobox-arrow">' +
-                                                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>' +
+                                        '<div class="pm-font-combobox" id="pm-combo-en">' +
+                                            '<span class="pm-combobox-label">EN</span>' +
+                                            '<div class="pm-combobox-input-wrap">' +
+                                                '<input type="text" class="pm-font-search-input" id="pm-input-en" placeholder="Search font..." autocomplete="off" spellcheck="false">' +
+                                                '<div class="pm-combobox-arrow">' +
+                                                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>' +
+                                                '</div>' +
+                                                '<div class="pm-combobox-dropdown" id="pm-drop-en"></div>' +
                                             '</div>' +
-                                            '<div class="pm-combobox-dropdown" id="pm-drop-en"></div>' +
                                         '</div>' +
-                                    '</div>' +
-                                    '<div class="pm-font-combobox" id="pm-combo-code">' +
-                                        '<span class="pm-combobox-label">Code</span>' +
-                                        '<div class="pm-combobox-input-wrap">' +
-                                            '<input type="text" class="pm-font-search-input" id="pm-input-code" placeholder="Search font..." autocomplete="off" spellcheck="false">' +
-                                            '<div class="pm-combobox-arrow">' +
-                                                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>' +
+                                        '<div class="pm-font-combobox" id="pm-combo-code">' +
+                                            '<span class="pm-combobox-label">Code</span>' +
+                                            '<div class="pm-combobox-input-wrap">' +
+                                                '<input type="text" class="pm-font-search-input" id="pm-input-code" placeholder="Search font..." autocomplete="off" spellcheck="false">' +
+                                                '<div class="pm-combobox-arrow">' +
+                                                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>' +
+                                                '</div>' +
+                                                '<div class="pm-combobox-dropdown" id="pm-drop-code"></div>' +
                                             '</div>' +
-                                            '<div class="pm-combobox-dropdown" id="pm-drop-code"></div>' +
                                         '</div>' +
                                     '</div>' +
-                                '</div>' +
-                                '<div class="pm-section-title">Typography</div>' +
-                                '<div class="pm-metrics-grid">' +
-                                    '<div class="pm-metric-card">' +
-                                        '<span class="pm-metric-label">Font Size</span>' +
-                                        '<div class="pm-stepper-group">' +
-                                            '<button type="button" class="pm-stepper-btn" id="pm-dec-fs">-</button>' +
-                                            '<span class="pm-metric-val" id="pm-fs-val">' + defaultFs + 'px</span>' +
-                                            '<button type="button" class="pm-stepper-btn" id="pm-inc-fs">+</button>' +
+                                    '<div class="pm-section-title">Typography</div>' +
+                                    '<div class="pm-metrics-grid">' +
+                                        '<div class="pm-metric-card">' +
+                                            '<span class="pm-metric-label">Font Size</span>' +
+                                            '<div class="pm-stepper-group">' +
+                                                '<button type="button" class="pm-stepper-btn" id="pm-dec-fs">-</button>' +
+                                                '<span class="pm-metric-val" id="pm-fs-val">' + defaultFs + 'px</span>' +
+                                                '<button type="button" class="pm-stepper-btn" id="pm-inc-fs">+</button>' +
+                                            '</div>' +
                                         '</div>' +
-                                    '</div>' +
-                                    '<div class="pm-metric-card">' +
-                                        '<span class="pm-metric-label">Line Height</span>' +
-                                        '<div class="pm-stepper-group">' +
-                                            '<button type="button" class="pm-stepper-btn" id="pm-dec-lh">-</button>' +
-                                            '<span class="pm-metric-val" id="pm-lh-val">' + defaultLh.toFixed(1) + 'x</span>' +
-                                            '<button type="button" class="pm-stepper-btn" id="pm-inc-lh">+</button>' +
+                                        '<div class="pm-metric-card">' +
+                                            '<span class="pm-metric-label">Line Height</span>' +
+                                            '<div class="pm-stepper-group">' +
+                                                '<button type="button" class="pm-stepper-btn" id="pm-dec-lh">-</button>' +
+                                                '<span class="pm-metric-val" id="pm-lh-val">' + defaultLh.toFixed(1) + 'x</span>' +
+                                                '<button type="button" class="pm-stepper-btn" id="pm-inc-lh">+</button>' +
+                                            '</div>' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +
@@ -1451,7 +1672,8 @@ object CssGenerator {
 
                     // Controls
                     var optEnabled = card.querySelector('#pm-opt-enabled');
-                    var optForceRtl = card.querySelector('#pm-opt-force-rtl');
+                    var controlsWrap = card.querySelector('#pm-controls-wrap');
+                    var tabBtns = card.querySelectorAll('.pm-tab-btn');
                     var decLh = card.querySelector('#pm-dec-lh');
                     var incLh = card.querySelector('#pm-inc-lh');
                     var lhVal = card.querySelector('#pm-lh-val');
@@ -1465,13 +1687,14 @@ object CssGenerator {
                     var suggestedEn = ['JetBrains Mono', 'SF Pro', 'Inter', 'Geist', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'System UI'];
                     var suggestedCode = ['JetBrains Mono', 'Cascadia Code', 'Fira Code', 'SF Mono', 'Geist Mono', 'Consolas', 'Courier New', 'Menlo', 'Monaco'];
 
-                    var savedFa = cleanFontName(getPref('fa_font', defaultFaFont)) || 'Vazirmatn';
-                    var savedEn = cleanFontName(getPref('en_font', defaultEnFont)) || 'JetBrains Mono';
-                    var savedCode = cleanFontName(getPref('code_font', defaultCodeFont)) || 'JetBrains Mono';
+                    var savedFa = cleanFontName(getPref('fa_font', defaultFaFont)) || defaultFaFont;
+                    var savedEn = cleanFontName(getPref('en_font', defaultEnFont)) || defaultEnFont;
+                    var savedCode = cleanFontName(getPref('code_font', defaultCodeFont)) || defaultCodeFont;
 
                     function updateFaFont(val) {
                         val = cleanFontName(val);
                         if (!val) return;
+                        savedFa = val;
                         savePref('fa_font', val);
                         document.documentElement.style.setProperty('--pm-fa-font', "'" + val + "', 'PersianMarkdownBundledVazir', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif");
                     }
@@ -1479,6 +1702,7 @@ object CssGenerator {
                     function updateEnFont(val) {
                         val = cleanFontName(val);
                         if (!val) return;
+                        savedEn = val;
                         savePref('en_font', val);
                         document.documentElement.style.setProperty('--pm-en-font', "'" + val + "', 'PersianMarkdownBundledJBMono', 'SF Pro', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif");
                     }
@@ -1486,8 +1710,26 @@ object CssGenerator {
                     function updateCodeFont(val) {
                         val = cleanFontName(val);
                         if (!val) return;
+                        savedCode = val;
                         savePref('code_font', val);
                         document.documentElement.style.setProperty('--pm-code-font', "'" + val + "', 'PersianMarkdownBundledJBMono', Menlo, Monaco, Consolas, monospace");
+                    }
+
+                    function postUpdateToIde() {
+                        try {
+                            if (window.__IntelliJTools && window.__IntelliJTools.messagePipe && typeof window.__IntelliJTools.messagePipe.post === 'function') {
+                                var params = [
+                                    'enabled=' + (isEnabled ? 'true' : 'false'),
+                                    'mode=' + encodeURIComponent(currentMode),
+                                    'fontSize=' + encodeURIComponent(currentFs),
+                                    'lineHeight=' + encodeURIComponent(currentLh.toFixed(1)),
+                                    'faFont=' + encodeURIComponent(comboFa ? comboFa.getValue() : savedFa),
+                                    'enFont=' + encodeURIComponent(comboEn ? comboEn.getValue() : savedEn),
+                                    'codeFont=' + encodeURIComponent(comboCode ? comboCode.getValue() : savedCode)
+                                ].join('&');
+                                window.__IntelliJTools.messagePipe.post('pmUpdateSettings', params);
+                            }
+                        } catch (_) {}
                     }
 
                     var comboFa = setupFontCombobox('fa', 
@@ -1497,6 +1739,7 @@ object CssGenerator {
                         savedFa, 
                         function(selectedFont) {
                             updateFaFont(selectedFont);
+                            postUpdateToIde();
                         }
                     );
 
@@ -1507,6 +1750,7 @@ object CssGenerator {
                         savedEn, 
                         function(selectedFont) {
                             updateEnFont(selectedFont);
+                            postUpdateToIde();
                         }
                     );
 
@@ -1517,34 +1761,74 @@ object CssGenerator {
                         savedCode, 
                         function(selectedFont) {
                             updateCodeFont(selectedFont);
+                            postUpdateToIde();
                         }
                     );
 
-                    // Enabled toggle
-                    optEnabled.addEventListener('change', function() {
-                        var isEnabled = optEnabled.checked;
-                        savePref('enabled', isEnabled ? '1' : '0');
+                    function updateControlsState() {
                         if (isEnabled) {
                             document.documentElement.classList.remove('pm-disabled');
                             statusDot.classList.remove('pm-disabled-dot');
+                            if (controlsWrap) controlsWrap.classList.remove('pm-controls-disabled');
                             applyDirections();
                         } else {
                             document.documentElement.classList.add('pm-disabled');
                             statusDot.classList.add('pm-disabled-dot');
+                            if (controlsWrap) controlsWrap.classList.add('pm-controls-disabled');
                             resetDirections();
                         }
+                    }
+
+                    function setEnabled(val) {
+                        isEnabled = !!val;
+                        savePref('enabled', isEnabled ? '1' : '0');
+                        optEnabled.checked = isEnabled;
+                        updateControlsState();
+                        postUpdateToIde();
+                    }
+
+                    function setMode(newMode) {
+                        if (newMode !== 'auto' && newMode !== 'force_rtl' && newMode !== 'force_ltr') {
+                            newMode = 'auto';
+                        }
+                        currentMode = newMode;
+                        savePref('mode', currentMode);
+
+                        for (var t = 0; t < tabBtns.length; t++) {
+                            var tab = tabBtns[t];
+                            if (tab.getAttribute('data-mode') === currentMode) {
+                                tab.classList.add('pm-active');
+                            } else {
+                                tab.classList.remove('pm-active');
+                            }
+                        }
+
+                        document.documentElement.setAttribute('data-pm-mode', currentMode);
+                        if (isEnabled) {
+                            applyDirections();
+                        } else {
+                            resetDirections();
+                        }
+                        postUpdateToIde();
+                    }
+
+                    // Enabled toggle
+                    optEnabled.addEventListener('change', function() {
+                        setEnabled(optEnabled.checked);
                     });
 
-                    // Force RTL toggle
-                    optForceRtl.addEventListener('change', function() {
-                        var isForce = optForceRtl.checked;
-                        currentMode = isForce ? 'force_rtl' : 'auto';
-                        savePref('force_rtl', isForce ? '1' : '0');
-                        applyDirections();
-                    });
+                    // Tab buttons
+                    for (var tb = 0; tb < tabBtns.length; tb++) {
+                        (function(btn) {
+                            btn.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                var m = btn.getAttribute('data-mode');
+                                setMode(m);
+                            });
+                        })(tabBtns[tb]);
+                    }
 
                     // Font Size stepper
-                    var currentFs = parseInt(getPref('font_size', defaultFs), 10) || defaultFs;
                     function updateFsDisplay() {
                         fsVal.textContent = currentFs + 'px';
                         document.documentElement.style.setProperty('--pm-font-size', currentFs + 'px');
@@ -1554,15 +1838,16 @@ object CssGenerator {
                         e.stopPropagation();
                         currentFs = Math.max(10, currentFs - 1);
                         updateFsDisplay();
+                        postUpdateToIde();
                     });
                     incFs.addEventListener('click', function(e) {
                         e.stopPropagation();
                         currentFs = Math.min(32, currentFs + 1);
                         updateFsDisplay();
+                        postUpdateToIde();
                     });
 
                     // Line Height stepper
-                    var currentLh = parseFloat(getPref('line_height', defaultLh)) || defaultLh;
                     function updateLhDisplay() {
                         lhVal.textContent = currentLh.toFixed(1) + 'x';
                         document.documentElement.style.setProperty('--pm-line-height', currentLh.toFixed(1));
@@ -1572,24 +1857,20 @@ object CssGenerator {
                         e.stopPropagation();
                         currentLh = Math.max(1.0, Math.round((currentLh - 0.1) * 10) / 10);
                         updateLhDisplay();
+                        postUpdateToIde();
                     });
                     incLh.addEventListener('click', function(e) {
                         e.stopPropagation();
                         currentLh = Math.min(2.8, Math.round((currentLh + 0.1) * 10) / 10);
                         updateLhDisplay();
+                        postUpdateToIde();
                     });
 
                     // Reset Defaults
                     resetBtn.addEventListener('click', function(e) {
                         e.stopPropagation();
-                        optEnabled.checked = true;
-                        savePref('enabled', '1');
-                        document.documentElement.classList.remove('pm-disabled');
-                        statusDot.classList.remove('pm-disabled-dot');
-
-                        optForceRtl.checked = false;
-                        currentMode = 'auto';
-                        savePref('force_rtl', '0');
+                        setEnabled(true);
+                        setMode('auto');
 
                         comboFa.setValue('Vazirmatn');
                         updateFaFont('Vazirmatn');
@@ -1603,7 +1884,7 @@ object CssGenerator {
                         currentLh = defaultLh;
                         updateLhDisplay();
 
-                        applyDirections();
+                        postUpdateToIde();
                     });
 
                     // Keyboard shortcuts
@@ -1617,28 +1898,23 @@ object CssGenerator {
                             }
                         } else if (e.altKey && (e.key === 'e' || e.key === 'E' || e.code === 'KeyE')) {
                             e.preventDefault();
-                            optEnabled.checked = !optEnabled.checked;
-                            optEnabled.dispatchEvent(new Event('change'));
+                            setEnabled(!isEnabled);
                         } else if (e.altKey && (e.key === 'r' || e.key === 'R' || e.code === 'KeyR')) {
                             e.preventDefault();
-                            optForceRtl.checked = !optForceRtl.checked;
-                            optForceRtl.dispatchEvent(new Event('change'));
+                            if (currentMode === 'auto') {
+                                setMode('force_rtl');
+                            } else if (currentMode === 'force_rtl') {
+                                setMode('force_ltr');
+                            } else {
+                                setMode('auto');
+                            }
                         }
                     });
 
-                    // Load saved preferences on init
-                    var savedEnabled = getPref('enabled', '1');
-                    optEnabled.checked = savedEnabled === '1';
-                    if (!optEnabled.checked) {
-                        document.documentElement.classList.add('pm-disabled');
-                        statusDot.classList.add('pm-disabled-dot');
-                    } else {
-                        statusDot.classList.remove('pm-disabled-dot');
-                    }
-
-                    var savedForceRtl = getPref('force_rtl', currentMode === 'force_rtl' ? '1' : '0');
-                    optForceRtl.checked = savedForceRtl === '1';
-                    currentMode = optForceRtl.checked ? 'force_rtl' : 'auto';
+                    // Initialize widget state
+                    optEnabled.checked = isEnabled;
+                    updateControlsState();
+                    setMode(currentMode);
 
                     updateFsDisplay();
                     updateLhDisplay();
@@ -1646,7 +1922,7 @@ object CssGenerator {
                     updateEnFont(savedEn);
                     updateCodeFont(savedCode);
 
-                    container.appendChild(switcher);
+                    target.appendChild(switcher);
                 }
 
                 function init() {
@@ -1660,16 +1936,34 @@ object CssGenerator {
                     init();
                 }
 
+                if (window.IncrementalDOM && window.IncrementalDOM.notifications && window.IncrementalDOM.notifications.afterPatchListeners) {
+                    window.IncrementalDOM.notifications.afterPatchListeners.push(function() {
+                        createSwitcherUI();
+                        applyDirections();
+                    });
+                }
+
                 if (window.MutationObserver) {
                     var debounceTimer = null;
-                    var observer = new MutationObserver(function() {
+                    var observer = new MutationObserver(function(mutations) {
+                        var onlySwitcher = true;
+                        for (var m = 0; m < mutations.length; m++) {
+                            var mut = mutations[m];
+                            var isSwitcher = (mut.target && (mut.target.id === 'persian-markdown-switcher' || (mut.target.closest && mut.target.closest('#persian-markdown-switcher'))));
+                            if (!isSwitcher) {
+                                onlySwitcher = false;
+                                break;
+                            }
+                        }
+                        if (onlySwitcher) return;
+
                         if (debounceTimer) clearTimeout(debounceTimer);
                         debounceTimer = setTimeout(function() {
                             createSwitcherUI();
                             applyDirections();
                         }, 40);
                     });
-                    var obsTarget = document.body || document.documentElement;
+                    var obsTarget = document.documentElement || document.body;
                     if (obsTarget) {
                         observer.observe(obsTarget, { childList: true, subtree: true });
                     }

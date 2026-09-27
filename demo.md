@@ -1,4 +1,3 @@
-# به نام خدا
 
 این یک فایل مارک‌داون نمونه برای ارزیابی و تست **پلاگین Persian / RTL Markdown** در IntelliJ IDEA و Android Studio است.
 

@@ -51,14 +51,20 @@ intellijPlatform {
             </p>
         """.trimIndent()
         changeNotes = """
-            <h3>What's New in Version 1.0.0</h3>
+            <h3>What's New in Version 1.0.1</h3>
             <ul>
-                <li><b>Official 1.0.0 Release:</b> Comprehensive RTL and Persian/Arabic support for JetBrains IDEs and Android Studio.</li>
-                <li><b>Interactive Floating Controller:</b> Added a sleek bottom-left floating widget with quick toggles (Enabled, Force RTL) and searchable font comboboxes.</li>
+                <li><b>Seamless Viewport Positioning:</b> Fixed Bento widget positioning in IntelliJ IDEA and Android Studio so it stays smoothly docked at the bottom-left during page scrolling.</li>
+                <li><b>Comfortable Bento Dimensions:</b> Enlarged trigger button, popover card, font pickers, and metric steppers for enhanced legibility and touch/click ergonomics.</li>
+                <li><b>Settings Simplification:</b> Cleaned up IDE settings to make the in-preview Bento controller the single responsive source of truth for direction and typography.</li>
+                <li><b>Branding Unification:</b> Unified plugin display name to <b>Markdown RTL</b> across all settings and dialogs.</li>
+            </ul>
+            <h3>Version 1.0.0</h3>
+            <ul>
+                <li><b>Official Release:</b> Comprehensive RTL and Persian/Arabic support for JetBrains IDEs and Android Studio.</li>
+                <li><b>Interactive Floating Controller:</b> Added sleek bottom-left floating widget with quick toggles and searchable font comboboxes.</li>
                 <li><b>Live Typography Tuning:</b> Real-time font size and line height stepper controls with instant preview synchronization.</li>
-                <li><b>Embedded Fonts:</b> Bundled premium <i>Vazirmatn</i> (Regular/Bold) and <i>JetBrains Mono</i> for beautiful cross-platform rendering.</li>
-                <li><b>Code Isolation:</b> Bulletproof BiDi isolation preventing syntax distortion in code blocks and inline snippets.</li>
-                <li><b>GitHub Integration:</b> One-click direct link to the GitHub repository from the preview widget.</li>
+                <li><b>Embedded Fonts:</b> Bundled premium <i>Vazirmatn</i> and <i>JetBrains Mono</i>.</li>
+                <li><b>Code Isolation:</b> Strict BiDi isolation preventing syntax distortion in code blocks and inline snippets.</li>
             </ul>
         """.trimIndent()
         ideaVersion {
