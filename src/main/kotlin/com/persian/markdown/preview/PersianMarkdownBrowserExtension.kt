@@ -21,11 +21,6 @@ class PersianMarkdownBrowserExtension(
                     handleIncomingSettings(data)
                     return true
                 }
-
-                @Deprecated("Deprecated in upstream IntelliJ Markdown plugin")
-                override fun messageReceived(data: String) {
-                    handleIncomingSettings(data)
-                }
             })
         } catch (_: Exception) {
         }
