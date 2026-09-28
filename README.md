@@ -21,6 +21,7 @@
   <a href="#-quick-start--installation"><b>⚡ Install Now</b></a> •
   <a href="https://plugins.jetbrains.com/plugin/34457-markdown-rtl"><b>📦 Marketplace Page</b></a> •
   <a href="https://github.com/mahdiasd/MarkdownRTL/issues"><b>🐛 Report Issue</b></a> •
+  <a href="#️-architecture--system-structure"><b>🏛️ Architecture</b></a> •
   <a href="#-support--feedback"><b>⭐ Star Project</b></a>
 </p>
 
@@ -87,6 +88,14 @@ Markdown RTL works natively inside the **Markdown Preview Pane**:
 - <kbd>Alt</kbd> + <kbd>E</kbd> / <kbd>⌥E</kbd>: Toggle **Plugin Enabled / Disabled**
 - <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd>: Cycle modes (**Auto** ➔ **Force RTL** ➔ **Force LTR**)
 - <kbd>Esc</kbd>: Close floating Bento widget
+
+---
+
+## 🏛️ Architecture & System Structure
+
+<p align="center">
+  <img src="docs/architecture.svg" alt="Markdown RTL Architecture" width="100%"/>
+</p>
 
 ---
 
