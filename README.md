@@ -126,6 +126,12 @@ The output package will be generated at: `build/distributions/PersianMarkdown-1.
 
 ---
 
+## 🙏 Acknowledgements
+
+- **UI & Settings Card Inspiration:** [antigravity-rtl](https://github.com/mmnaderi/antigravity-rtl) by [@mmnaderi](https://github.com/mmnaderi) — special thanks for the insightful floating controller concept and RTL tooling efforts.
+
+---
+
 ## 📄 License
 
 Distributed under the **Apache License 2.0**. See [`LICENSE`](LICENSE) for details.
