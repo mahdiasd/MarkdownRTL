@@ -77,6 +77,9 @@ class PersianMarkdownBrowserExtension(
                 params["codeFont"]?.takeIf { it.isNotBlank() }?.let {
                     state.codeFontFamily = it
                 }
+                params["frontmatter"]?.let {
+                    state.renderFrontMatter = it.toBoolean()
+                }
 
                 settings.notifyChanged()
             } catch (_: Exception) {

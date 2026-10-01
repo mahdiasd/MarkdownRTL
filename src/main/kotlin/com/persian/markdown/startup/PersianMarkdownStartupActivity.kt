@@ -8,6 +8,7 @@ import org.intellij.plugins.markdown.ui.preview.MarkdownHtmlPanelProvider
 class PersianMarkdownStartupActivity : ProjectActivity {
 
     override suspend fun execute(project: Project) {
+        ensureFrontMatterPreviewEnabled()
         ensureJcefPreview(project)
     }
 
@@ -37,6 +38,17 @@ class PersianMarkdownStartupActivity : ProjectActivity {
                 if (e is java.util.concurrent.CancellationException) {
                     throw e
                 }
+            }
+        }
+
+        fun ensureFrontMatterPreviewEnabled() {
+            try {
+                val key = "markdown.experimental.show.frontmatter.in.preview"
+                val registry = com.intellij.openapi.util.registry.Registry.get(key)
+                if (!registry.asBoolean()) {
+                    registry.setValue(true)
+                }
+            } catch (_: Exception) {
             }
         }
     }
