@@ -504,6 +504,23 @@ object CssGenerator {
             .pm-frontmatter-container.pm-view-raw .pm-fm-raw {
                 display: block !important;
             }
+            .pm-fm-text-body {
+                padding: 10px 14px !important;
+                color: #E2E8F0 !important;
+                font-size: var(--pm-font-size, 15px) !important;
+                line-height: var(--pm-line-height, 1.6) !important;
+                margin: 0 !important;
+            }
+            .pm-fm-text-body[dir="rtl"] {
+                direction: rtl !important;
+                text-align: right !important;
+                font-family: var(--pm-fa-font) !important;
+            }
+            .pm-fm-text-body[dir="ltr"] {
+                direction: ltr !important;
+                text-align: left !important;
+                font-family: var(--pm-en-font) !important;
+            }
             pre.frontmatter-header:not(.pm-wrapped) {
                 display: none !important;
             }
@@ -1581,6 +1598,72 @@ object CssGenerator {
                     return container;
                 }
 
+                function buildFrontMatterTextCard(bodyText, rawText) {
+                    var container = document.createElement('div');
+                    container.className = 'pm-frontmatter-container pm-fm-text-card';
+
+                    var header = document.createElement('div');
+                    header.className = 'pm-fm-header';
+
+                    var titleGroup = document.createElement('div');
+                    titleGroup.className = 'pm-fm-title-group';
+                    titleGroup.innerHTML = 
+                        '<span class="pm-fm-icon">' +
+                            '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                                '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>' +
+                                '<polyline points="14 2 14 8 20 8"></polyline>' +
+                                '<line x1="16" y1="13" x2="8" y2="13"></line>' +
+                                '<line x1="16" y1="17" x2="8" y2="17"></line>' +
+                                '<polyline points="10 9 9 9 8 9"></polyline>' +
+                            '</svg>' +
+                        '</span>' +
+                        '<span class="pm-fm-title">Front Matter</span>';
+
+                    var actions = document.createElement('div');
+                    actions.className = 'pm-fm-actions';
+
+                    var copyBtn = document.createElement('button');
+                    copyBtn.type = 'button';
+                    copyBtn.className = 'pm-fm-btn';
+                    copyBtn.textContent = 'Copy';
+                    copyBtn.title = 'Copy Front Matter';
+                    copyBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var textToCopy = (rawText || bodyText).trim();
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(textToCopy).then(function() {
+                                copyBtn.textContent = 'Copied!';
+                                setTimeout(function() { copyBtn.textContent = 'Copy'; }, 1800);
+                            }).catch(function() {
+                                copyBtn.textContent = 'Error';
+                            });
+                        }
+                    });
+
+                    actions.appendChild(copyBtn);
+                    header.appendChild(titleGroup);
+                    header.appendChild(actions);
+
+                    var content = document.createElement('div');
+                    content.className = 'pm-fm-content';
+
+                    var p = document.createElement('p');
+                    p.className = 'pm-fm-text-body';
+                    p.textContent = bodyText;
+                    if (hasPersian(bodyText)) {
+                        p.setAttribute('dir', 'rtl');
+                    } else {
+                        p.setAttribute('dir', 'ltr');
+                    }
+                    content.appendChild(p);
+
+                    container.appendChild(header);
+                    container.appendChild(content);
+
+                    return container;
+                }
+
                 function processFrontMatter() {
                     if (!renderFrontMatterEnabled) {
                         var existing = document.querySelectorAll('.pm-frontmatter-container');
@@ -1595,12 +1678,24 @@ object CssGenerator {
                         if (pre.classList.contains('pm-wrapped')) continue;
 
                         var rawText = (pre.textContent || '').trim();
+                        var cleanedBody = rawText.replace(/^---[\r\n]+/, '').replace(/[\r\n]+---$/, '').trim();
+                        if (!cleanedBody) {
+                            pre.classList.add('pm-wrapped');
+                            pre.style.display = 'none';
+                            continue;
+                        }
+
                         var items = parseYamlSimple(rawText);
                         if (items && items.length > 0) {
                             pre.classList.add('pm-wrapped');
                             pre.style.display = 'none';
                             var card = buildFrontMatterCard(rawText, items);
                             pre.parentNode.insertBefore(card, pre);
+                        } else {
+                            pre.classList.add('pm-wrapped');
+                            pre.style.display = 'none';
+                            var textCard = buildFrontMatterTextCard(cleanedBody, rawText);
+                            pre.parentNode.insertBefore(textCard, pre);
                         }
                     }
 

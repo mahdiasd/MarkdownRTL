@@ -203,6 +203,7 @@ class CssGeneratorTest {
         assertTrue(css.contains(".pm-fm-val-td"))
         assertTrue(css.contains(".pm-fm-badge"))
         assertTrue(css.contains(".pm-fm-raw"))
+        assertTrue(css.contains(".pm-fm-text-body"))
         assertTrue(css.contains("pre.frontmatter-header:not(.pm-wrapped)"))
     }
 
@@ -213,11 +214,14 @@ class CssGeneratorTest {
         assertTrue(js.contains("renderFrontMatterEnabled"))
         assertTrue(js.contains("parseYamlSimple"))
         assertTrue(js.contains("buildFrontMatterCard"))
+        assertTrue(js.contains("buildFrontMatterTextCard"))
         assertTrue(js.contains("processFrontMatter"))
         assertTrue(js.contains("cleanYamlQuotes"))
         assertTrue(js.contains("pm-frontmatter-container"))
         assertTrue(js.contains("pm-fm-header"))
         assertTrue(js.contains("pm-fm-table"))
         assertTrue(js.contains("pm-fm-raw"))
+        assertTrue(js.contains("pm-fm-text-card"))
+        assertTrue(js.contains("pm-fm-text-body"))
     }
 }
