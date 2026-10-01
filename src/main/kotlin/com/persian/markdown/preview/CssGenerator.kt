@@ -1332,19 +1332,26 @@ object CssGenerator {
                     if (el.tagName === 'PRE' || el.classList.contains('code-fence') || el.classList.contains('markdown-code-fence')) {
                         return false;
                     }
-                    var clone = el.cloneNode(true);
-                    var codes = clone.querySelectorAll('pre, code');
-                    for (var c = 0; c < codes.length; c++) {
-                        codes[c].remove();
+                    if (!el.querySelector('code, pre')) {
+                        var raw = (el.textContent || '');
+                        if (!raw) return false;
+                        raw = raw.replace(/\[[xX\s]?\]/g, '').replace(/https?:\/\/\S+/g, '');
+                        return hasPersian(raw);
                     }
-                    var text = (clone.textContent || '').trim();
-                    if (!text) {
-                        text = (el.textContent || '').trim();
+                    var text = '';
+                    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+                        acceptNode: function(node) {
+                            var parent = node.parentElement;
+                            if (parent && (parent.tagName === 'CODE' || parent.tagName === 'PRE' || parent.tagName === 'KBD' || parent.tagName === 'SAMP' || parent.tagName === 'TT')) {
+                                return NodeFilter.FILTER_REJECT;
+                            }
+                            return NodeFilter.FILTER_ACCEPT;
+                        }
+                    });
+                    while (walker.nextNode()) {
+                        text += walker.currentNode.nodeValue + ' ';
                     }
-                    text = text.replace(/\[[xX\s]?\]/g, '')
-                               .replace(/\[.*?\]/g, '')
-                               .replace(/https?:\/\/\S+/g, '')
-                               .trim();
+                    text = text.replace(/\[[xX\s]?\]/g, '').replace(/https?:\/\/\S+/g, '').trim();
                     return hasPersian(text);
                 }
 
@@ -1665,89 +1672,124 @@ object CssGenerator {
                 }
 
                 function processFrontMatter() {
-                    if (!renderFrontMatterEnabled) {
+                    if (!renderFrontMatterEnabled || !isEnabled) {
                         var existing = document.querySelectorAll('.pm-frontmatter-container');
-                        for (var e = 0; e < existing.length; e++) { existing[e].remove(); }
+                        for (var e = 0; e < existing.length; e++) {
+                            existing[e].classList.add('pm-fm-hidden');
+                        }
+                        var wrappedPres = document.querySelectorAll('pre.frontmatter-header.pm-wrapped');
+                        for (var wp = 0; wp < wrappedPres.length; wp++) {
+                            wrappedPres[wp].style.display = '';
+                        }
+                        var hiddenFallbacks = document.querySelectorAll('.pm-fallback-hidden');
+                        for (var hf = 0; hf < hiddenFallbacks.length; hf++) {
+                            hiddenFallbacks[hf].style.display = '';
+                        }
                         return;
                     }
 
                     // 1. Primary path: JetBrains generated pre.frontmatter-header
                     var fmPres = document.querySelectorAll('pre.frontmatter-header');
-                    for (var i = 0; i < fmPres.length; i++) {
-                        var pre = fmPres[i];
-                        if (pre.classList.contains('pm-wrapped')) continue;
+                    if (fmPres.length > 0) {
+                        for (var i = 0; i < fmPres.length; i++) {
+                            var pre = fmPres[i];
+                            var rawText = (pre.textContent || '').trim();
+                            var prevSibling = pre.previousElementSibling;
 
-                        var rawText = (pre.textContent || '').trim();
-                        var cleanedBody = rawText.replace(/^---[\r\n]+/, '').replace(/[\r\n]+---$/, '').trim();
-                        if (!cleanedBody) {
-                            pre.classList.add('pm-wrapped');
-                            pre.style.display = 'none';
-                            continue;
-                        }
+                            // If already processed and card exists, ensure it is unhidden
+                            if (pre.classList.contains('pm-wrapped') && prevSibling && prevSibling.classList.contains('pm-frontmatter-container')) {
+                                prevSibling.classList.remove('pm-fm-hidden');
+                                pre.style.display = 'none';
+                                continue;
+                            }
 
-                        var items = parseYamlSimple(rawText);
-                        if (items && items.length > 0) {
+                            var cleanedBody = rawText.replace(/^---[\r\n]+/, '').replace(/[\r\n]+---$/, '').trim();
+                            if (!cleanedBody) {
+                                pre.classList.add('pm-wrapped');
+                                pre.style.display = 'none';
+                                continue;
+                            }
+
+                            if (prevSibling && prevSibling.classList.contains('pm-frontmatter-container')) {
+                                prevSibling.remove();
+                            }
+
+                            var items = parseYamlSimple(rawText);
                             pre.classList.add('pm-wrapped');
                             pre.style.display = 'none';
-                            var card = buildFrontMatterCard(rawText, items);
-                            pre.parentNode.insertBefore(card, pre);
-                        } else {
-                            pre.classList.add('pm-wrapped');
-                            pre.style.display = 'none';
-                            var textCard = buildFrontMatterTextCard(cleanedBody, rawText);
-                            pre.parentNode.insertBefore(textCard, pre);
+
+                            var newCard;
+                            if (items && items.length > 0) {
+                                newCard = buildFrontMatterCard(rawText, items);
+                            } else {
+                                newCard = buildFrontMatterTextCard(cleanedBody, rawText);
+                            }
+                            pre.parentNode.insertBefore(newCard, pre);
                         }
+                        return;
                     }
 
                     // 2. Fallback heuristic path: if JetBrains did NOT generate pre.frontmatter-header
-                    if (document.querySelectorAll('.pm-frontmatter-container').length === 0) {
-                        var body = document.body;
-                        if (!body) return;
-                        var firstEl = null;
-                        for (var b = 0; b < body.children.length; b++) {
-                            var child = body.children[b];
-                            if (child.id === 'persian-markdown-switcher') continue;
-                            firstEl = child;
-                            break;
+                    var existingCards = document.querySelectorAll('.pm-frontmatter-container');
+                    if (existingCards.length > 0) {
+                        for (var ec = 0; ec < existingCards.length; ec++) {
+                            existingCards[ec].classList.remove('pm-fm-hidden');
+                        }
+                        var hiddenFBs = document.querySelectorAll('.pm-fallback-hidden');
+                        for (var h = 0; h < hiddenFBs.length; h++) {
+                            hiddenFBs[h].style.display = 'none';
+                        }
+                        return;
+                    }
+
+                    var body = document.body;
+                    if (!body) return;
+                    var firstEl = null;
+                    for (var b = 0; b < body.children.length; b++) {
+                        var child = body.children[b];
+                        if (child.id === 'persian-markdown-switcher' || child.classList.contains('pm-frontmatter-container')) continue;
+                        firstEl = child;
+                        break;
+                    }
+
+                    if (firstEl && firstEl.tagName === 'HR') {
+                        var candidateNodes = [];
+                        var curr = firstEl.nextElementSibling;
+                        var closingFound = false;
+                        var collectedText = '';
+
+                        while (curr && curr.id !== 'persian-markdown-switcher') {
+                            if (curr.tagName === 'HR') {
+                                closingFound = true;
+                                candidateNodes.push(curr);
+                                break;
+                            }
+                            var text = (curr.textContent || '').trim();
+                            if (curr.tagName === 'H2' && text.indexOf(':') !== -1) {
+                                collectedText += '\n' + text;
+                                candidateNodes.push(curr);
+                                closingFound = true;
+                                break;
+                            }
+                            if (text.indexOf(':') !== -1 || /^\s*-\s+/.test(text)) {
+                                collectedText += '\n' + text;
+                                candidateNodes.push(curr);
+                            } else {
+                                break;
+                            }
+                            curr = curr.nextElementSibling;
                         }
 
-                        if (firstEl && firstEl.tagName === 'HR') {
-                            var candidateNodes = [];
-                            var curr = firstEl.nextElementSibling;
-                            var closingFound = false;
-                            var collectedText = '';
-
-                            while (curr && curr.id !== 'persian-markdown-switcher') {
-                                if (curr.tagName === 'HR') {
-                                    closingFound = true;
-                                    candidateNodes.push(curr);
-                                    break;
-                                }
-                                var text = (curr.textContent || '').trim();
-                                if (curr.tagName === 'H2' && text.indexOf(':') !== -1) {
-                                    collectedText += '\n' + text;
-                                    candidateNodes.push(curr);
-                                    closingFound = true;
-                                    break;
-                                }
-                                if (text.indexOf(':') !== -1 || /^\s*-\s+/.test(text)) {
-                                    collectedText += '\n' + text;
-                                    candidateNodes.push(curr);
-                                } else {
-                                    break;
-                                }
-                                curr = curr.nextElementSibling;
-                            }
-
-                            if (closingFound && collectedText.trim()) {
-                                var fallbackItems = parseYamlSimple(collectedText);
-                                if (fallbackItems && fallbackItems.length > 0) {
-                                    var fallbackCard = buildFrontMatterCard(collectedText.trim(), fallbackItems);
-                                    firstEl.parentNode.insertBefore(fallbackCard, firstEl);
-                                    firstEl.remove();
-                                    for (var c = 0; c < candidateNodes.length; c++) {
-                                        candidateNodes[c].remove();
-                                    }
+                        if (closingFound && collectedText.trim()) {
+                            var fallbackItems = parseYamlSimple(collectedText);
+                            if (fallbackItems && fallbackItems.length > 0) {
+                                var fallbackCard = buildFrontMatterCard(collectedText.trim(), fallbackItems);
+                                firstEl.parentNode.insertBefore(fallbackCard, firstEl);
+                                firstEl.classList.add('pm-fallback-hidden');
+                                firstEl.style.display = 'none';
+                                for (var c = 0; c < candidateNodes.length; c++) {
+                                    candidateNodes[c].classList.add('pm-fallback-hidden');
+                                    candidateNodes[c].style.display = 'none';
                                 }
                             }
                         }
@@ -1758,6 +1800,14 @@ object CssGenerator {
                     var existingFm = document.querySelectorAll('.pm-frontmatter-container');
                     for (var ef = 0; ef < existingFm.length; ef++) {
                         existingFm[ef].classList.add('pm-fm-hidden');
+                    }
+                    var wrappedPres = document.querySelectorAll('pre.frontmatter-header.pm-wrapped');
+                    for (var wp = 0; wp < wrappedPres.length; wp++) {
+                        wrappedPres[wp].style.display = '';
+                    }
+                    var hiddenFallbacks = document.querySelectorAll('.pm-fallback-hidden');
+                    for (var hf = 0; hf < hiddenFallbacks.length; hf++) {
+                        hiddenFallbacks[hf].style.display = '';
                     }
                     var elements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li, blockquote, td, th, pre, code, kbd, samp, tt, a');
                     for (var i = 0; i < elements.length; i++) {
@@ -2547,22 +2597,27 @@ object CssGenerator {
                 if (window.MutationObserver) {
                     var debounceTimer = null;
                     var observer = new MutationObserver(function(mutations) {
-                        var onlySwitcher = true;
+                        var onlyInternalPlugin = true;
                         for (var m = 0; m < mutations.length; m++) {
                             var mut = mutations[m];
-                            var isSwitcher = (mut.target && (mut.target.id === 'persian-markdown-switcher' || (mut.target.closest && mut.target.closest('#persian-markdown-switcher'))));
-                            if (!isSwitcher) {
-                                onlySwitcher = false;
+                            var target = mut.target;
+                            var isInternal = target && (
+                                target.id === 'persian-markdown-switcher' ||
+                                (target.classList && target.classList.contains('pm-frontmatter-container')) ||
+                                (target.closest && (target.closest('#persian-markdown-switcher') || target.closest('.pm-frontmatter-container')))
+                            );
+                            if (!isInternal) {
+                                onlyInternalPlugin = false;
                                 break;
                             }
                         }
-                        if (onlySwitcher) return;
+                        if (onlyInternalPlugin) return;
 
                         if (debounceTimer) clearTimeout(debounceTimer);
                         debounceTimer = setTimeout(function() {
                             createSwitcherUI();
                             applyDirections();
-                        }, 40);
+                        }, 50);
                     });
                     var obsTarget = document.documentElement || document.body;
                     if (obsTarget) {
