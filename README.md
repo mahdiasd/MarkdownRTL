@@ -124,7 +124,7 @@ cd MarkdownRTL
 # 3. Build distributable plugin archive
 ./gradlew buildPlugin
 ```
-The output package will be generated at: `build/distributions/PersianMarkdown-1.0.1.zip`.
+The output package will be generated at: `build/distributions/PersianMarkdown-1.0.2.zip`.
 
 ---
 

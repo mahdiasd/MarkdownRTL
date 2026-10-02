@@ -51,6 +51,13 @@ intellijPlatform {
             </p>
         """.trimIndent()
         changeNotes = """
+            <h3>What's New in Version 1.0.2</h3>
+            <ul>
+                <li><b>Smart YAML Front Matter Metadata Card (#1):</b> Automatically detects and renders document metadata blocks (<code>--- ... ---</code>) as a styled interactive card with bidirectional (BiDi) language detection (RTL for Persian/Arabic, LTR for English/URLs).</li>
+                <li><b>Structured Array Badges &amp; Direct Links:</b> Formats tag and list items as visual badges and converts URLs into clickable web links.</li>
+                <li><b>Interactive Card Controls:</b> Toggle between formatted Table View and Raw YAML, plus single-click copying to clipboard.</li>
+                <li><b>Robust Fallback Parser:</b> Preserves freeform front matter text and gracefully handles CommonMark Setext H2 and HR edge cases without data loss.</li>
+            </ul>
             <h3>What's New in Version 1.0.1</h3>
             <ul>
                 <li><b>Seamless Viewport Positioning:</b> Fixed Bento widget positioning in IntelliJ IDEA and Android Studio so it stays smoothly docked at the bottom-left during page scrolling.</li>
