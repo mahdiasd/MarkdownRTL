@@ -60,13 +60,15 @@ Markdown RTL works natively inside the **Markdown Preview Pane**:
 1. Open any Markdown file (`.md`).
 2. Switch the view mode in the top-right corner to **Split View** (Editor and Preview) or **Preview Only**.
 3. Persian and Arabic prose will automatically render Right-to-Left with proper punctuation and *Vazirmatn* typography, while all code blocks remain strictly Left-to-Right.
-4. Click the floating **Markdown RTL** capsule at the bottom-left to adjust fonts, sizes, line heights, or direction modes.
+4. YAML Front Matter blocks (`--- ... ---`) are automatically rendered as an interactive metadata table card with BiDi support.
+5. Click the floating **Markdown RTL** capsule at the bottom-left to adjust fonts, sizes, line heights, or direction modes.
 
 ---
 
 ## ✨ Key Features
 
 - 🔄 **Smart BiDi Detection (Auto Mode):** Analyzes paragraphs, headings, and lists dynamically. Persian and Arabic align right; pure English stays left.
+- 📑 **Smart YAML Front Matter Card:** Seamlessly parses and renders document metadata blocks (`--- ... ---`) into a modern card with field-level BiDi alignment, array badges, clickable URLs, and quick **Raw YAML / Copy** toggles.
 - 🛡️ **Bulletproof Code Isolation:** Monospace code fences (`<pre>`, `.code-fence`, `<code>`) are strictly protected as LTR and left-aligned.
 - 🎛️ **In-Preview Bento Controller:** Floating modern widget to toggle modes, choose fonts (Persian, English, Code), and adjust font size and line height on the fly.
 - 🖋️ **Embedded Fonts Included:** Bundled with high-legibility **Vazirmatn** and **JetBrains Mono**—works out of the box on Windows, macOS, and Linux without installing fonts.
