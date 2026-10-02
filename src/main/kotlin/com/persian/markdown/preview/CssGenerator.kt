@@ -336,6 +336,194 @@ object CssGenerator {
                 padding-left: inherit !important;
                 padding-right: inherit !important;
             }
+
+            /* --- Front Matter Metadata Card & Table Styling --- */
+            .pm-frontmatter-container {
+                margin: 16px 0 28px 0 !important;
+                border: 1px solid rgba(142, 217, 245, 0.22) !important;
+                background: rgba(17, 23, 34, 0.75) !important;
+                border-radius: 10px !important;
+                overflow: hidden !important;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.04) !important;
+                backdrop-filter: blur(12px) !important;
+                -webkit-backdrop-filter: blur(12px) !important;
+                font-size: var(--pm-font-size, 15px) !important;
+                direction: ltr !important;
+                text-align: left !important;
+            }
+            .pm-frontmatter-container.pm-fm-hidden {
+                display: none !important;
+            }
+            .pm-fm-header {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                padding: 7px 12px !important;
+                background: rgba(26, 33, 46, 0.85) !important;
+                border-bottom: 1px solid rgba(142, 217, 245, 0.15) !important;
+                user-select: none !important;
+            }
+            .pm-fm-title-group {
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+            }
+            .pm-fm-icon {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                color: #1EB4EB !important;
+                width: 16px !important;
+                height: 16px !important;
+            }
+            .pm-fm-title {
+                font-family: var(--pm-code-font, monospace) !important;
+                font-size: 11.5px !important;
+                font-weight: 600 !important;
+                color: #8ED9F5 !important;
+                letter-spacing: 0.04em !important;
+                text-transform: uppercase !important;
+            }
+            .pm-fm-actions {
+                display: flex !important;
+                align-items: center !important;
+                gap: 6px !important;
+            }
+            .pm-fm-btn {
+                background: rgba(255, 255, 255, 0.06) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                color: #94A3B8 !important;
+                font-family: var(--pm-code-font, monospace) !important;
+                font-size: 11px !important;
+                padding: 2px 8px !important;
+                border-radius: 5px !important;
+                cursor: pointer !important;
+                transition: all 0.15s ease !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 4px !important;
+                line-height: 1.4 !important;
+            }
+            .pm-fm-btn:hover {
+                background: rgba(30, 180, 235, 0.2) !important;
+                color: #F0F9FF !important;
+                border-color: rgba(30, 180, 235, 0.4) !important;
+            }
+            .pm-fm-btn.pm-active {
+                background: #1EB4EB !important;
+                color: #0B111A !important;
+                font-weight: 600 !important;
+                border-color: #1EB4EB !important;
+            }
+            .pm-fm-content {
+                padding: 0 !important;
+                overflow-x: auto !important;
+            }
+            .pm-fm-table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                margin: 0 !important;
+                font-size: 13px !important;
+            }
+            .pm-fm-table tr {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+                transition: background 0.12s ease !important;
+            }
+            .pm-fm-table tr:last-child {
+                border-bottom: none !important;
+            }
+            .pm-fm-table tr:hover {
+                background: rgba(255, 255, 255, 0.02) !important;
+            }
+            .pm-fm-key-td {
+                width: 28% !important;
+                min-width: 120px !important;
+                max-width: 200px !important;
+                padding: 7px 12px !important;
+                font-family: var(--pm-code-font, monospace) !important;
+                font-size: 12px !important;
+                color: #7DD3FC !important;
+                background: rgba(14, 20, 31, 0.5) !important;
+                border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+                vertical-align: top !important;
+                direction: ltr !important;
+                text-align: left !important;
+                word-break: break-all !important;
+            }
+            .pm-fm-val-td {
+                padding: 7px 14px !important;
+                vertical-align: top !important;
+                color: #E2E8F0 !important;
+                line-height: 1.5 !important;
+            }
+            .pm-fm-val-td[dir="rtl"] {
+                direction: rtl !important;
+                text-align: right !important;
+                font-family: var(--pm-fa-font) !important;
+            }
+            .pm-fm-val-td[dir="ltr"] {
+                direction: ltr !important;
+                text-align: left !important;
+                font-family: var(--pm-en-font) !important;
+            }
+            .pm-fm-badge {
+                display: inline-block !important;
+                padding: 2px 7px !important;
+                border-radius: 4px !important;
+                background: rgba(30, 180, 235, 0.15) !important;
+                border: 1px solid rgba(30, 180, 235, 0.3) !important;
+                color: #BAE6FD !important;
+                font-size: 11.5px !important;
+                margin: 2px 3px !important;
+                line-height: 1.3 !important;
+            }
+            .pm-fm-badge[dir="rtl"] {
+                direction: rtl !important;
+                font-family: var(--pm-fa-font) !important;
+            }
+            .pm-fm-badge[dir="ltr"] {
+                direction: ltr !important;
+                font-family: var(--pm-en-font) !important;
+            }
+            .pm-fm-raw {
+                display: none !important;
+                margin: 0 !important;
+                padding: 10px 14px !important;
+                background: rgba(10, 14, 22, 0.9) !important;
+                font-family: var(--pm-code-font, monospace) !important;
+                font-size: 12.5px !important;
+                color: #94A3B8 !important;
+                white-space: pre !important;
+                direction: ltr !important;
+                text-align: left !important;
+                overflow-x: auto !important;
+            }
+            .pm-frontmatter-container.pm-view-raw .pm-fm-table {
+                display: none !important;
+            }
+            .pm-frontmatter-container.pm-view-raw .pm-fm-raw {
+                display: block !important;
+            }
+            .pm-fm-text-body {
+                padding: 10px 14px !important;
+                color: #E2E8F0 !important;
+                font-size: var(--pm-font-size, 15px) !important;
+                line-height: var(--pm-line-height, 1.6) !important;
+                margin: 0 !important;
+            }
+            .pm-fm-text-body[dir="rtl"] {
+                direction: rtl !important;
+                text-align: right !important;
+                font-family: var(--pm-fa-font) !important;
+            }
+            .pm-fm-text-body[dir="ltr"] {
+                direction: ltr !important;
+                text-align: left !important;
+                font-family: var(--pm-en-font) !important;
+            }
+            pre.frontmatter-header:not(.pm-wrapped) {
+                display: none !important;
+            }
         """.trimIndent()).append("\n")
 
         // Styles for Linear / Raycast Bento Switcher in preview (bottom-left popup)
@@ -1144,23 +1332,483 @@ object CssGenerator {
                     if (el.tagName === 'PRE' || el.classList.contains('code-fence') || el.classList.contains('markdown-code-fence')) {
                         return false;
                     }
-                    var clone = el.cloneNode(true);
-                    var codes = clone.querySelectorAll('pre, code');
-                    for (var c = 0; c < codes.length; c++) {
-                        codes[c].remove();
+                    if (!el.querySelector('code, pre')) {
+                        var raw = (el.textContent || '');
+                        if (!raw) return false;
+                        raw = raw.replace(/\[[xX\s]?\]/g, '').replace(/https?:\/\/\S+/g, '');
+                        return hasPersian(raw);
                     }
-                    var text = (clone.textContent || '').trim();
-                    if (!text) {
-                        text = (el.textContent || '').trim();
+                    var text = '';
+                    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+                        acceptNode: function(node) {
+                            var parent = node.parentElement;
+                            if (parent && (parent.tagName === 'CODE' || parent.tagName === 'PRE' || parent.tagName === 'KBD' || parent.tagName === 'SAMP' || parent.tagName === 'TT')) {
+                                return NodeFilter.FILTER_REJECT;
+                            }
+                            return NodeFilter.FILTER_ACCEPT;
+                        }
+                    });
+                    while (walker.nextNode()) {
+                        text += walker.currentNode.nodeValue + ' ';
                     }
-                    text = text.replace(/\[[xX\s]?\]/g, '')
-                               .replace(/\[.*?\]/g, '')
-                               .replace(/https?:\/\/\S+/g, '')
-                               .trim();
+                    text = text.replace(/\[[xX\s]?\]/g, '').replace(/https?:\/\/\S+/g, '').trim();
                     return hasPersian(text);
                 }
 
+                var renderFrontMatterEnabled = ${state.renderFrontMatter};
+
+                function cleanYamlQuotes(str) {
+                    if (!str) return '';
+                    str = str.trim();
+                    if ((str.indexOf('"') === 0 && str.lastIndexOf('"') === str.length - 1 && str.length >= 2) ||
+                        (str.indexOf("'") === 0 && str.lastIndexOf("'") === str.length - 1 && str.length >= 2)) {
+                        str = str.substring(1, str.length - 1);
+                    }
+                    return str;
+                }
+
+                function parseYamlSimple(rawYaml) {
+                    if (!rawYaml || typeof rawYaml !== 'string') return null;
+                    var lines = rawYaml.split(/\r?\n/);
+                    var result = [];
+                    var inMultiline = false;
+                    var multilineKey = null;
+                    var multilineLines = [];
+                    var inArray = false;
+                    var arrayKey = null;
+                    var arrayItems = [];
+
+                    function flushMultiline() {
+                        if (multilineKey && multilineLines.length > 0) {
+                            result.push({ key: multilineKey, value: multilineLines.join(' ').trim(), type: 'string' });
+                        }
+                        multilineKey = null;
+                        multilineLines = [];
+                        inMultiline = false;
+                    }
+
+                    function flushArray() {
+                        if (arrayKey && arrayItems.length > 0) {
+                            result.push({ key: arrayKey, value: arrayItems, type: 'array' });
+                        }
+                        arrayKey = null;
+                        arrayItems = [];
+                        inArray = false;
+                    }
+
+                    for (var i = 0; i < lines.length; i++) {
+                        var line = lines[i];
+                        var trimmed = line.trim();
+                        if (!trimmed || trimmed === '---' || trimmed === '...') continue;
+                        if (trimmed.indexOf('#') === 0) continue;
+
+                        if (inMultiline) {
+                            if (/^\s+/.test(line)) {
+                                multilineLines.push(trimmed);
+                                continue;
+                            } else {
+                                flushMultiline();
+                            }
+                        }
+
+                        if (inArray) {
+                            if (/^\s*-\s+/.test(line)) {
+                                var itemVal = trimmed.replace(/^-\s+/, '').trim();
+                                itemVal = cleanYamlQuotes(itemVal);
+                                arrayItems.push(itemVal);
+                                continue;
+                            } else {
+                                flushArray();
+                            }
+                        }
+
+                        var colonIdx = line.indexOf(':');
+                        if (colonIdx > 0) {
+                            var k = line.substring(0, colonIdx).trim();
+                            var v = line.substring(colonIdx + 1).trim();
+
+                            if (v === '>' || v === '|') {
+                                flushMultiline();
+                                flushArray();
+                                inMultiline = true;
+                                multilineKey = k;
+                                multilineLines = [];
+                                continue;
+                            }
+
+                            if (!v) {
+                                if (i + 1 < lines.length && /^\s*-\s+/.test(lines[i + 1])) {
+                                    flushMultiline();
+                                    flushArray();
+                                    inArray = true;
+                                    arrayKey = k;
+                                    arrayItems = [];
+                                    continue;
+                                }
+                                result.push({ key: k, value: '', type: 'empty' });
+                                continue;
+                            }
+
+                            if (v.indexOf('[') === 0 && v.lastIndexOf(']') === v.length - 1) {
+                                var inner = v.substring(1, v.length - 1).trim();
+                                var items = inner ? inner.split(',').map(function(s) { return cleanYamlQuotes(s.trim()); }) : [];
+                                result.push({ key: k, value: items, type: 'array' });
+                                continue;
+                            }
+
+                            v = cleanYamlQuotes(v);
+                            result.push({ key: k, value: v, type: 'string' });
+                        }
+                    }
+                    flushMultiline();
+                    flushArray();
+
+                    return result.length > 0 ? result : null;
+                }
+
+                function buildFrontMatterCard(rawYaml, items) {
+                    var container = document.createElement('div');
+                    container.className = 'pm-frontmatter-container';
+
+                    var header = document.createElement('div');
+                    header.className = 'pm-fm-header';
+
+                    var titleGroup = document.createElement('div');
+                    titleGroup.className = 'pm-fm-title-group';
+                    titleGroup.innerHTML = 
+                        '<span class="pm-fm-icon">' +
+                            '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                                '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>' +
+                                '<polyline points="14 2 14 8 20 8"></polyline>' +
+                                '<line x1="16" y1="13" x2="8" y2="13"></line>' +
+                                '<line x1="16" y1="17" x2="8" y2="17"></line>' +
+                                '<polyline points="10 9 9 9 8 9"></polyline>' +
+                            '</svg>' +
+                        '</span>' +
+                        '<span class="pm-fm-title">Metadata</span>';
+
+                    var actions = document.createElement('div');
+                    actions.className = 'pm-fm-actions';
+
+                    var toggleViewBtn = document.createElement('button');
+                    toggleViewBtn.type = 'button';
+                    toggleViewBtn.className = 'pm-fm-btn';
+                    toggleViewBtn.textContent = 'Raw YAML';
+                    toggleViewBtn.title = 'Switch between Table and Code view';
+                    toggleViewBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var isRaw = container.classList.toggle('pm-view-raw');
+                        toggleViewBtn.textContent = isRaw ? 'Table View' : 'Raw YAML';
+                        if (isRaw) {
+                            toggleViewBtn.classList.add('pm-active');
+                        } else {
+                            toggleViewBtn.classList.remove('pm-active');
+                        }
+                    });
+
+                    var copyBtn = document.createElement('button');
+                    copyBtn.type = 'button';
+                    copyBtn.className = 'pm-fm-btn';
+                    copyBtn.textContent = 'Copy';
+                    copyBtn.title = 'Copy YAML Front Matter';
+                    copyBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var textToCopy = rawYaml.trim();
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(textToCopy).then(function() {
+                                copyBtn.textContent = 'Copied!';
+                                setTimeout(function() { copyBtn.textContent = 'Copy'; }, 1800);
+                            }).catch(function() {
+                                copyBtn.textContent = 'Error';
+                            });
+                        }
+                    });
+
+                    actions.appendChild(toggleViewBtn);
+                    actions.appendChild(copyBtn);
+                    header.appendChild(titleGroup);
+                    header.appendChild(actions);
+
+                    var content = document.createElement('div');
+                    content.className = 'pm-fm-content';
+
+                    var table = document.createElement('table');
+                    table.className = 'pm-fm-table';
+                    var tbody = document.createElement('tbody');
+
+                    for (var k = 0; k < items.length; k++) {
+                        var it = items[k];
+                        var tr = document.createElement('tr');
+
+                        var tdKey = document.createElement('td');
+                        tdKey.className = 'pm-fm-key-td';
+                        tdKey.textContent = it.key;
+                        if (hasPersian(it.key)) {
+                            tdKey.setAttribute('dir', 'rtl');
+                            tdKey.style.textAlign = 'right';
+                        }
+
+                        var tdVal = document.createElement('td');
+                        tdVal.className = 'pm-fm-val-td';
+
+                        if (it.type === 'array') {
+                            for (var a = 0; a < it.value.length; a++) {
+                                var badge = document.createElement('span');
+                                badge.className = 'pm-fm-badge';
+                                badge.textContent = it.value[a];
+                                if (hasPersian(it.value[a])) {
+                                    badge.setAttribute('dir', 'rtl');
+                                } else {
+                                    badge.setAttribute('dir', 'ltr');
+                                }
+                                tdVal.appendChild(badge);
+                            }
+                        } else {
+                            var valStr = String(it.value || '');
+                            if (/^https?:\/\/\S+$/.test(valStr)) {
+                                var link = document.createElement('a');
+                                link.href = valStr;
+                                link.target = '_blank';
+                                link.textContent = valStr;
+                                link.style.direction = 'ltr';
+                                link.style.unicodeBidi = 'isolate';
+                                tdVal.appendChild(link);
+                                tdVal.setAttribute('dir', 'ltr');
+                            } else {
+                                tdVal.textContent = valStr;
+                                if (hasPersian(valStr)) {
+                                    tdVal.setAttribute('dir', 'rtl');
+                                } else {
+                                    tdVal.setAttribute('dir', 'ltr');
+                                }
+                            }
+                        }
+
+                        tr.appendChild(tdKey);
+                        tr.appendChild(tdVal);
+                        tbody.appendChild(tr);
+                    }
+                    table.appendChild(tbody);
+
+                    var rawPre = document.createElement('pre');
+                    rawPre.className = 'pm-fm-raw';
+                    rawPre.textContent = rawYaml.trim();
+
+                    content.appendChild(table);
+                    content.appendChild(rawPre);
+
+                    container.appendChild(header);
+                    container.appendChild(content);
+
+                    return container;
+                }
+
+                function buildFrontMatterTextCard(bodyText, rawText) {
+                    var container = document.createElement('div');
+                    container.className = 'pm-frontmatter-container pm-fm-text-card';
+
+                    var header = document.createElement('div');
+                    header.className = 'pm-fm-header';
+
+                    var titleGroup = document.createElement('div');
+                    titleGroup.className = 'pm-fm-title-group';
+                    titleGroup.innerHTML = 
+                        '<span class="pm-fm-icon">' +
+                            '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                                '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>' +
+                                '<polyline points="14 2 14 8 20 8"></polyline>' +
+                                '<line x1="16" y1="13" x2="8" y2="13"></line>' +
+                                '<line x1="16" y1="17" x2="8" y2="17"></line>' +
+                                '<polyline points="10 9 9 9 8 9"></polyline>' +
+                            '</svg>' +
+                        '</span>' +
+                        '<span class="pm-fm-title">Front Matter</span>';
+
+                    var actions = document.createElement('div');
+                    actions.className = 'pm-fm-actions';
+
+                    var copyBtn = document.createElement('button');
+                    copyBtn.type = 'button';
+                    copyBtn.className = 'pm-fm-btn';
+                    copyBtn.textContent = 'Copy';
+                    copyBtn.title = 'Copy Front Matter';
+                    copyBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var textToCopy = (rawText || bodyText).trim();
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(textToCopy).then(function() {
+                                copyBtn.textContent = 'Copied!';
+                                setTimeout(function() { copyBtn.textContent = 'Copy'; }, 1800);
+                            }).catch(function() {
+                                copyBtn.textContent = 'Error';
+                            });
+                        }
+                    });
+
+                    actions.appendChild(copyBtn);
+                    header.appendChild(titleGroup);
+                    header.appendChild(actions);
+
+                    var content = document.createElement('div');
+                    content.className = 'pm-fm-content';
+
+                    var p = document.createElement('p');
+                    p.className = 'pm-fm-text-body';
+                    p.textContent = bodyText;
+                    if (hasPersian(bodyText)) {
+                        p.setAttribute('dir', 'rtl');
+                    } else {
+                        p.setAttribute('dir', 'ltr');
+                    }
+                    content.appendChild(p);
+
+                    container.appendChild(header);
+                    container.appendChild(content);
+
+                    return container;
+                }
+
+                function processFrontMatter() {
+                    if (!renderFrontMatterEnabled || !isEnabled) {
+                        var existing = document.querySelectorAll('.pm-frontmatter-container');
+                        for (var e = 0; e < existing.length; e++) {
+                            existing[e].classList.add('pm-fm-hidden');
+                        }
+                        var wrappedPres = document.querySelectorAll('pre.frontmatter-header.pm-wrapped');
+                        for (var wp = 0; wp < wrappedPres.length; wp++) {
+                            wrappedPres[wp].style.display = '';
+                        }
+                        var hiddenFallbacks = document.querySelectorAll('.pm-fallback-hidden');
+                        for (var hf = 0; hf < hiddenFallbacks.length; hf++) {
+                            hiddenFallbacks[hf].style.display = '';
+                        }
+                        return;
+                    }
+
+                    // 1. Primary path: JetBrains generated pre.frontmatter-header
+                    var fmPres = document.querySelectorAll('pre.frontmatter-header');
+                    if (fmPres.length > 0) {
+                        for (var i = 0; i < fmPres.length; i++) {
+                            var pre = fmPres[i];
+                            var rawText = (pre.textContent || '').trim();
+                            var prevSibling = pre.previousElementSibling;
+
+                            // If already processed and card exists, ensure it is unhidden
+                            if (pre.classList.contains('pm-wrapped') && prevSibling && prevSibling.classList.contains('pm-frontmatter-container')) {
+                                prevSibling.classList.remove('pm-fm-hidden');
+                                pre.style.display = 'none';
+                                continue;
+                            }
+
+                            var cleanedBody = rawText.replace(/^---[\r\n]+/, '').replace(/[\r\n]+---$/, '').trim();
+                            if (!cleanedBody) {
+                                pre.classList.add('pm-wrapped');
+                                pre.style.display = 'none';
+                                continue;
+                            }
+
+                            if (prevSibling && prevSibling.classList.contains('pm-frontmatter-container')) {
+                                prevSibling.remove();
+                            }
+
+                            var items = parseYamlSimple(rawText);
+                            pre.classList.add('pm-wrapped');
+                            pre.style.display = 'none';
+
+                            var newCard;
+                            if (items && items.length > 0) {
+                                newCard = buildFrontMatterCard(rawText, items);
+                            } else {
+                                newCard = buildFrontMatterTextCard(cleanedBody, rawText);
+                            }
+                            pre.parentNode.insertBefore(newCard, pre);
+                        }
+                        return;
+                    }
+
+                    // 2. Fallback heuristic path: if JetBrains did NOT generate pre.frontmatter-header
+                    var existingCards = document.querySelectorAll('.pm-frontmatter-container');
+                    if (existingCards.length > 0) {
+                        for (var ec = 0; ec < existingCards.length; ec++) {
+                            existingCards[ec].classList.remove('pm-fm-hidden');
+                        }
+                        var hiddenFBs = document.querySelectorAll('.pm-fallback-hidden');
+                        for (var h = 0; h < hiddenFBs.length; h++) {
+                            hiddenFBs[h].style.display = 'none';
+                        }
+                        return;
+                    }
+
+                    var body = document.body;
+                    if (!body) return;
+                    var firstEl = null;
+                    for (var b = 0; b < body.children.length; b++) {
+                        var child = body.children[b];
+                        if (child.id === 'persian-markdown-switcher' || child.classList.contains('pm-frontmatter-container')) continue;
+                        firstEl = child;
+                        break;
+                    }
+
+                    if (firstEl && firstEl.tagName === 'HR') {
+                        var candidateNodes = [];
+                        var curr = firstEl.nextElementSibling;
+                        var closingFound = false;
+                        var collectedText = '';
+
+                        while (curr && curr.id !== 'persian-markdown-switcher') {
+                            if (curr.tagName === 'HR') {
+                                closingFound = true;
+                                candidateNodes.push(curr);
+                                break;
+                            }
+                            var text = (curr.textContent || '').trim();
+                            if (curr.tagName === 'H2' && text.indexOf(':') !== -1) {
+                                collectedText += '\n' + text;
+                                candidateNodes.push(curr);
+                                closingFound = true;
+                                break;
+                            }
+                            if (text.indexOf(':') !== -1 || /^\s*-\s+/.test(text)) {
+                                collectedText += '\n' + text;
+                                candidateNodes.push(curr);
+                            } else {
+                                break;
+                            }
+                            curr = curr.nextElementSibling;
+                        }
+
+                        if (closingFound && collectedText.trim()) {
+                            var fallbackItems = parseYamlSimple(collectedText);
+                            if (fallbackItems && fallbackItems.length > 0) {
+                                var fallbackCard = buildFrontMatterCard(collectedText.trim(), fallbackItems);
+                                firstEl.parentNode.insertBefore(fallbackCard, firstEl);
+                                firstEl.classList.add('pm-fallback-hidden');
+                                firstEl.style.display = 'none';
+                                for (var c = 0; c < candidateNodes.length; c++) {
+                                    candidateNodes[c].classList.add('pm-fallback-hidden');
+                                    candidateNodes[c].style.display = 'none';
+                                }
+                            }
+                        }
+                    }
+                }
+
                 function resetDirections() {
+                    var existingFm = document.querySelectorAll('.pm-frontmatter-container');
+                    for (var ef = 0; ef < existingFm.length; ef++) {
+                        existingFm[ef].classList.add('pm-fm-hidden');
+                    }
+                    var wrappedPres = document.querySelectorAll('pre.frontmatter-header.pm-wrapped');
+                    for (var wp = 0; wp < wrappedPres.length; wp++) {
+                        wrappedPres[wp].style.display = '';
+                    }
+                    var hiddenFallbacks = document.querySelectorAll('.pm-fallback-hidden');
+                    for (var hf = 0; hf < hiddenFallbacks.length; hf++) {
+                        hiddenFallbacks[hf].style.display = '';
+                    }
                     var elements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li, blockquote, td, th, pre, code, kbd, samp, tt, a');
                     for (var i = 0; i < elements.length; i++) {
                         var el = elements[i];
@@ -1179,6 +1827,9 @@ object CssGenerator {
                         resetDirections();
                         return;
                     }
+
+                    // Process Front Matter first
+                    processFrontMatter();
 
                     // 1. Code blocks (<pre>) are ALWAYS LTR and left-aligned
                     var preElements = document.querySelectorAll('pre, .code-fence, .markdown-code-fence');
@@ -1946,22 +2597,27 @@ object CssGenerator {
                 if (window.MutationObserver) {
                     var debounceTimer = null;
                     var observer = new MutationObserver(function(mutations) {
-                        var onlySwitcher = true;
+                        var onlyInternalPlugin = true;
                         for (var m = 0; m < mutations.length; m++) {
                             var mut = mutations[m];
-                            var isSwitcher = (mut.target && (mut.target.id === 'persian-markdown-switcher' || (mut.target.closest && mut.target.closest('#persian-markdown-switcher'))));
-                            if (!isSwitcher) {
-                                onlySwitcher = false;
+                            var target = mut.target;
+                            var isInternal = target && (
+                                target.id === 'persian-markdown-switcher' ||
+                                (target.classList && target.classList.contains('pm-frontmatter-container')) ||
+                                (target.closest && (target.closest('#persian-markdown-switcher') || target.closest('.pm-frontmatter-container')))
+                            );
+                            if (!isInternal) {
+                                onlyInternalPlugin = false;
                                 break;
                             }
                         }
-                        if (onlySwitcher) return;
+                        if (onlyInternalPlugin) return;
 
                         if (debounceTimer) clearTimeout(debounceTimer);
                         debounceTimer = setTimeout(function() {
                             createSwitcherUI();
                             applyDirections();
-                        }, 40);
+                        }, 50);
                     });
                     var obsTarget = document.documentElement || document.body;
                     if (obsTarget) {

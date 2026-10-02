@@ -21,6 +21,7 @@ class PersianMarkdownState : BaseState() {
     var enhanceHeadings by property(true)
     var enhanceQuotes by property(true)
     var enhanceTables by property(true)
+    var renderFrontMatter by property(true)
 }
 
 fun interface PersianMarkdownSettingsListener {
