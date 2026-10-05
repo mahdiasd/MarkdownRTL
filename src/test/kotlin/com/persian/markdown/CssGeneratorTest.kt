@@ -224,4 +224,35 @@ class CssGeneratorTest {
         assertTrue(js.contains("pm-fm-text-card"))
         assertTrue(js.contains("pm-fm-text-body"))
     }
+
+    @Test
+    fun testMermaidCssGenerated() {
+        val state = PersianMarkdownState()
+        val css = CssGenerator.generateCss(state)
+        assertTrue(css.contains(".pm-mermaid-container"))
+        assertTrue(css.contains(".pm-mermaid-header"))
+        assertTrue(css.contains(".pm-mermaid-btn"))
+        assertTrue(css.contains(".pm-mermaid-svg-wrap"))
+        assertTrue(css.contains(".pm-mermaid-raw-wrap"))
+        assertTrue(css.contains(".pm-mermaid-modal"))
+        assertTrue(css.contains(".pm-modal-canvas"))
+        assertTrue(css.contains(".pm-modal-controls"))
+    }
+
+    @Test
+    fun testMermaidJsScriptInjected() {
+        val state = PersianMarkdownState().apply {
+            renderMermaid = true
+        }
+        val js = CssGenerator.generateAutoDirScript(state)
+        assertTrue(js.contains("renderMermaidEnabled"))
+        assertTrue(js.contains("processMermaidDiagrams"))
+        assertTrue(js.contains("createMermaidCard"))
+        assertTrue(js.contains("renderMermaidCard"))
+        assertTrue(js.contains("openMermaidModal"))
+        assertTrue(js.contains("detectIdeDarkTheme"))
+        assertTrue(js.contains("pm-opt-mermaid"))
+        assertTrue(js.contains("pm-opt-fm"))
+        assertTrue(js.contains("mermaid"))
+    }
 }

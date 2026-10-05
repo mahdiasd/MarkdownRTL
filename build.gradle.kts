@@ -51,6 +51,15 @@ intellijPlatform {
             </p>
         """.trimIndent()
         changeNotes = """
+            <h3>What's New in Version 1.1.0</h3>
+            <ul>
+                <li><b>Native Mermaid Diagram Support:</b> Renders <code>```mermaid</code> fenced code blocks directly into crisp, interactive SVG diagrams completely offline without external plugins.</li>
+                <li><b>Smart Diagram Language Detection &amp; Typography:</b> Diagrams with pure English text default to <i>JetBrains Mono</i>, while diagrams containing Persian/Arabic automatically use <i>Vazirmatn</i> with RTL-aligned text labels.</li>
+                <li><b>Modern Interactive Card UI:</b> Features a sleek toolbar to toggle between Diagram and Source views, copy SVG image, and copy source code.</li>
+                <li><b>Fullscreen Modal with Pan &amp; Zoom:</b> View complex architectural diagrams in a fullscreen overlay with mouse wheel zoom and drag-to-pan navigation.</li>
+                <li><b>Live Editing Resilience:</b> Gracefully handles in-progress syntax errors during typing by preserving the last valid diagram render.</li>
+                <li><b>Bento Widget Quick Toggle:</b> Easily enable or disable Mermaid diagram rendering on the fly via the floating bottom-left Bento controller.</li>
+            </ul>
             <h3>What's New in Version 1.0.2</h3>
             <ul>
                 <li><b>Smart YAML Front Matter Metadata Card (#1):</b> Automatically detects and renders document metadata blocks (<code>--- ... ---</code>) as a styled interactive card with bidirectional (BiDi) language detection (RTL for Persian/Arabic, LTR for English/URLs).</li>

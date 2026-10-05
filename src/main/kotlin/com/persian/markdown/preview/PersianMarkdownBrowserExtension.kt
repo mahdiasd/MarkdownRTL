@@ -80,6 +80,9 @@ class PersianMarkdownBrowserExtension(
                 params["frontmatter"]?.let {
                     state.renderFrontMatter = it.toBoolean()
                 }
+                params["mermaid"]?.let {
+                    state.renderMermaid = it.toBoolean()
+                }
 
                 settings.notifyChanged()
             } catch (_: Exception) {
@@ -95,13 +98,18 @@ class PersianMarkdownBrowserExtension(
         get() = MarkdownBrowserPreviewExtension.Priority.AFTER_ALL
 
     override val styles: List<String> = listOf("persianMarkdown/persian.css")
-    override val scripts: List<String> = listOf("persianMarkdown/persian.js")
+    override val scripts: List<String> = listOf(
+        "persianMarkdown/mermaid.min.js",
+        "persianMarkdown/persian.js"
+    )
 
     override val resourceProvider: ResourceProvider
         get() = this
 
     override fun canProvide(resourceName: String): Boolean {
-        return resourceName == "persianMarkdown/persian.css" || resourceName == "persianMarkdown/persian.js"
+        return resourceName == "persianMarkdown/persian.css" ||
+                resourceName == "persianMarkdown/persian.js" ||
+                resourceName == "persianMarkdown/mermaid.min.js"
     }
 
     override fun loadResource(resourceName: String): ResourceProvider.Resource? {
@@ -116,11 +124,23 @@ class PersianMarkdownBrowserExtension(
                 val js = CssGenerator.generateAutoDirScript(state, cachedSystemFonts)
                 ResourceProvider.Resource(js.toByteArray(Charsets.UTF_8), "application/javascript; charset=utf-8")
             }
+            "persianMarkdown/mermaid.min.js" -> {
+                ResourceProvider.Resource(cachedMermaidJs, "application/javascript; charset=utf-8")
+            }
             else -> null
         }
     }
 
     companion object {
+        val cachedMermaidJs: ByteArray by lazy {
+            try {
+                PersianMarkdownBrowserExtension::class.java.getResourceAsStream("/js/mermaid.min.js")
+                    ?.use { it.readBytes() } ?: ByteArray(0)
+            } catch (_: Exception) {
+                ByteArray(0)
+            }
+        }
+
         val cachedSystemFonts: Array<String> by lazy {
             try {
                 java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment()
