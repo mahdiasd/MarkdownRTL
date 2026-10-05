@@ -1529,6 +1529,18 @@ object CssGenerator {
                 function savePref(k, v) { try { localStorage.setItem('pm_' + k, v); } catch(e){} }
                 function getPref(k, def) { try { var v = localStorage.getItem('pm_' + k); return v !== null ? v : def; } catch(e){ return def; } }
 
+                function cleanFontName(name) {
+                    if (!name) return '';
+                    if (name.indexOf(',') !== -1) {
+                        name = name.split(',')[0];
+                    }
+                    return name.trim().replace(/['"]/g, '');
+                }
+
+                var savedFa = cleanFontName(getPref('fa_font', defaultFaFont)) || defaultFaFont;
+                var savedEn = cleanFontName(getPref('en_font', defaultEnFont)) || defaultEnFont;
+                var savedCode = cleanFontName(getPref('code_font', defaultCodeFont)) || defaultCodeFont;
+
                 var savedPrefEnabled = getPref('enabled', '$initialEnabled');
                 var isEnabled = savedPrefEnabled === '1' || savedPrefEnabled === 'true';
                 var currentMode = getPref('mode', '${escapeJs(initialMode)}');
@@ -2269,7 +2281,7 @@ object CssGenerator {
                     var svgWrap = document.createElement('div');
                     svgWrap.className = 'pm-mermaid-svg-wrap';
 
-                    var rawWrap = document.createElement('pre');
+                    var rawWrap = document.createElement('div');
                     rawWrap.className = 'pm-mermaid-raw-wrap';
                     rawWrap.textContent = rawCode;
 
@@ -2330,7 +2342,19 @@ object CssGenerator {
                 }
 
                 function renderMermaidCard(card, rawCode, isFa, diagramType) {
-                    if (!window.mermaid) return;
+                    if (!window.mermaid) {
+                        var retryCount = 0;
+                        var retryTimer = setInterval(function() {
+                            retryCount++;
+                            if (window.mermaid) {
+                                clearInterval(retryTimer);
+                                renderMermaidCard(card, rawCode, isFa, diagramType);
+                            } else if (retryCount > 60) {
+                                clearInterval(retryTimer);
+                            }
+                        }, 100);
+                        return;
+                    }
                     card.setAttribute('data-raw-code', rawCode);
 
                     var svgWrap = card.querySelector('.pm-mermaid-svg-wrap');
@@ -2443,6 +2467,11 @@ object CssGenerator {
                     for (var i = 0; i < pres.length; i++) {
                         var pre = pres[i];
                         if (pre.classList.contains('frontmatter-header')) continue;
+                        if (pre.closest('#persian-markdown-switcher')) continue;
+                        if (pre.closest('.pm-frontmatter-container')) continue;
+                        if (pre.closest('.pm-mermaid-container')) continue;
+                        if (pre.closest('.pm-mermaid-modal')) continue;
+                        if (pre.classList.contains('pm-mermaid-raw-wrap')) continue;
 
                         var code = pre.querySelector('code');
                         var className = (code ? code.className : '') + ' ' + (pre.className || '');
@@ -2479,7 +2508,9 @@ object CssGenerator {
                         if (prevSibling && prevSibling.classList.contains('pm-mermaid-container')) {
                             card = prevSibling;
                             card.classList.remove('pm-mermaid-hidden');
-                            if (card.getAttribute('data-raw-code') !== rawText) {
+                            var svgWrap = card.querySelector('.pm-mermaid-svg-wrap');
+                            var hasSvg = svgWrap && svgWrap.querySelector('svg');
+                            if (!hasSvg || card.getAttribute('data-raw-code') !== rawText) {
                                 renderMermaidCard(card, rawText, isFa, diagramType);
                             }
                         } else {
@@ -2593,14 +2624,6 @@ object CssGenerator {
                             }
                         }
                     }
-                }
-
-                function cleanFontName(name) {
-                    if (!name) return '';
-                    if (name.indexOf(',') !== -1) {
-                        name = name.split(',')[0];
-                    }
-                    return name.trim().replace(/['"]/g, '');
                 }
 
                 function setupFontCombobox(type, inputEl, dropdownEl, suggestedList, initialVal, onSelect) {
@@ -3063,9 +3086,9 @@ object CssGenerator {
                     var suggestedEn = ['JetBrains Mono', 'SF Pro', 'Inter', 'Geist', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'System UI'];
                     var suggestedCode = ['JetBrains Mono', 'Cascadia Code', 'Fira Code', 'SF Mono', 'Geist Mono', 'Consolas', 'Courier New', 'Menlo', 'Monaco'];
 
-                    var savedFa = cleanFontName(getPref('fa_font', defaultFaFont)) || defaultFaFont;
-                    var savedEn = cleanFontName(getPref('en_font', defaultEnFont)) || defaultEnFont;
-                    var savedCode = cleanFontName(getPref('code_font', defaultCodeFont)) || defaultCodeFont;
+                    savedFa = cleanFontName(getPref('fa_font', defaultFaFont)) || defaultFaFont;
+                    savedEn = cleanFontName(getPref('en_font', defaultEnFont)) || defaultEnFont;
+                    savedCode = cleanFontName(getPref('code_font', defaultCodeFont)) || defaultCodeFont;
 
                     function updateFaFont(val) {
                         val = cleanFontName(val);
