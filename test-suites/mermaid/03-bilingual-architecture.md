@@ -23,7 +23,7 @@ flowchart TD
         امنیت["سرویس احراز هویت (Keycloak OAuth2/OIDC)"]
     end
 
-    subgraph سرویس‌ها ["هسته میکروسرویس‌ها (Core Microservices)"]
+    subgraph سرویس_ها ["هسته میکروسرویس‌ها (Core Microservices)"]
         سرویس_سفارش["سرویس سفارشات (Order Service - Kotlin)"]
         سرویس_انبار["سرویس موجودی کالا (Inventory Service - Go)"]
         سرویس_مالی["سرویس تراکنش و تسویه (Payment Service - Java)"]

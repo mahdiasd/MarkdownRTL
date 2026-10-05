@@ -231,12 +231,8 @@ class CssGeneratorTest {
         val css = CssGenerator.generateCss(state)
         assertTrue(css.contains(".pm-mermaid-container"))
         assertTrue(css.contains(".pm-mermaid-header"))
-        assertTrue(css.contains(".pm-mermaid-btn"))
         assertTrue(css.contains(".pm-mermaid-svg-wrap"))
-        assertTrue(css.contains(".pm-mermaid-raw-wrap"))
-        assertTrue(css.contains(".pm-mermaid-modal"))
-        assertTrue(css.contains(".pm-modal-canvas"))
-        assertTrue(css.contains(".pm-modal-controls"))
+        assertTrue(css.contains(".pm-mermaid-error-banner"))
     }
 
     @Test
@@ -249,7 +245,7 @@ class CssGeneratorTest {
         assertTrue(js.contains("processMermaidDiagrams"))
         assertTrue(js.contains("createMermaidCard"))
         assertTrue(js.contains("renderMermaidCard"))
-        assertTrue(js.contains("openMermaidModal"))
+        assertTrue(js.contains("sanitizeMermaidCode"))
         assertTrue(js.contains("detectIdeDarkTheme"))
         assertTrue(js.contains("pm-opt-mermaid"))
         assertTrue(js.contains("pm-opt-fm"))

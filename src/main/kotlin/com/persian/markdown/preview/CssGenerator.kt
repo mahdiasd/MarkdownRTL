@@ -604,37 +604,6 @@ object CssGenerator {
             .pm-mermaid-status.pm-visible {
                 display: inline-flex !important;
             }
-            .pm-mermaid-actions {
-                display: flex !important;
-                align-items: center !important;
-                gap: 6px !important;
-            }
-            .pm-mermaid-btn {
-                background: rgba(255, 255, 255, 0.06) !important;
-                border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                color: #94A3B8 !important;
-                font-family: var(--pm-code-font, monospace) !important;
-                font-size: 11px !important;
-                padding: 2px 8px !important;
-                border-radius: 5px !important;
-                cursor: pointer !important;
-                transition: all 0.15s ease !important;
-                display: inline-flex !important;
-                align-items: center !important;
-                gap: 4px !important;
-                line-height: 1.4 !important;
-            }
-            .pm-mermaid-btn:hover {
-                background: rgba(30, 180, 235, 0.2) !important;
-                color: #F0F9FF !important;
-                border-color: rgba(30, 180, 235, 0.4) !important;
-            }
-            .pm-mermaid-btn.pm-active {
-                background: #1EB4EB !important;
-                color: #0B111A !important;
-                font-weight: 600 !important;
-                border-color: #1EB4EB !important;
-            }
             .pm-mermaid-body {
                 padding: 16px !important;
                 position: relative !important;
@@ -651,22 +620,6 @@ object CssGenerator {
                 height: auto !important;
                 display: block !important;
             }
-            .pm-mermaid-raw-wrap {
-                display: none !important;
-                margin: 0 !important;
-                padding: 12px !important;
-                background: rgba(10, 15, 24, 0.9) !important;
-                border-radius: 6px !important;
-                font-family: var(--pm-code-font, monospace) !important;
-                font-size: 12.5px !important;
-                line-height: 1.6 !important;
-                color: #CBD5E1 !important;
-                overflow-x: auto !important;
-                white-space: pre !important;
-            }
-            .pm-mermaid-raw-wrap.pm-visible {
-                display: block !important;
-            }
             .pm-mermaid-error-banner {
                 margin-top: 10px !important;
                 padding: 8px 12px !important;
@@ -680,74 +633,6 @@ object CssGenerator {
             }
             .pm-mermaid-error-banner.pm-visible {
                 display: block !important;
-            }
-
-            /* --- Fullscreen Zoom Modal --- */
-            .pm-mermaid-modal {
-                position: fixed !important;
-                inset: 0 !important;
-                z-index: 99999 !important;
-                background: rgba(8, 12, 18, 0.9) !important;
-                backdrop-filter: blur(14px) !important;
-                -webkit-backdrop-filter: blur(14px) !important;
-                display: none !important;
-                flex-direction: column !important;
-            }
-            .pm-mermaid-modal.pm-modal-open {
-                display: flex !important;
-            }
-            .pm-modal-topbar {
-                display: flex !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                padding: 10px 18px !important;
-                background: rgba(18, 24, 36, 0.95) !important;
-                border-bottom: 1px solid rgba(142, 217, 245, 0.2) !important;
-            }
-            .pm-modal-title {
-                font-size: 13px !important;
-                font-weight: 600 !important;
-                color: #8ED9F5 !important;
-                font-family: var(--pm-code-font, monospace) !important;
-                display: flex !important;
-                align-items: center !important;
-                gap: 8px !important;
-            }
-            .pm-modal-controls {
-                display: flex !important;
-                align-items: center !important;
-                gap: 8px !important;
-            }
-            .pm-modal-canvas {
-                flex: 1 !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                overflow: hidden !important;
-                cursor: grab !important;
-                position: relative !important;
-                user-select: none !important;
-            }
-            .pm-modal-canvas:active {
-                cursor: grabbing !important;
-            }
-            .pm-modal-content-wrap {
-                transform-origin: center center !important;
-                transition: transform 0.05s ease-out !important;
-                max-width: 90vw !important;
-                max-height: 85vh !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-            }
-            .pm-modal-content-wrap svg {
-                max-width: none !important;
-                width: auto !important;
-                height: auto !important;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
-                background: rgba(22, 28, 42, 0.6) !important;
-                padding: 16px !important;
-                border-radius: 8px !important;
             }
 
             /* --- Isolated Floating Switcher & Dialog --- */
@@ -2062,159 +1947,30 @@ object CssGenerator {
                     } catch (_) {}
                 }
 
-                function copyTextToClipboard(text, btn, feedbackText) {
-                    var origText = btn.textContent;
-                    function showDone() {
-                        btn.textContent = feedbackText || 'Copied!';
-                        btn.classList.add('pm-active');
-                        setTimeout(function() {
-                            btn.textContent = origText;
-                            btn.classList.remove('pm-active');
-                        }, 1800);
-                    }
-                    if (navigator.clipboard && navigator.clipboard.writeText) {
-                        navigator.clipboard.writeText(text).then(showDone).catch(function() {
-                            fallbackCopyExec(text);
-                            showDone();
-                        });
-                    } else {
-                        fallbackCopyExec(text);
-                        showDone();
-                    }
-                }
-
-                function fallbackCopyExec(text) {
-                    var ta = document.createElement('textarea');
-                    ta.value = text;
-                    ta.style.position = 'fixed';
-                    ta.style.opacity = '0';
-                    document.body.appendChild(ta);
-                    ta.select();
-                    try { document.execCommand('copy'); } catch (_) {}
-                    ta.remove();
-                }
-
-                function openMermaidModal(sourceSvg, diagramType) {
-                    var modal = document.getElementById('pm-mermaid-modal');
-                    if (!modal) {
-                        modal = document.createElement('div');
-                        modal.id = 'pm-mermaid-modal';
-                        modal.className = 'pm-mermaid-modal';
-                        modal.innerHTML = 
-                            '<div class="pm-modal-topbar">' +
-                                '<div class="pm-modal-title">' +
-                                    '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#1EB4EB" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/><path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4"/></svg>' +
-                                    '<span id="pm-modal-title-text">Diagram Fullscreen</span>' +
-                                '</div>' +
-                                '<div class="pm-modal-controls">' +
-                                    '<button type="button" class="pm-mermaid-btn" id="pm-modal-zoom-out" title="Zoom Out (−)">−</button>' +
-                                    '<button type="button" class="pm-mermaid-btn" id="pm-modal-zoom-reset" title="Reset Zoom">100%</button>' +
-                                    '<button type="button" class="pm-mermaid-btn" id="pm-modal-zoom-in" title="Zoom In (+)">+</button>' +
-                                    '<button type="button" class="pm-mermaid-btn pm-active" id="pm-modal-close" title="Close (ESC)">✕ Close</button>' +
-                                '</div>' +
-                            '</div>' +
-                            '<div class="pm-modal-canvas" id="pm-modal-canvas">' +
-                                '<div class="pm-modal-content-wrap" id="pm-modal-content"></div>' +
-                            '</div>';
-                        document.body.appendChild(modal);
-
-                        var closeBtn = modal.querySelector('#pm-modal-close');
-                        var canvas = modal.querySelector('#pm-modal-canvas');
-                        var content = modal.querySelector('#pm-modal-content');
-                        var btnIn = modal.querySelector('#pm-modal-zoom-in');
-                        var btnOut = modal.querySelector('#pm-modal-zoom-out');
-                        var btnReset = modal.querySelector('#pm-modal-zoom-reset');
-
-                        var scale = 1.0;
-                        var panX = 0;
-                        var panY = 0;
-                        var isPanning = false;
-                        var startX = 0;
-                        var startY = 0;
-
-                        function updateTransform() {
-                            content.style.transform = 'translate(' + panX + 'px, ' + panY + 'px) scale(' + scale + ')';
-                            btnReset.textContent = Math.round(scale * 100) + '%';
-                        }
-
-                        modal._resetTransform = function() {
-                            scale = 1.0;
-                            panX = 0;
-                            panY = 0;
-                            updateTransform();
-                        };
-
-                        btnIn.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                            scale = Math.min(scale * 1.25, 6.0);
-                            updateTransform();
-                        });
-
-                        btnOut.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                            scale = Math.max(scale / 1.25, 0.2);
-                            updateTransform();
-                        });
-
-                        btnReset.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                            modal._resetTransform();
-                        });
-
-                        function closeModal() {
-                            modal.classList.remove('pm-modal-open');
-                        }
-
-                        closeBtn.addEventListener('click', closeModal);
-
-                        modal.addEventListener('click', function(e) {
-                            if (e.target === canvas) {
-                                closeModal();
+                function sanitizeMermaidCode(code) {
+                    if (!code) return '';
+                    var inQuote = false;
+                    var out = '';
+                    for (var i = 0; i < code.length; i++) {
+                        var ch = code[i];
+                        if (ch === '"') {
+                            var backslashes = 0;
+                            var j = i - 1;
+                            while (j >= 0 && code[j] === '\\') {
+                                backslashes++;
+                                j--;
                             }
-                        });
-
-                        document.addEventListener('keydown', function(e) {
-                            if (e.key === 'Escape' && modal.classList.contains('pm-modal-open')) {
-                                closeModal();
+                            if (backslashes % 2 === 0) {
+                                inQuote = !inQuote;
                             }
-                        });
-
-                        canvas.addEventListener('wheel', function(e) {
-                            e.preventDefault();
-                            var delta = e.deltaY < 0 ? 1.15 : 0.85;
-                            scale = Math.max(0.2, Math.min(scale * delta, 6.0));
-                            updateTransform();
-                        }, { passive: false });
-
-                        canvas.addEventListener('mousedown', function(e) {
-                            if (e.target === closeBtn || (e.target.closest && e.target.closest('.pm-modal-controls'))) return;
-                            isPanning = true;
-                            startX = e.clientX - panX;
-                            startY = e.clientY - panY;
-                        });
-
-                        window.addEventListener('mousemove', function(e) {
-                            if (!isPanning) return;
-                            panX = e.clientX - startX;
-                            panY = e.clientY - startY;
-                            updateTransform();
-                        });
-
-                        window.addEventListener('mouseup', function() {
-                            isPanning = false;
-                        });
+                            out += ch;
+                        } else if (!inQuote && (ch === '\u200C' || ch === '\u200D')) {
+                            out += '_';
+                        } else {
+                            out += ch;
+                        }
                     }
-
-                    var titleEl = modal.querySelector('#pm-modal-title-text');
-                    if (titleEl) titleEl.textContent = 'Mermaid ' + (diagramType || 'Diagram') + ' - Fullscreen';
-
-                    var content = modal.querySelector('#pm-modal-content');
-                    content.innerHTML = '';
-                    var clone = sourceSvg.cloneNode(true);
-                    clone.removeAttribute('style');
-                    content.appendChild(clone);
-                    modal._resetTransform();
-                    modal.classList.add('pm-modal-open');
+                    return out;
                 }
 
                 var mermaidCardCounter = 0;
@@ -2240,40 +1996,7 @@ object CssGenerator {
                         (diagramType ? '<span class="pm-mermaid-lang-badge">' + diagramType + '</span>' : '') +
                         '<span class="pm-mermaid-status" id="' + cardId + '-status">● Updating...</span>';
 
-                    var actions = document.createElement('div');
-                    actions.className = 'pm-mermaid-actions';
-
-                    var toggleBtn = document.createElement('button');
-                    toggleBtn.type = 'button';
-                    toggleBtn.className = 'pm-mermaid-btn';
-                    toggleBtn.textContent = 'Source';
-                    toggleBtn.title = 'Toggle Diagram / Raw Code';
-
-                    var copySvgBtn = document.createElement('button');
-                    copySvgBtn.type = 'button';
-                    copySvgBtn.className = 'pm-mermaid-btn';
-                    copySvgBtn.textContent = 'Copy SVG';
-                    copySvgBtn.title = 'Copy SVG Vector to Clipboard';
-
-                    var copyCodeBtn = document.createElement('button');
-                    copyCodeBtn.type = 'button';
-                    copyCodeBtn.className = 'pm-mermaid-btn';
-                    copyCodeBtn.textContent = 'Copy Code';
-                    copyCodeBtn.title = 'Copy Mermaid Definition';
-
-                    var zoomBtn = document.createElement('button');
-                    zoomBtn.type = 'button';
-                    zoomBtn.className = 'pm-mermaid-btn';
-                    zoomBtn.textContent = 'Zoom';
-                    zoomBtn.title = 'Fullscreen & Interactive Pan/Zoom';
-
-                    actions.appendChild(toggleBtn);
-                    actions.appendChild(copySvgBtn);
-                    actions.appendChild(copyCodeBtn);
-                    actions.appendChild(zoomBtn);
-
                     header.appendChild(titleGroup);
-                    header.appendChild(actions);
 
                     var body = document.createElement('div');
                     body.className = 'pm-mermaid-body';
@@ -2281,62 +2004,14 @@ object CssGenerator {
                     var svgWrap = document.createElement('div');
                     svgWrap.className = 'pm-mermaid-svg-wrap';
 
-                    var rawWrap = document.createElement('div');
-                    rawWrap.className = 'pm-mermaid-raw-wrap';
-                    rawWrap.textContent = rawCode;
-
                     var errorBanner = document.createElement('div');
                     errorBanner.className = 'pm-mermaid-error-banner';
 
                     body.appendChild(svgWrap);
-                    body.appendChild(rawWrap);
                     body.appendChild(errorBanner);
 
                     container.appendChild(header);
                     container.appendChild(body);
-
-                    var isSourceMode = false;
-                    toggleBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        isSourceMode = !isSourceMode;
-                        if (isSourceMode) {
-                            svgWrap.style.display = 'none';
-                            rawWrap.classList.add('pm-visible');
-                            toggleBtn.textContent = 'Diagram';
-                            toggleBtn.classList.add('pm-active');
-                        } else {
-                            svgWrap.style.display = '';
-                            rawWrap.classList.remove('pm-visible');
-                            toggleBtn.textContent = 'Source';
-                            toggleBtn.classList.remove('pm-active');
-                        }
-                    });
-
-                    copySvgBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        var svg = svgWrap.querySelector('svg');
-                        if (svg) {
-                            copyTextToClipboard(svg.outerHTML, copySvgBtn, 'Copied SVG!');
-                        }
-                    });
-
-                    copyCodeBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        var codeToCopy = container.getAttribute('data-raw-code') || rawCode;
-                        copyTextToClipboard(codeToCopy, copyCodeBtn, 'Copied Code!');
-                    });
-
-                    zoomBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        var svg = svgWrap.querySelector('svg');
-                        if (svg) {
-                            openMermaidModal(svg, diagramType);
-                        }
-                    });
 
                     return container;
                 }
@@ -2358,10 +2033,8 @@ object CssGenerator {
                     card.setAttribute('data-raw-code', rawCode);
 
                     var svgWrap = card.querySelector('.pm-mermaid-svg-wrap');
-                    var rawWrap = card.querySelector('.pm-mermaid-raw-wrap');
                     var errorBanner = card.querySelector('.pm-mermaid-error-banner');
                     var statusEl = card.querySelector('.pm-mermaid-status');
-                    if (rawWrap) rawWrap.textContent = rawCode;
 
                     // Choose typography based on language detection (English by default, Vazirmatn for Persian)
                     var diagramFont;
@@ -2435,8 +2108,10 @@ object CssGenerator {
                         }
                     }
 
+                    var sanitizedCode = sanitizeMermaidCode(rawCode);
+
                     try {
-                        var res = window.mermaid.render(renderId, rawCode);
+                        var res = window.mermaid.render(renderId, sanitizedCode);
                         if (res && typeof res.then === 'function') {
                             res.then(function(result) {
                                 var svgStr = result && result.svg ? result.svg : result;
@@ -2470,8 +2145,6 @@ object CssGenerator {
                         if (pre.closest('#persian-markdown-switcher')) continue;
                         if (pre.closest('.pm-frontmatter-container')) continue;
                         if (pre.closest('.pm-mermaid-container')) continue;
-                        if (pre.closest('.pm-mermaid-modal')) continue;
-                        if (pre.classList.contains('pm-mermaid-raw-wrap')) continue;
 
                         var code = pre.querySelector('code');
                         var className = (code ? code.className : '') + ' ' + (pre.className || '');
@@ -3388,8 +3061,8 @@ object CssGenerator {
                             var target = mut.target;
                             var isInternal = target && (
                                 target.id === 'persian-markdown-switcher' ||
-                                (target.classList && (target.classList.contains('pm-frontmatter-container') || target.classList.contains('pm-mermaid-container') || target.classList.contains('pm-mermaid-modal'))) ||
-                                (target.closest && (target.closest('#persian-markdown-switcher') || target.closest('.pm-frontmatter-container') || target.closest('.pm-mermaid-container') || target.closest('.pm-mermaid-modal')))
+                                (target.classList && (target.classList.contains('pm-frontmatter-container') || target.classList.contains('pm-mermaid-container'))) ||
+                                (target.closest && (target.closest('#persian-markdown-switcher') || target.closest('.pm-frontmatter-container') || target.closest('.pm-mermaid-container')))
                             );
                             if (!isInternal) {
                                 onlyInternalPlugin = false;
