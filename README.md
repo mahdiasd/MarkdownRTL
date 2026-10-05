@@ -68,7 +68,7 @@ Markdown RTL works natively inside the **Markdown Preview Pane**:
 ## ✨ Key Features
 
 - 🔄 **Smart BiDi Detection (Auto Mode):** Analyzes paragraphs, headings, and lists dynamically. Persian and Arabic align right; pure English stays left.
-- 📊 **Native Mermaid Diagram Support (v1.1.0):** Automatically renders ` ```mermaid ` code fences into interactive SVG diagrams completely offline. Pure English diagrams use *JetBrains Mono* by default, while Persian/Arabic diagrams automatically utilize *Vazirmatn* with RTL-aligned text labels. Includes Diagram/Source view toggles, copy SVG/code, and a fullscreen modal with mouse wheel pan & zoom.
+- 📊 **Native Mermaid Diagram Support:** Automatically renders ` ```mermaid ` code fences into interactive SVG diagrams completely offline. Pure English diagrams use *JetBrains Mono* by default, while Persian/Arabic diagrams automatically utilize *Vazirmatn* with RTL-aligned text labels. Includes Diagram/Source view toggles, copy SVG/code, and clean inline zoom (+ / −) controls.
 - 📑 **Smart YAML Front Matter Card:** Seamlessly parses and renders document metadata blocks (`--- ... ---`) into a modern card with field-level BiDi alignment, array badges, clickable URLs, and quick **Raw YAML / Copy** toggles.
 - 🛡️ **Bulletproof Code Isolation:** Monospace code fences (`<pre>`, `.code-fence`, `<code>`) are strictly protected as LTR and left-aligned.
 - 🎛️ **In-Preview Bento Controller:** Floating modern widget to toggle modes, choose fonts (Persian, English, Code), and adjust font size and line height on the fly.

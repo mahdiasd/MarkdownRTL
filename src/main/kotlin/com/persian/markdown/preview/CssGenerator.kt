@@ -604,6 +604,62 @@ object CssGenerator {
             .pm-mermaid-status.pm-visible {
                 display: inline-flex !important;
             }
+            .pm-mermaid-zoom-bar {
+                display: inline-flex !important;
+                align-items: center !important;
+                background: rgba(15, 23, 42, 0.75) !important;
+                border: 1px solid rgba(142, 217, 245, 0.2) !important;
+                border-radius: 6px !important;
+                padding: 1px 3px !important;
+                gap: 2px !important;
+            }
+            .pm-mermaid-zoom-btn {
+                width: 22px !important;
+                height: 22px !important;
+                border-radius: 4px !important;
+                background: transparent !important;
+                color: #94A3B8 !important;
+                border: none !important;
+                cursor: pointer !important;
+                font-size: 14px !important;
+                font-weight: 600 !important;
+                line-height: 1 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                transition: all 0.12s ease !important;
+                padding: 0 !important;
+                user-select: none !important;
+            }
+            .pm-mermaid-zoom-btn:hover {
+                color: #FFFFFF !important;
+                background: rgba(30, 180, 235, 0.25) !important;
+            }
+            .pm-mermaid-zoom-btn:active {
+                transform: scale(0.9) !important;
+            }
+            .pm-mermaid-zoom-val {
+                font-family: var(--pm-code-font, monospace) !important;
+                font-size: 10.5px !important;
+                font-weight: 500 !important;
+                color: #8ED9F5 !important;
+                padding: 2px 5px !important;
+                cursor: pointer !important;
+                user-select: none !important;
+                min-width: 38px !important;
+                text-align: center !important;
+                border-radius: 3px !important;
+                transition: all 0.12s ease !important;
+                line-height: 1.2 !important;
+            }
+            .pm-mermaid-zoom-val:hover {
+                background: rgba(30, 180, 235, 0.2) !important;
+                color: #FFFFFF !important;
+            }
+            .pm-mermaid-zoom-val.pm-zoomed {
+                color: #38BDF8 !important;
+                font-weight: 600 !important;
+            }
             .pm-mermaid-body {
                 padding: 16px !important;
                 position: relative !important;
@@ -1981,6 +2037,7 @@ object CssGenerator {
                     var cardId = 'pm-mermaid-card-' + (++mermaidCardCounter);
                     container.id = cardId;
                     container.setAttribute('data-raw-code', rawCode);
+                    container._zoomScale = 1.0;
 
                     var header = document.createElement('div');
                     header.className = 'pm-mermaid-header';
@@ -1996,7 +2053,34 @@ object CssGenerator {
                         (diagramType ? '<span class="pm-mermaid-lang-badge">' + diagramType + '</span>' : '') +
                         '<span class="pm-mermaid-status" id="' + cardId + '-status">● Updating...</span>';
 
+                    var zoomBar = document.createElement('div');
+                    zoomBar.className = 'pm-mermaid-zoom-bar';
+
+                    var btnMinus = document.createElement('button');
+                    btnMinus.type = 'button';
+                    btnMinus.className = 'pm-mermaid-zoom-btn';
+                    btnMinus.textContent = '−';
+                    btnMinus.title = 'Zoom Out (−)';
+                    btnMinus.setAttribute('aria-label', 'Zoom Out');
+
+                    var zoomVal = document.createElement('span');
+                    zoomVal.className = 'pm-mermaid-zoom-val';
+                    zoomVal.textContent = '100%';
+                    zoomVal.title = 'Click to Reset (100%)';
+
+                    var btnPlus = document.createElement('button');
+                    btnPlus.type = 'button';
+                    btnPlus.className = 'pm-mermaid-zoom-btn';
+                    btnPlus.textContent = '+';
+                    btnPlus.title = 'Zoom In (+)';
+                    btnPlus.setAttribute('aria-label', 'Zoom In');
+
+                    zoomBar.appendChild(btnMinus);
+                    zoomBar.appendChild(zoomVal);
+                    zoomBar.appendChild(btnPlus);
+
                     header.appendChild(titleGroup);
+                    header.appendChild(zoomBar);
 
                     var body = document.createElement('div');
                     body.className = 'pm-mermaid-body';
@@ -2012,6 +2096,59 @@ object CssGenerator {
 
                     container.appendChild(header);
                     container.appendChild(body);
+
+                    function applyZoom(newScale) {
+                        newScale = Math.round(newScale * 100) / 100;
+                        if (newScale < 0.4) newScale = 0.4;
+                        if (newScale > 3.0) newScale = 3.0;
+                        container._zoomScale = newScale;
+
+                        zoomVal.textContent = Math.round(newScale * 100) + '%';
+                        if (newScale === 1.0) {
+                            zoomVal.classList.remove('pm-zoomed');
+                        } else {
+                            zoomVal.classList.add('pm-zoomed');
+                        }
+
+                        var svg = svgWrap.querySelector('svg');
+                        if (!svg) return;
+
+                        if (newScale === 1.0) {
+                            svg.style.width = '';
+                            svg.style.maxWidth = '100%';
+                            svg.style.flexShrink = '';
+                        } else {
+                            var baseW = container._initialSvgWidth;
+                            if (!baseW) {
+                                baseW = svg.getBoundingClientRect().width || (svg.viewBox ? svg.viewBox.baseVal.width : 500);
+                                container._initialSvgWidth = baseW;
+                            }
+                            var targetW = Math.round(baseW * newScale);
+                            svg.style.setProperty('width', targetW + 'px', 'important');
+                            svg.style.setProperty('max-width', 'none', 'important');
+                            svg.style.setProperty('flex-shrink', '0', 'important');
+                        }
+                    }
+
+                    container._applyZoom = applyZoom;
+
+                    btnMinus.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        applyZoom((container._zoomScale || 1.0) - 0.2);
+                    });
+
+                    btnPlus.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        applyZoom((container._zoomScale || 1.0) + 0.2);
+                    });
+
+                    zoomVal.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        applyZoom(1.0);
+                    });
 
                     return container;
                 }
@@ -2082,6 +2219,20 @@ object CssGenerator {
                                         el.style.textAlign = 'right';
                                     }
                                 }
+                            }
+                        }
+
+                        // Record initial rendered width for zoom scaling calculation
+                        var renderedSvg = svgWrap.querySelector('svg');
+                        if (renderedSvg) {
+                            var rectW = renderedSvg.getBoundingClientRect().width;
+                            if (rectW > 50) {
+                                card._initialSvgWidth = rectW;
+                            } else if (renderedSvg.viewBox && renderedSvg.viewBox.baseVal.width) {
+                                card._initialSvgWidth = renderedSvg.viewBox.baseVal.width;
+                            }
+                            if (card._applyZoom && card._zoomScale && card._zoomScale !== 1.0) {
+                                card._applyZoom(card._zoomScale);
                             }
                         }
 
@@ -2553,7 +2704,6 @@ object CssGenerator {
                                         '</svg>' +
                                     '</div>' +
                                     '<span class="pm-header-title">Markdown RTL</span>' +
-                                    '<span class="pm-header-badge">v1.0</span>' +
                                 '</div>' +
                                 '<div class="pm-header-right">' +
                                     '<button id="pm-close-btn" type="button" title="Close (ESC)">esc</button>' +

@@ -233,6 +233,9 @@ class CssGeneratorTest {
         assertTrue(css.contains(".pm-mermaid-header"))
         assertTrue(css.contains(".pm-mermaid-svg-wrap"))
         assertTrue(css.contains(".pm-mermaid-error-banner"))
+        assertTrue(css.contains(".pm-mermaid-zoom-bar"))
+        assertTrue(css.contains(".pm-mermaid-zoom-btn"))
+        assertTrue(css.contains(".pm-mermaid-zoom-val"))
     }
 
     @Test
@@ -250,5 +253,9 @@ class CssGeneratorTest {
         assertTrue(js.contains("pm-opt-mermaid"))
         assertTrue(js.contains("pm-opt-fm"))
         assertTrue(js.contains("mermaid"))
+        assertTrue(js.contains("pm-mermaid-zoom-bar"))
+        assertTrue(js.contains("applyZoom"))
+        // Version badge must not be in switcher header
+        org.junit.Assert.assertFalse(js.contains("pm-header-badge"))
     }
 }
