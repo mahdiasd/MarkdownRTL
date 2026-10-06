@@ -258,4 +258,19 @@ class CssGeneratorTest {
         // Version badge must not be in switcher header
         org.junit.Assert.assertFalse(js.contains("pm-header-badge"))
     }
+
+    @Test
+    fun testNativeMermaidCoexistenceMode() {
+        val state = PersianMarkdownState().apply {
+            renderMermaid = true
+        }
+        val jsNative = CssGenerator.generateAutoDirScript(state, hasNativeMermaid = true)
+        assertTrue(jsNative.contains("var hasNativeMermaid = true;"))
+        assertTrue(jsNative.contains("enhanceNativeMermaidDiagrams"))
+        assertTrue(jsNative.contains("Native"))
+
+        val jsStandalone = CssGenerator.generateAutoDirScript(state, hasNativeMermaid = false)
+        assertTrue(jsStandalone.contains("var hasNativeMermaid = false;"))
+        org.junit.Assert.assertFalse(jsStandalone.contains("v1.1"))
+    }
 }

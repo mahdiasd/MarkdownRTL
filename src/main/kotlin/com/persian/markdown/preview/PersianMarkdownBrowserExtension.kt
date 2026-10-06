@@ -1,6 +1,8 @@
 package com.persian.markdown.preview
 
+import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.extensions.PluginId
 import com.persian.markdown.settings.PersianMarkdownSettings
 import com.persian.markdown.settings.PersianMarkdownSettingsListener
 import org.intellij.plugins.markdown.extensions.MarkdownBrowserPreviewExtension
@@ -98,10 +100,15 @@ class PersianMarkdownBrowserExtension(
         get() = MarkdownBrowserPreviewExtension.Priority.AFTER_ALL
 
     override val styles: List<String> = listOf("persianMarkdown/persian.css")
-    override val scripts: List<String> = listOf(
-        "persianMarkdown/mermaid.min.js",
-        "persianMarkdown/persian.js"
-    )
+    override val scripts: List<String>
+        get() = if (isNativeMermaidPluginEnabled()) {
+            listOf("persianMarkdown/persian.js")
+        } else {
+            listOf(
+                "persianMarkdown/mermaid.min.js",
+                "persianMarkdown/persian.js"
+            )
+        }
 
     override val resourceProvider: ResourceProvider
         get() = this
@@ -121,7 +128,11 @@ class PersianMarkdownBrowserExtension(
             }
             "persianMarkdown/persian.js" -> {
                 val state = PersianMarkdownSettings.getInstance().state
-                val js = CssGenerator.generateAutoDirScript(state, cachedSystemFonts)
+                val js = CssGenerator.generateAutoDirScript(
+                    state = state,
+                    systemFonts = cachedSystemFonts,
+                    hasNativeMermaid = isNativeMermaidPluginEnabled()
+                )
                 ResourceProvider.Resource(js.toByteArray(Charsets.UTF_8), "application/javascript; charset=utf-8")
             }
             "persianMarkdown/mermaid.min.js" -> {
@@ -132,6 +143,15 @@ class PersianMarkdownBrowserExtension(
     }
 
     companion object {
+        fun isNativeMermaidPluginEnabled(): Boolean {
+            return try {
+                val pluginId = PluginId.getId("com.intellij.mermaid")
+                PluginManagerCore.getPlugin(pluginId)?.isEnabled == true
+            } catch (_: Throwable) {
+                false
+            }
+        }
+
         val cachedMermaidJs: ByteArray by lazy {
             try {
                 PersianMarkdownBrowserExtension::class.java.getResourceAsStream("/js/mermaid.min.js")

@@ -1441,7 +1441,8 @@ object CssGenerator {
     @JvmOverloads
     fun generateAutoDirScript(
         state: PersianMarkdownState,
-        systemFonts: Array<String> = emptyArray()
+        systemFonts: Array<String> = emptyArray(),
+        hasNativeMermaid: Boolean = false
     ): String {
         val initialEnabled = state.enabled
         val initialMode = state.directionMode.id
@@ -1531,6 +1532,7 @@ object CssGenerator {
                     return hasPersian(text);
                 }
 
+                var hasNativeMermaid = $hasNativeMermaid;
                 var renderFrontMatterEnabled = ${state.renderFrontMatter};
                 var renderMermaidEnabled = ${state.renderMermaid};
                 var savedPrefMermaid = getPref('mermaid', '$initialMermaid');
@@ -2276,7 +2278,44 @@ object CssGenerator {
                     }
                 }
 
+                function enhanceNativeMermaidDiagrams() {
+                    var nativeContainers = document.querySelectorAll('.mermaid, div[data-actual-fence-content]');
+                    for (var c = 0; c < nativeContainers.length; c++) {
+                        var container = nativeContainers[c];
+                        if (!renderMermaidEnabled || !isEnabled) {
+                            container.style.display = 'none';
+                            continue;
+                        } else {
+                            container.style.display = '';
+                        }
+                        var svgs = container.querySelectorAll('svg');
+                        for (var s = 0; s < svgs.length; s++) {
+                            var svg = svgs[s];
+                            var textNodes = svg.querySelectorAll('text, .nodeLabel, .label, foreignObject, foreignObject span, foreignObject div, foreignObject p');
+                            var hasFa = false;
+                            for (var t = 0; t < textNodes.length; t++) {
+                                var node = textNodes[t];
+                                if (hasPersian(node.textContent)) {
+                                    hasFa = true;
+                                    node.setAttribute('dir', 'rtl');
+                                    node.style.direction = 'rtl';
+                                    node.style.textAlign = 'right';
+                                }
+                            }
+                            if (hasFa) {
+                                var faFont = cleanFontName(savedFa) || 'Vazirmatn';
+                                svg.style.fontFamily = "'" + faFont + "', 'PersianMarkdownBundledVazir', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif";
+                            }
+                        }
+                    }
+                }
+
                 function processMermaidDiagrams() {
+                    if (hasNativeMermaid) {
+                        enhanceNativeMermaidDiagrams();
+                        return;
+                    }
+
                     if (!renderMermaidEnabled || !isEnabled) {
                         var existing = document.querySelectorAll('.pm-mermaid-container');
                         for (var e = 0; e < existing.length; e++) {
@@ -2361,6 +2400,10 @@ object CssGenerator {
                     var wrappedMmPres = document.querySelectorAll('pre.pm-mermaid-wrapped');
                     for (var wm = 0; wm < wrappedMmPres.length; wm++) {
                         wrappedMmPres[wm].style.display = '';
+                    }
+                    var nativeContainers = document.querySelectorAll('.mermaid, div[data-actual-fence-content]');
+                    for (var nc = 0; nc < nativeContainers.length; nc++) {
+                        nativeContainers[nc].style.display = '';
                     }
                     var hiddenFallbacks = document.querySelectorAll('.pm-fallback-hidden');
                     for (var hf = 0; hf < hiddenFallbacks.length; hf++) {
@@ -2808,7 +2851,8 @@ object CssGenerator {
                                         '<div style="display: flex; align-items: center; justify-content: space-between; width: 100%; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 6px;">' +
                                             '<div style="display: flex; align-items: center; gap: 6px;">' +
                                                 '<span style="font-size: 11.5px; font-weight: 500; color: #CBD5E1;">Mermaid</span>' +
-                                                '<span style="font-size: 9.5px; padding: 1px 5px; border-radius: 4px; background: rgba(56, 189, 248, 0.15); color: #38BDF8; font-family: var(--pm-code-font);">v1.1</span>' +
+                                                (hasNativeMermaid ?
+                                                    '<span style="font-size: 9.5px; padding: 1px 5px; border-radius: 4px; background: rgba(56, 189, 248, 0.15); color: #38BDF8; font-family: var(--pm-code-font);">Native</span>' : '') +
                                             '</div>' +
                                             '<label class="pm-switch">' +
                                                 '<input type="checkbox" id="pm-opt-mermaid">' +
