@@ -2005,6 +2005,84 @@ object CssGenerator {
                     } catch (_) {}
                 }
 
+                function decodeBase64Utf8(base64Str) {
+                    if (!base64Str || typeof base64Str !== 'string') return '';
+                    try {
+                        var cleanStr = base64Str.trim().replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
+                        while (cleanStr.length % 4 !== 0) {
+                            cleanStr += '=';
+                        }
+                        var binary = window.atob(cleanStr);
+                        var bytes = new Uint8Array(binary.length);
+                        for (var i = 0; i < binary.length; i++) {
+                            bytes[i] = binary.charCodeAt(i);
+                        }
+                        return new TextDecoder('utf-8').decode(bytes);
+                    } catch (e) {
+                        try {
+                            return decodeURIComponent(escape(window.atob(base64Str.trim())));
+                        } catch (_) {
+                            return '';
+                        }
+                    }
+                }
+
+                function extractFenceText(container) {
+                    if (!container) return '';
+
+                    // 1. Check data-actual-fence-content (JetBrains MermaidCodeGeneratingProviderExtension)
+                    var actualEl = (container.hasAttribute && container.hasAttribute('data-actual-fence-content'))
+                        ? container
+                        : (container.querySelector ? container.querySelector('[data-actual-fence-content]') : null);
+                    if (actualEl) {
+                        var b64Actual = actualEl.getAttribute('data-actual-fence-content');
+                        if (b64Actual) {
+                            var decodedActual = decodeBase64Utf8(b64Actual).trim();
+                            if (decodedActual) return decodedActual;
+                        }
+                    }
+
+                    // 2. Check data-fence-content (JetBrains DefaultCodeFenceGeneratingProvider copy button)
+                    var fenceEl = (container.hasAttribute && container.hasAttribute('data-fence-content'))
+                        ? container
+                        : (container.querySelector ? container.querySelector('[data-fence-content]') : null);
+                    if (fenceEl) {
+                        var b64Fence = fenceEl.getAttribute('data-fence-content');
+                        if (b64Fence) {
+                            var decodedFence = decodeBase64Utf8(b64Fence).trim();
+                            if (decodedFence) return decodedFence;
+                        }
+                    }
+
+                    // 3. Check data-src or data-code attributes
+                    if (container.getAttribute) {
+                        var dataSrc = container.getAttribute('data-src') || container.getAttribute('data-code');
+                        if (dataSrc && dataSrc.trim()) return dataSrc.trim();
+                    }
+
+                    // 4. Check <code> element textContent
+                    var codeEl = container.querySelector ? container.querySelector('code') : null;
+                    if (codeEl) {
+                        var codeText = (codeEl.textContent || '').trim();
+                        if (codeText) return codeText;
+                    }
+
+                    // 5. Fallback to container textContent, stripping copy buttons, tooltips and existing SVGs
+                    try {
+                        if (container.cloneNode) {
+                            var clone = container.cloneNode(true);
+                            var toRemove = clone.querySelectorAll('.code-fence-highlighter-copy-button, .tooltiptext, button, .pm-mermaid-container, svg');
+                            for (var r = 0; r < toRemove.length; r++) {
+                                toRemove[r].remove();
+                            }
+                            var cloneText = (clone.textContent || '').trim();
+                            if (cloneText) return cloneText;
+                        }
+                    } catch (_) {}
+
+                    return (container.textContent || '').trim();
+                }
+
                 function sanitizeMermaidCode(code) {
                     if (!code) return '';
                     var inQuote = false;
@@ -2171,6 +2249,24 @@ object CssGenerator {
                     }
                     card.setAttribute('data-raw-code', rawCode);
 
+                    // Update badges in case language or diagram type changed during live edit
+                    var langBadge = card.querySelector('.pm-mermaid-lang-badge');
+                    if (langBadge) {
+                        langBadge.textContent = isFa ? 'FA' : 'EN';
+                        if (isFa) {
+                            langBadge.classList.add('pm-fa');
+                        } else {
+                            langBadge.classList.remove('pm-fa');
+                        }
+                    }
+                    var titleGroup = card.querySelector('.pm-mermaid-title-group');
+                    if (titleGroup) {
+                        var allBadges = titleGroup.querySelectorAll('.pm-mermaid-lang-badge');
+                        if (allBadges.length > 1 && diagramType) {
+                            allBadges[1].textContent = diagramType;
+                        }
+                    }
+
                     var svgWrap = card.querySelector('.pm-mermaid-svg-wrap');
                     var errorBanner = card.querySelector('.pm-mermaid-error-banner');
                     var statusEl = card.querySelector('.pm-mermaid-status');
@@ -2318,26 +2414,47 @@ object CssGenerator {
                         for (var e = 0; e < existing.length; e++) {
                             existing[e].classList.add('pm-mermaid-hidden');
                         }
-                        var wrappedPres = document.querySelectorAll('pre.pm-mermaid-wrapped');
+                        var wrappedPres = document.querySelectorAll('pre.pm-mermaid-wrapped, .pm-mermaid-wrapped');
                         for (var wp = 0; wp < wrappedPres.length; wp++) {
                             wrappedPres[wp].style.display = '';
                         }
                         return;
                     }
 
+                    var targetElements = [];
                     var pres = document.querySelectorAll('pre');
-                    for (var i = 0; i < pres.length; i++) {
-                        var pre = pres[i];
-                        if (pre.classList.contains('frontmatter-header')) continue;
-                        if (pre.closest('#persian-markdown-switcher')) continue;
-                        if (pre.closest('.pm-frontmatter-container')) continue;
-                        if (pre.closest('.pm-mermaid-container')) continue;
+                    for (var p = 0; p < pres.length; p++) {
+                        targetElements.push(pres[p]);
+                    }
+                    var standaloneDivs = document.querySelectorAll('div.mermaid, div[data-actual-fence-content]');
+                    for (var sd = 0; sd < standaloneDivs.length; sd++) {
+                        var sDiv = standaloneDivs[sd];
+                        if (sDiv.closest('pre')) continue;
+                        if (sDiv.closest('.pm-mermaid-container')) continue;
+                        targetElements.push(sDiv);
+                    }
 
-                        var code = pre.querySelector('code');
-                        var className = (code ? code.className : '') + ' ' + (pre.className || '');
-                        var isMermaidClass = /\b(language-mermaid|src-mermaid|mermaid)\b/i.test(className);
-                        var rawText = (code ? code.textContent : pre.textContent) || '';
+                    for (var i = 0; i < targetElements.length; i++) {
+                        var el = targetElements[i];
+                        if (el.classList.contains('frontmatter-header')) continue;
+                        if (el.closest('#persian-markdown-switcher')) continue;
+                        if (el.closest('.pm-frontmatter-container')) continue;
+                        if (el.closest('.pm-mermaid-container')) continue;
+
+                        var code = el.querySelector ? el.querySelector('code') : null;
+                        var className = (el.className || '') + ' ' + (code ? code.className : '');
+                        var hasActualAttr = (el.hasAttribute && el.hasAttribute('data-actual-fence-content')) ||
+                                            (el.querySelector && el.querySelector('[data-actual-fence-content]'));
+                        var hasFenceAttr = (el.hasAttribute && el.hasAttribute('data-fence-content')) ||
+                                           (el.querySelector && el.querySelector('[data-fence-content]'));
+                        var isMermaidClass = /\b(language-mermaid|src-mermaid|mermaid)\b/i.test(className) || !!hasActualAttr;
+
+                        var rawText = extractFenceText(el);
                         var trimmed = rawText.trim();
+
+                        if (!trimmed) {
+                            continue;
+                        }
 
                         var isMermaidSyntax = /^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram(-v2)?|erDiagram|gantt|pie|gitGraph|mindmap|timeline|quadrantChart|xychart-beta|packet-beta|architecture-beta)\b/m.test(trimmed);
 
@@ -2358,16 +2475,27 @@ object CssGenerator {
                         else if (/^gitGraph\b/i.test(trimmed)) diagramType = 'GIT GRAPH';
                         else if (/^mindmap\b/i.test(trimmed)) diagramType = 'MINDMAP';
                         else if (/^timeline\b/i.test(trimmed)) diagramType = 'TIMELINE';
+                        else if (/^quadrantChart\b/i.test(trimmed)) diagramType = 'QUADRANT';
+                        else if (/^xychart-beta\b/i.test(trimmed)) diagramType = 'XY CHART';
+                        else if (/^packet-beta\b/i.test(trimmed)) diagramType = 'PACKET';
+                        else if (/^architecture-beta\b/i.test(trimmed)) diagramType = 'ARCHITECTURE';
 
-                        pre.classList.add('pm-mermaid-wrapped');
-                        pre.style.display = 'none';
+                        // Check if an SVG was already rendered inside el (e.g. by native Mermaid)
+                        var existingSvgEl = el.querySelector ? el.querySelector('.mermaid svg, svg') : null;
+                        var existingSvgHtml = existingSvgEl ? existingSvgEl.outerHTML : null;
 
-                        var prevSibling = pre.previousElementSibling;
+                        el.classList.add('pm-mermaid-wrapped');
+                        el.style.display = 'none';
+
+                        var prevSibling = el.previousElementSibling;
                         var card = null;
 
                         if (prevSibling && prevSibling.classList.contains('pm-mermaid-container')) {
                             card = prevSibling;
                             card.classList.remove('pm-mermaid-hidden');
+                            if (existingSvgHtml && !card._lastValidSvg) {
+                                card._lastValidSvg = existingSvgHtml;
+                            }
                             var svgWrap = card.querySelector('.pm-mermaid-svg-wrap');
                             var hasSvg = svgWrap && svgWrap.querySelector('svg');
                             if (!hasSvg || card.getAttribute('data-raw-code') !== rawText) {
@@ -2375,7 +2503,10 @@ object CssGenerator {
                             }
                         } else {
                             card = createMermaidCard(rawText, isFa, diagramType);
-                            pre.parentNode.insertBefore(card, pre);
+                            if (existingSvgHtml) {
+                                card._lastValidSvg = existingSvgHtml;
+                            }
+                            el.parentNode.insertBefore(card, el);
                             renderMermaidCard(card, rawText, isFa, diagramType);
                         }
                     }
@@ -2394,7 +2525,7 @@ object CssGenerator {
                     for (var em = 0; em < existingMm.length; em++) {
                         existingMm[em].classList.add('pm-mermaid-hidden');
                     }
-                    var wrappedMmPres = document.querySelectorAll('pre.pm-mermaid-wrapped');
+                    var wrappedMmPres = document.querySelectorAll('pre.pm-mermaid-wrapped, .pm-mermaid-wrapped');
                     for (var wm = 0; wm < wrappedMmPres.length; wm++) {
                         wrappedMmPres[wm].style.display = '';
                     }

@@ -285,4 +285,17 @@ class CssGeneratorTest {
         assertTrue(jsNative.contains("renderMermaidCard"))
         assertTrue(jsNative.contains("isMermaidClass"))
     }
+
+    @Test
+    fun testBase64ExtractionAndFenceDecoderInjected() {
+        val state = PersianMarkdownState().apply {
+            renderMermaid = true
+        }
+        val js = CssGenerator.generateAutoDirScript(state)
+        assertTrue(js.contains("decodeBase64Utf8"))
+        assertTrue(js.contains("extractFenceText"))
+        assertTrue(js.contains("data-actual-fence-content"))
+        assertTrue(js.contains("data-fence-content"))
+        assertTrue(js.contains("if (!trimmed)"))
+    }
 }
