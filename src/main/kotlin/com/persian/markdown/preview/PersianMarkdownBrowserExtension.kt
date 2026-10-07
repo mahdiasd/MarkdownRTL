@@ -100,15 +100,10 @@ class PersianMarkdownBrowserExtension(
         get() = MarkdownBrowserPreviewExtension.Priority.AFTER_ALL
 
     override val styles: List<String> = listOf("persianMarkdown/persian.css")
-    override val scripts: List<String>
-        get() = if (isNativeMermaidPluginEnabled()) {
-            listOf("persianMarkdown/persian.js")
-        } else {
-            listOf(
-                "persianMarkdown/mermaid.min.js",
-                "persianMarkdown/persian.js"
-            )
-        }
+    override val scripts: List<String> = listOf(
+        "persianMarkdown/mermaid.min.js",
+        "persianMarkdown/persian.js"
+    )
 
     override val resourceProvider: ResourceProvider
         get() = this

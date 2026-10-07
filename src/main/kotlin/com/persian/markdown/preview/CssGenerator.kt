@@ -2311,10 +2311,7 @@ object CssGenerator {
                 }
 
                 function processMermaidDiagrams() {
-                    if (hasNativeMermaid) {
-                        enhanceNativeMermaidDiagrams();
-                        return;
-                    }
+                    enhanceNativeMermaidDiagrams();
 
                     if (!renderMermaidEnabled || !isEnabled) {
                         var existing = document.querySelectorAll('.pm-mermaid-container');

@@ -51,6 +51,12 @@ intellijPlatform {
             </p>
         """.trimIndent()
         changeNotes = """
+            <h3>What's New in Version 1.1.1</h3>
+            <ul>
+                <li><b>Enhanced Android Studio &amp; Multi-IDE Compatibility:</b> Fixed JCEF preview provider resolution for Android Studio and modern JetBrains IDEs (2024.2+), safely resolving both modern (<code>com.intellij.markdown.jcef.preview.JCEFHtmlPanelProvider</code>) and legacy provider classes without configuration corruption.</li>
+                <li><b>Universal Offline Mermaid Diagram Rendering:</b> Fixed Mermaid rendering in Android Studio by guaranteeing offline bundled Mermaid scripts load seamlessly, rendering all diagram code blocks even in environments where native Mermaid modules are absent or inactive.</li>
+                <li><b>Graceful JCEF Environment Detection:</b> Safeguarded startup activity and action handlers to respect environment capabilities without forced invalid settings.</li>
+            </ul>
             <h3>What's New in Version 1.1.0</h3>
             <ul>
                 <li><b>Native Mermaid Diagram Support:</b> Renders <code>```mermaid</code> fenced code blocks directly into crisp, interactive SVG diagrams completely offline without external plugins.</li>

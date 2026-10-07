@@ -273,4 +273,16 @@ class CssGeneratorTest {
         assertTrue(jsStandalone.contains("var hasNativeMermaid = false;"))
         org.junit.Assert.assertFalse(jsStandalone.contains("v1.1"))
     }
+
+    @Test
+    fun testProcessMermaidProcessesUnrenderedBlocksEvenWithNativeMermaid() {
+        val state = PersianMarkdownState().apply {
+            renderMermaid = true
+        }
+        val jsNative = CssGenerator.generateAutoDirScript(state, hasNativeMermaid = true)
+        assertTrue(jsNative.contains("enhanceNativeMermaidDiagrams()"))
+        assertTrue(jsNative.contains("createMermaidCard"))
+        assertTrue(jsNative.contains("renderMermaidCard"))
+        assertTrue(jsNative.contains("isMermaidClass"))
+    }
 }
