@@ -39,9 +39,11 @@ intellijPlatform {
             <h4>Key Capabilities:</h4>
             <ul>
                 <li><b>Smart BiDi Heuristics (Auto Mode):</b> Automatically detects paragraph language and applies RTL alignment to Persian and Arabic prose while keeping pure English text LTR.</li>
+                <li><b>Native Offline Mermaid Diagrams:</b> Renders <code>```mermaid</code> fenced code blocks into crisp, interactive SVG diagrams completely offline without external plugins. Diagrams with pure English text use <i>JetBrains Mono</i>, while Persian/Arabic diagrams automatically utilize <i>Vazirmatn</i> with RTL text labels. Features Diagram/Source view toggling, one-click SVG/code copying, inline zoom (+ / −), and fullscreen pan-and-zoom inspection.</li>
+                <li><b>Smart YAML Front Matter Metadata Cards:</b> Automatically parses document metadata headers (<code>--- ... ---</code>) into a styled card with bidirectional language detection, structured array badges, clickable URLs, and Raw YAML / Table toggles.</li>
                 <li><b>Strict Code Fence Isolation:</b> Code blocks (<code>pre</code>, <code>code</code>), inline backticks, and technical tokens remain strictly Left-to-Right with isolated bidirectional formatting.</li>
-                <li><b>Bundled Vazirmatn &amp; JetBrains Mono:</b> Out-of-the-box typography featuring embedded high-legibility fonts (Regular &amp; Bold) without requiring any operating system installations.</li>
-                <li><b>Interactive Floating Bento Widget:</b> Sleek, modern floating overlay in the preview window for live adjustments to font family, font size, and line height with zero lag.</li>
+                <li><b>Bundled Vazirmatn &amp; JetBrains Mono:</b> Out-of-the-box typography featuring embedded high-legibility fonts (Regular &amp; Bold) without requiring any operating system font installations.</li>
+                <li><b>Interactive Floating Bento Widget:</b> Sleek, modern floating overlay in the preview window for live adjustments to font family, font size, line height, and Mermaid/Frontmatter toggles with zero lag.</li>
                 <li><b>Full Direction Control:</b> Switch effortlessly between <i>Auto BiDi</i>, <i>Force RTL</i>, and <i>Force LTR</i> with keyboard shortcuts (<code>⇧⌥R</code> in editor, or <code>⌥E</code> / <code>⌥R</code> inside preview).</li>
                 <li><b>Enhanced Elements:</b> Right-aligned bulleted and numbered lists, RTL blockquotes with themed accent borders, and proportional heading scales.</li>
             </ul>
@@ -53,9 +55,12 @@ intellijPlatform {
         changeNotes = """
             <h3>What's New in Version 1.1.1</h3>
             <ul>
-                <li><b>Enhanced Android Studio &amp; Multi-IDE Compatibility:</b> Fixed JCEF preview provider resolution for Android Studio and modern JetBrains IDEs (2024.3+), safely resolving both modern (<code>com.intellij.markdown.jcef.preview.JCEFHtmlPanelProvider</code>) and legacy provider classes without configuration corruption.</li>
-                <li><b>Universal Offline Mermaid Diagram Rendering:</b> Fixed Mermaid rendering in Android Studio by guaranteeing offline bundled Mermaid scripts load seamlessly, rendering all diagram code blocks even in environments where native Mermaid modules are absent or inactive.</li>
-                <li><b>Graceful JCEF Environment Detection:</b> Safeguarded startup activity and action handlers to respect environment capabilities without forced invalid settings.</li>
+                <li><b>Native Mermaid Diagram Support:</b> Renders <code>```mermaid</code> fenced code blocks directly into crisp, interactive SVG diagrams completely offline without requiring external plugins. Features language-aware typography (<i>JetBrains Mono</i> for English, <i>Vazirmatn</i> for Persian/Arabic), Diagram/Source view toggling, one-click SVG/source copying, and fullscreen pan-and-zoom modal.</li>
+                <li><b>Security Hardening:</b> Upgraded Mermaid integration to <code>antiscript</code> security level with strict script filtering and input sanitization, preventing XSS and unauthorized HTML injection.</li>
+                <li><b>Enhanced Android Studio &amp; Multi-IDE Compatibility:</b> Seamless Chromium JCEF preview provider resolution for Android Studio and modern JetBrains IDEs (2024.3+), supporting both modern and legacy provider classes without configuration corruption.</li>
+                <li><b>Instant State &amp; Action Synchronization:</b> Synchronized the in-preview Bento controller with IDE menu actions and keyboard shortcuts (<code>⇧⌥R</code>), eliminating setting desynchronization.</li>
+                <li><b>Context-Aware Actions:</b> Menu actions and right-click shortcuts are strictly scoped to Markdown files, keeping general code editor menus clean.</li>
+                <li><b>Performance Optimization:</b> Non-blocking background font discovery, conditional script loading, and debounced live preview updates.</li>
             </ul>
             <h3>What's New in Version 1.1.0</h3>
             <ul>
