@@ -1479,18 +1479,17 @@ object CssGenerator {
                     return name.trim().replace(/['"]/g, '');
                 }
 
-                var savedFa = cleanFontName(getPref('fa_font', defaultFaFont)) || defaultFaFont;
-                var savedEn = cleanFontName(getPref('en_font', defaultEnFont)) || defaultEnFont;
-                var savedCode = cleanFontName(getPref('code_font', defaultCodeFont)) || defaultCodeFont;
+                var savedFa = cleanFontName(defaultFaFont);
+                var savedEn = cleanFontName(defaultEnFont);
+                var savedCode = cleanFontName(defaultCodeFont);
 
-                var savedPrefEnabled = getPref('enabled', '$initialEnabled');
-                var isEnabled = savedPrefEnabled === '1' || savedPrefEnabled === 'true';
-                var currentMode = getPref('mode', '${escapeJs(initialMode)}');
+                var isEnabled = $initialEnabled;
+                var currentMode = '${escapeJs(initialMode)}';
                 if (currentMode !== 'auto' && currentMode !== 'force_rtl' && currentMode !== 'force_ltr') {
-                    currentMode = '${escapeJs(initialMode)}';
+                    currentMode = 'auto';
                 }
-                var currentFs = parseInt(getPref('font_size', defaultFs), 10) || defaultFs;
-                var currentLh = parseFloat(getPref('line_height', defaultLh)) || defaultLh;
+                var currentFs = defaultFs;
+                var currentLh = defaultLh;
                 var systemFonts = $systemFontsJson;
                 var persianRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
 
@@ -1534,9 +1533,7 @@ object CssGenerator {
 
                 var hasNativeMermaid = $hasNativeMermaid;
                 var renderFrontMatterEnabled = ${state.renderFrontMatter};
-                var renderMermaidEnabled = ${state.renderMermaid};
-                var savedPrefMermaid = getPref('mermaid', '$initialMermaid');
-                renderMermaidEnabled = savedPrefMermaid === '1' || savedPrefMermaid === 'true';
+                var renderMermaidEnabled = $initialMermaid;
 
                 function cleanYamlQuotes(str) {
                     if (!str) return '';
@@ -2286,7 +2283,7 @@ object CssGenerator {
                         window.mermaid.initialize({
                             startOnLoad: false,
                             theme: isDark ? 'dark' : 'default',
-                            securityLevel: 'loose',
+                            securityLevel: 'antiscript',
                             suppressErrorRendering: true,
                             fontFamily: diagramFont
                         });
@@ -3397,9 +3394,9 @@ object CssGenerator {
                         debounceTimer = setTimeout(function() {
                             createSwitcherUI();
                             applyDirections();
-                        }, 50);
+                        }, 80);
                     });
-                    var obsTarget = document.documentElement || document.body;
+                    var obsTarget = document.body || document.documentElement;
                     if (obsTarget) {
                         observer.observe(obsTarget, { childList: true, subtree: true });
                     }

@@ -254,7 +254,7 @@ class CssGeneratorTest {
         assertTrue(js.contains("pm-opt-fm"))
         assertTrue(js.contains("mermaid"))
         assertTrue(js.contains("pm-mermaid-zoom-bar"))
-        assertTrue(js.contains("applyZoom"))
+        assertTrue(js.contains("securityLevel: 'antiscript'"))
         // Version badge must not be in switcher header
         org.junit.Assert.assertFalse(js.contains("pm-header-badge"))
     }

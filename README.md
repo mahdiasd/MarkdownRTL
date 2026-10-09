@@ -87,10 +87,10 @@ Markdown RTL works natively inside the **Markdown Preview Pane**:
 | **Force LTR** | Revert LTR | Standard Left-to-Right layout for pure English technical specifications. |
 
 ### Shortcuts Reference:
-- <kbd>Alt</kbd> + <kbd>R</kbd> / <kbd>⌥R</kbd>: Toggle between **Auto RTL** and **Force RTL**
-- <kbd>Alt</kbd> + <kbd>E</kbd> / <kbd>⌥E</kbd>: Toggle **Plugin Enabled / Disabled**
-- <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd>: Cycle modes (**Auto** ➔ **Force RTL** ➔ **Force LTR**)
-- <kbd>Esc</kbd>: Close floating Bento widget
+- <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd> (or <kbd>⇧⌥R</kbd>): Global Editor Shortcut to cycle modes (**Auto** ➔ **Force RTL** ➔ **Force LTR**)
+- <kbd>Alt</kbd> + <kbd>R</kbd> / <kbd>⌥R</kbd>: Inside preview pane to toggle between **Auto RTL** and **Force RTL**
+- <kbd>Alt</kbd> + <kbd>E</kbd> / <kbd>⌥E</kbd>: Inside preview pane to toggle **Plugin Enabled / Disabled**
+- <kbd>Esc</kbd>: Inside preview pane to close floating Bento widget
 
 ---
 
