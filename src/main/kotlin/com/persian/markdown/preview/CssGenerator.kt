@@ -528,6 +528,169 @@ object CssGenerator {
 
         // Styles for Linear / Raycast Bento Switcher in preview (bottom-left popup)
         sb.append("""
+            /* --- Mermaid Diagram Card & Container Styling --- */
+            .pm-mermaid-container {
+                margin: 20px 0 28px 0 !important;
+                border: 1px solid rgba(142, 217, 245, 0.22) !important;
+                background: rgba(17, 23, 34, 0.75) !important;
+                border-radius: 10px !important;
+                overflow: hidden !important;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.04) !important;
+                backdrop-filter: blur(12px) !important;
+                -webkit-backdrop-filter: blur(12px) !important;
+                direction: ltr !important;
+                text-align: left !important;
+                transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+            }
+            .pm-mermaid-container:hover {
+                border-color: rgba(30, 180, 235, 0.38) !important;
+                box-shadow: 0 6px 24px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(30, 180, 235, 0.1) !important;
+            }
+            .pm-mermaid-container.pm-mermaid-hidden {
+                display: none !important;
+            }
+            .pm-mermaid-header {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                padding: 7px 12px !important;
+                background: rgba(26, 33, 46, 0.85) !important;
+                border-bottom: 1px solid rgba(142, 217, 245, 0.15) !important;
+                user-select: none !important;
+            }
+            .pm-mermaid-title-group {
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+            }
+            .pm-mermaid-icon {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                color: #1EB4EB !important;
+                width: 16px !important;
+                height: 16px !important;
+            }
+            .pm-mermaid-title {
+                font-family: var(--pm-code-font, monospace) !important;
+                font-size: 11.5px !important;
+                font-weight: 600 !important;
+                color: #8ED9F5 !important;
+                letter-spacing: 0.04em !important;
+                text-transform: uppercase !important;
+            }
+            .pm-mermaid-lang-badge {
+                font-family: var(--pm-code-font, monospace) !important;
+                font-size: 10px !important;
+                font-weight: 600 !important;
+                padding: 1px 6px !important;
+                border-radius: 4px !important;
+                background: rgba(255, 255, 255, 0.06) !important;
+                color: #94A3B8 !important;
+                border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            }
+            .pm-mermaid-lang-badge.pm-fa {
+                color: #38BDF8 !important;
+                background: rgba(56, 189, 248, 0.12) !important;
+                border-color: rgba(56, 189, 248, 0.25) !important;
+            }
+            .pm-mermaid-status {
+                font-size: 10.5px !important;
+                color: #F59E0B !important;
+                display: none !important;
+                align-items: center !important;
+                gap: 4px !important;
+            }
+            .pm-mermaid-status.pm-visible {
+                display: inline-flex !important;
+            }
+            .pm-mermaid-zoom-bar {
+                display: inline-flex !important;
+                align-items: center !important;
+                background: rgba(15, 23, 42, 0.75) !important;
+                border: 1px solid rgba(142, 217, 245, 0.2) !important;
+                border-radius: 6px !important;
+                padding: 1px 3px !important;
+                gap: 2px !important;
+            }
+            .pm-mermaid-zoom-btn {
+                width: 22px !important;
+                height: 22px !important;
+                border-radius: 4px !important;
+                background: transparent !important;
+                color: #94A3B8 !important;
+                border: none !important;
+                cursor: pointer !important;
+                font-size: 14px !important;
+                font-weight: 600 !important;
+                line-height: 1 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                transition: all 0.12s ease !important;
+                padding: 0 !important;
+                user-select: none !important;
+            }
+            .pm-mermaid-zoom-btn:hover {
+                color: #FFFFFF !important;
+                background: rgba(30, 180, 235, 0.25) !important;
+            }
+            .pm-mermaid-zoom-btn:active {
+                transform: scale(0.9) !important;
+            }
+            .pm-mermaid-zoom-val {
+                font-family: var(--pm-code-font, monospace) !important;
+                font-size: 10.5px !important;
+                font-weight: 500 !important;
+                color: #8ED9F5 !important;
+                padding: 2px 5px !important;
+                cursor: pointer !important;
+                user-select: none !important;
+                min-width: 38px !important;
+                text-align: center !important;
+                border-radius: 3px !important;
+                transition: all 0.12s ease !important;
+                line-height: 1.2 !important;
+            }
+            .pm-mermaid-zoom-val:hover {
+                background: rgba(30, 180, 235, 0.2) !important;
+                color: #FFFFFF !important;
+            }
+            .pm-mermaid-zoom-val.pm-zoomed {
+                color: #38BDF8 !important;
+                font-weight: 600 !important;
+            }
+            .pm-mermaid-body {
+                padding: 16px !important;
+                position: relative !important;
+            }
+            .pm-mermaid-svg-wrap {
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                overflow-x: auto !important;
+                min-height: 60px !important;
+            }
+            .pm-mermaid-svg-wrap svg {
+                max-width: 100% !important;
+                height: auto !important;
+                display: block !important;
+            }
+            .pm-mermaid-error-banner {
+                margin-top: 10px !important;
+                padding: 8px 12px !important;
+                background: rgba(239, 68, 68, 0.15) !important;
+                border: 1px solid rgba(239, 68, 68, 0.3) !important;
+                border-radius: 6px !important;
+                color: #FCA5A5 !important;
+                font-size: 12px !important;
+                font-family: var(--pm-code-font, monospace) !important;
+                display: none !important;
+            }
+            .pm-mermaid-error-banner.pm-visible {
+                display: block !important;
+            }
+
             /* --- Isolated Floating Switcher & Dialog --- */
             html {
                 transform: none !important;
@@ -1278,7 +1441,8 @@ object CssGenerator {
     @JvmOverloads
     fun generateAutoDirScript(
         state: PersianMarkdownState,
-        systemFonts: Array<String> = emptyArray()
+        systemFonts: Array<String> = emptyArray(),
+        hasNativeMermaid: Boolean = false
     ): String {
         val initialEnabled = state.enabled
         val initialMode = state.directionMode.id
@@ -1287,6 +1451,7 @@ object CssGenerator {
         val defaultFaFont = state.fontFamily?.split(",")?.firstOrNull()?.trim()?.replace("'", "")?.replace("\"", "")?.ifBlank { null } ?: "Vazirmatn"
         val defaultEnFont = state.enFontFamily?.split(",")?.firstOrNull()?.trim()?.replace("'", "")?.replace("\"", "")?.ifBlank { null } ?: "JetBrains Mono"
         val defaultCodeFont = state.codeFontFamily?.split(",")?.firstOrNull()?.trim()?.replace("'", "")?.replace("\"", "")?.ifBlank { null } ?: "JetBrains Mono"
+        val initialMermaid = state.renderMermaid
 
         val systemFontsJson = systemFonts
             .filter { it.isNotBlank() }
@@ -1306,14 +1471,25 @@ object CssGenerator {
                 function savePref(k, v) { try { localStorage.setItem('pm_' + k, v); } catch(e){} }
                 function getPref(k, def) { try { var v = localStorage.getItem('pm_' + k); return v !== null ? v : def; } catch(e){ return def; } }
 
-                var savedPrefEnabled = getPref('enabled', '$initialEnabled');
-                var isEnabled = savedPrefEnabled === '1' || savedPrefEnabled === 'true';
-                var currentMode = getPref('mode', '${escapeJs(initialMode)}');
-                if (currentMode !== 'auto' && currentMode !== 'force_rtl' && currentMode !== 'force_ltr') {
-                    currentMode = '${escapeJs(initialMode)}';
+                function cleanFontName(name) {
+                    if (!name) return '';
+                    if (name.indexOf(',') !== -1) {
+                        name = name.split(',')[0];
+                    }
+                    return name.trim().replace(/['"]/g, '');
                 }
-                var currentFs = parseInt(getPref('font_size', defaultFs), 10) || defaultFs;
-                var currentLh = parseFloat(getPref('line_height', defaultLh)) || defaultLh;
+
+                var savedFa = cleanFontName(defaultFaFont);
+                var savedEn = cleanFontName(defaultEnFont);
+                var savedCode = cleanFontName(defaultCodeFont);
+
+                var isEnabled = $initialEnabled;
+                var currentMode = '${escapeJs(initialMode)}';
+                if (currentMode !== 'auto' && currentMode !== 'force_rtl' && currentMode !== 'force_ltr') {
+                    currentMode = 'auto';
+                }
+                var currentFs = defaultFs;
+                var currentLh = defaultLh;
                 var systemFonts = $systemFontsJson;
                 var persianRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
 
@@ -1355,7 +1531,9 @@ object CssGenerator {
                     return hasPersian(text);
                 }
 
+                var hasNativeMermaid = $hasNativeMermaid;
                 var renderFrontMatterEnabled = ${state.renderFrontMatter};
+                var renderMermaidEnabled = $initialMermaid;
 
                 function cleanYamlQuotes(str) {
                     if (!str) return '';
@@ -1796,6 +1974,541 @@ object CssGenerator {
                     }
                 }
 
+                /* --- Mermaid Diagram Rendering & Controls --- */
+                function detectIdeDarkTheme() {
+                    try {
+                        var bodyBg = window.getComputedStyle(document.body).backgroundColor;
+                        if (!bodyBg || bodyBg === 'transparent' || bodyBg === 'rgba(0, 0, 0, 0)') {
+                            bodyBg = window.getComputedStyle(document.documentElement).backgroundColor;
+                        }
+                        var m = bodyBg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+                        if (m) {
+                            var r = parseInt(m[1], 10);
+                            var g = parseInt(m[2], 10);
+                            var b = parseInt(m[3], 10);
+                            var lum = 0.299 * r + 0.587 * g + 0.114 * b;
+                            return lum < 140;
+                        }
+                    } catch (_) {}
+                    return true;
+                }
+
+                function cleanMermaidGlobalErrors() {
+                    try {
+                        var errDivs = document.querySelectorAll('div[id^="dpm-mermaid-"], #dpm-mermaid, .mermaidError');
+                        for (var e = 0; e < errDivs.length; e++) {
+                            errDivs[e].remove();
+                        }
+                    } catch (_) {}
+                }
+
+                function decodeBase64Utf8(base64Str) {
+                    if (!base64Str || typeof base64Str !== 'string') return '';
+                    try {
+                        var cleanStr = base64Str.trim().replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
+                        while (cleanStr.length % 4 !== 0) {
+                            cleanStr += '=';
+                        }
+                        var binary = window.atob(cleanStr);
+                        var bytes = new Uint8Array(binary.length);
+                        for (var i = 0; i < binary.length; i++) {
+                            bytes[i] = binary.charCodeAt(i);
+                        }
+                        return new TextDecoder('utf-8').decode(bytes);
+                    } catch (e) {
+                        try {
+                            return decodeURIComponent(escape(window.atob(base64Str.trim())));
+                        } catch (_) {
+                            return '';
+                        }
+                    }
+                }
+
+                function extractFenceText(container) {
+                    if (!container) return '';
+
+                    // 1. Check data-actual-fence-content (JetBrains MermaidCodeGeneratingProviderExtension)
+                    var actualEl = (container.hasAttribute && container.hasAttribute('data-actual-fence-content'))
+                        ? container
+                        : (container.querySelector ? container.querySelector('[data-actual-fence-content]') : null);
+                    if (actualEl) {
+                        var b64Actual = actualEl.getAttribute('data-actual-fence-content');
+                        if (b64Actual) {
+                            var decodedActual = decodeBase64Utf8(b64Actual).trim();
+                            if (decodedActual) return decodedActual;
+                        }
+                    }
+
+                    // 2. Check data-fence-content (JetBrains DefaultCodeFenceGeneratingProvider copy button)
+                    var fenceEl = (container.hasAttribute && container.hasAttribute('data-fence-content'))
+                        ? container
+                        : (container.querySelector ? container.querySelector('[data-fence-content]') : null);
+                    if (fenceEl) {
+                        var b64Fence = fenceEl.getAttribute('data-fence-content');
+                        if (b64Fence) {
+                            var decodedFence = decodeBase64Utf8(b64Fence).trim();
+                            if (decodedFence) return decodedFence;
+                        }
+                    }
+
+                    // 3. Check data-src or data-code attributes
+                    if (container.getAttribute) {
+                        var dataSrc = container.getAttribute('data-src') || container.getAttribute('data-code');
+                        if (dataSrc && dataSrc.trim()) return dataSrc.trim();
+                    }
+
+                    // 4. Check <code> element textContent
+                    var codeEl = container.querySelector ? container.querySelector('code') : null;
+                    if (codeEl) {
+                        var codeText = (codeEl.textContent || '').trim();
+                        if (codeText) return codeText;
+                    }
+
+                    // 5. Fallback to container textContent, stripping copy buttons, tooltips and existing SVGs
+                    try {
+                        if (container.cloneNode) {
+                            var clone = container.cloneNode(true);
+                            var toRemove = clone.querySelectorAll('.code-fence-highlighter-copy-button, .tooltiptext, button, .pm-mermaid-container, svg');
+                            for (var r = 0; r < toRemove.length; r++) {
+                                toRemove[r].remove();
+                            }
+                            var cloneText = (clone.textContent || '').trim();
+                            if (cloneText) return cloneText;
+                        }
+                    } catch (_) {}
+
+                    return (container.textContent || '').trim();
+                }
+
+                function sanitizeMermaidCode(code) {
+                    if (!code) return '';
+                    var inQuote = false;
+                    var out = '';
+                    for (var i = 0; i < code.length; i++) {
+                        var ch = code[i];
+                        if (ch === '"') {
+                            var backslashes = 0;
+                            var j = i - 1;
+                            while (j >= 0 && code[j] === '\\') {
+                                backslashes++;
+                                j--;
+                            }
+                            if (backslashes % 2 === 0) {
+                                inQuote = !inQuote;
+                            }
+                            out += ch;
+                        } else if (!inQuote && (ch === '\u200C' || ch === '\u200D')) {
+                            out += '_';
+                        } else {
+                            out += ch;
+                        }
+                    }
+                    return out;
+                }
+
+                var mermaidCardCounter = 0;
+
+                function createMermaidCard(rawCode, isFa, diagramType) {
+                    var container = document.createElement('div');
+                    container.className = 'pm-mermaid-container';
+                    var cardId = 'pm-mermaid-card-' + (++mermaidCardCounter);
+                    container.id = cardId;
+                    container.setAttribute('data-raw-code', rawCode);
+                    container._zoomScale = 1.0;
+
+                    var header = document.createElement('div');
+                    header.className = 'pm-mermaid-header';
+
+                    var titleGroup = document.createElement('div');
+                    titleGroup.className = 'pm-mermaid-title-group';
+                    titleGroup.innerHTML = 
+                        '<span class="pm-mermaid-icon">' +
+                            '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/><path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4"/></svg>' +
+                        '</span>' +
+                        '<span class="pm-mermaid-title">Mermaid</span>' +
+                        '<span class="pm-mermaid-lang-badge' + (isFa ? ' pm-fa' : '') + '">' + (isFa ? 'FA' : 'EN') + '</span>' +
+                        (diagramType ? '<span class="pm-mermaid-lang-badge">' + diagramType + '</span>' : '') +
+                        '<span class="pm-mermaid-status" id="' + cardId + '-status">● Updating...</span>';
+
+                    var zoomBar = document.createElement('div');
+                    zoomBar.className = 'pm-mermaid-zoom-bar';
+
+                    var btnMinus = document.createElement('button');
+                    btnMinus.type = 'button';
+                    btnMinus.className = 'pm-mermaid-zoom-btn';
+                    btnMinus.textContent = '−';
+                    btnMinus.title = 'Zoom Out (−)';
+                    btnMinus.setAttribute('aria-label', 'Zoom Out');
+
+                    var zoomVal = document.createElement('span');
+                    zoomVal.className = 'pm-mermaid-zoom-val';
+                    zoomVal.textContent = '100%';
+                    zoomVal.title = 'Click to Reset (100%)';
+
+                    var btnPlus = document.createElement('button');
+                    btnPlus.type = 'button';
+                    btnPlus.className = 'pm-mermaid-zoom-btn';
+                    btnPlus.textContent = '+';
+                    btnPlus.title = 'Zoom In (+)';
+                    btnPlus.setAttribute('aria-label', 'Zoom In');
+
+                    zoomBar.appendChild(btnMinus);
+                    zoomBar.appendChild(zoomVal);
+                    zoomBar.appendChild(btnPlus);
+
+                    header.appendChild(titleGroup);
+                    header.appendChild(zoomBar);
+
+                    var body = document.createElement('div');
+                    body.className = 'pm-mermaid-body';
+
+                    var svgWrap = document.createElement('div');
+                    svgWrap.className = 'pm-mermaid-svg-wrap';
+
+                    var errorBanner = document.createElement('div');
+                    errorBanner.className = 'pm-mermaid-error-banner';
+
+                    body.appendChild(svgWrap);
+                    body.appendChild(errorBanner);
+
+                    container.appendChild(header);
+                    container.appendChild(body);
+
+                    function applyZoom(newScale) {
+                        newScale = Math.round(newScale * 100) / 100;
+                        if (newScale < 0.4) newScale = 0.4;
+                        if (newScale > 3.0) newScale = 3.0;
+                        container._zoomScale = newScale;
+
+                        zoomVal.textContent = Math.round(newScale * 100) + '%';
+                        if (newScale === 1.0) {
+                            zoomVal.classList.remove('pm-zoomed');
+                        } else {
+                            zoomVal.classList.add('pm-zoomed');
+                        }
+
+                        var svg = svgWrap.querySelector('svg');
+                        if (!svg) return;
+
+                        if (newScale === 1.0) {
+                            svg.style.width = '';
+                            svg.style.maxWidth = '100%';
+                            svg.style.flexShrink = '';
+                        } else {
+                            var baseW = container._initialSvgWidth;
+                            if (!baseW) {
+                                baseW = svg.getBoundingClientRect().width || (svg.viewBox ? svg.viewBox.baseVal.width : 500);
+                                container._initialSvgWidth = baseW;
+                            }
+                            var targetW = Math.round(baseW * newScale);
+                            svg.style.setProperty('width', targetW + 'px', 'important');
+                            svg.style.setProperty('max-width', 'none', 'important');
+                            svg.style.setProperty('flex-shrink', '0', 'important');
+                        }
+                    }
+
+                    container._applyZoom = applyZoom;
+
+                    btnMinus.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        applyZoom((container._zoomScale || 1.0) - 0.2);
+                    });
+
+                    btnPlus.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        applyZoom((container._zoomScale || 1.0) + 0.2);
+                    });
+
+                    zoomVal.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        applyZoom(1.0);
+                    });
+
+                    return container;
+                }
+
+                function renderMermaidCard(card, rawCode, isFa, diagramType) {
+                    if (!window.mermaid) {
+                        var retryCount = 0;
+                        var retryTimer = setInterval(function() {
+                            retryCount++;
+                            if (window.mermaid) {
+                                clearInterval(retryTimer);
+                                renderMermaidCard(card, rawCode, isFa, diagramType);
+                            } else if (retryCount > 60) {
+                                clearInterval(retryTimer);
+                            }
+                        }, 100);
+                        return;
+                    }
+                    card.setAttribute('data-raw-code', rawCode);
+
+                    // Update badges in case language or diagram type changed during live edit
+                    var langBadge = card.querySelector('.pm-mermaid-lang-badge');
+                    if (langBadge) {
+                        langBadge.textContent = isFa ? 'FA' : 'EN';
+                        if (isFa) {
+                            langBadge.classList.add('pm-fa');
+                        } else {
+                            langBadge.classList.remove('pm-fa');
+                        }
+                    }
+                    var titleGroup = card.querySelector('.pm-mermaid-title-group');
+                    if (titleGroup) {
+                        var allBadges = titleGroup.querySelectorAll('.pm-mermaid-lang-badge');
+                        if (allBadges.length > 1 && diagramType) {
+                            allBadges[1].textContent = diagramType;
+                        }
+                    }
+
+                    var svgWrap = card.querySelector('.pm-mermaid-svg-wrap');
+                    var errorBanner = card.querySelector('.pm-mermaid-error-banner');
+                    var statusEl = card.querySelector('.pm-mermaid-status');
+
+                    // Choose typography based on language detection (English by default, Vazirmatn for Persian)
+                    var diagramFont;
+                    if (!isFa) {
+                        var enFont = cleanFontName(savedEn) || cleanFontName(savedCode) || 'JetBrains Mono';
+                        diagramFont = "'" + enFont + "', 'PersianMarkdownBundledJBMono', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+                    } else {
+                        var faFont = cleanFontName(savedFa) || 'Vazirmatn';
+                        diagramFont = "'" + faFont + "', 'PersianMarkdownBundledVazir', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif";
+                    }
+
+                    var isDark = detectIdeDarkTheme();
+                    try {
+                        window.mermaid.initialize({
+                            startOnLoad: false,
+                            theme: isDark ? 'dark' : 'default',
+                            securityLevel: 'antiscript',
+                            suppressErrorRendering: true,
+                            fontFamily: diagramFont
+                        });
+                    } catch (_) {}
+
+                    var renderId = 'pm-svg-' + Math.random().toString(36).substring(2, 9);
+
+                    if (statusEl) {
+                        statusEl.textContent = '● Updating...';
+                        statusEl.classList.add('pm-visible');
+                    }
+
+                    function onRenderSuccess(svgContent) {
+                        cleanMermaidGlobalErrors();
+                        card._lastValidSvg = svgContent;
+                        svgWrap.innerHTML = svgContent;
+
+                        // Smart BiDi enhancement for Persian/Arabic text inside nodes
+                        if (isFa) {
+                            var svgEl = svgWrap.querySelector('svg');
+                            if (svgEl) {
+                                var textEls = svgEl.querySelectorAll('text, .label, foreignObject, foreignObject span, foreignObject div, foreignObject p');
+                                for (var t = 0; t < textEls.length; t++) {
+                                    var el = textEls[t];
+                                    if (hasPersian(el.textContent)) {
+                                        el.setAttribute('dir', 'rtl');
+                                        el.style.direction = 'rtl';
+                                        el.style.textAlign = 'right';
+                                    }
+                                }
+                            }
+                        }
+
+                        // Record initial rendered width for zoom scaling calculation
+                        var renderedSvg = svgWrap.querySelector('svg');
+                        if (renderedSvg) {
+                            var rectW = renderedSvg.getBoundingClientRect().width;
+                            if (rectW > 50) {
+                                card._initialSvgWidth = rectW;
+                            } else if (renderedSvg.viewBox && renderedSvg.viewBox.baseVal.width) {
+                                card._initialSvgWidth = renderedSvg.viewBox.baseVal.width;
+                            }
+                            if (card._applyZoom && card._zoomScale && card._zoomScale !== 1.0) {
+                                card._applyZoom(card._zoomScale);
+                            }
+                        }
+
+                        if (statusEl) statusEl.classList.remove('pm-visible');
+                        if (errorBanner) errorBanner.classList.remove('pm-visible');
+                    }
+
+                    function onRenderError(err) {
+                        cleanMermaidGlobalErrors();
+                        if (card._lastValidSvg) {
+                            // Live Editing Resilience: keep displaying the last valid diagram!
+                            if (statusEl) {
+                                statusEl.textContent = '● Editing...';
+                                statusEl.classList.add('pm-visible');
+                            }
+                            if (errorBanner) errorBanner.classList.remove('pm-visible');
+                        } else {
+                            // No prior valid render: show error banner gracefully
+                            if (statusEl) statusEl.classList.remove('pm-visible');
+                            if (errorBanner) {
+                                errorBanner.textContent = (err && err.message) ? err.message : 'Syntax error in Mermaid diagram';
+                                errorBanner.classList.add('pm-visible');
+                            }
+                        }
+                    }
+
+                    var sanitizedCode = sanitizeMermaidCode(rawCode);
+
+                    try {
+                        var res = window.mermaid.render(renderId, sanitizedCode);
+                        if (res && typeof res.then === 'function') {
+                            res.then(function(result) {
+                                var svgStr = result && result.svg ? result.svg : result;
+                                onRenderSuccess(svgStr);
+                            }).catch(onRenderError);
+                        } else if (res && res.svg) {
+                            onRenderSuccess(res.svg);
+                        }
+                    } catch (e) {
+                        onRenderError(e);
+                    }
+                }
+
+                function enhanceNativeMermaidDiagrams() {
+                    var nativeContainers = document.querySelectorAll('.mermaid, div[data-actual-fence-content]');
+                    for (var c = 0; c < nativeContainers.length; c++) {
+                        var container = nativeContainers[c];
+                        if (!renderMermaidEnabled || !isEnabled) {
+                            container.style.display = 'none';
+                            continue;
+                        } else {
+                            container.style.display = '';
+                        }
+                        var svgs = container.querySelectorAll('svg');
+                        for (var s = 0; s < svgs.length; s++) {
+                            var svg = svgs[s];
+                            var textNodes = svg.querySelectorAll('text, .nodeLabel, .label, foreignObject, foreignObject span, foreignObject div, foreignObject p');
+                            var hasFa = false;
+                            for (var t = 0; t < textNodes.length; t++) {
+                                var node = textNodes[t];
+                                if (hasPersian(node.textContent)) {
+                                    hasFa = true;
+                                    node.setAttribute('dir', 'rtl');
+                                    node.style.direction = 'rtl';
+                                    node.style.textAlign = 'right';
+                                }
+                            }
+                            if (hasFa) {
+                                var faFont = cleanFontName(savedFa) || 'Vazirmatn';
+                                svg.style.fontFamily = "'" + faFont + "', 'PersianMarkdownBundledVazir', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif";
+                            }
+                        }
+                    }
+                }
+
+                function processMermaidDiagrams() {
+                    enhanceNativeMermaidDiagrams();
+
+                    if (!renderMermaidEnabled || !isEnabled) {
+                        var existing = document.querySelectorAll('.pm-mermaid-container');
+                        for (var e = 0; e < existing.length; e++) {
+                            existing[e].classList.add('pm-mermaid-hidden');
+                        }
+                        var wrappedPres = document.querySelectorAll('pre.pm-mermaid-wrapped, .pm-mermaid-wrapped');
+                        for (var wp = 0; wp < wrappedPres.length; wp++) {
+                            wrappedPres[wp].style.display = '';
+                        }
+                        return;
+                    }
+
+                    var targetElements = [];
+                    var pres = document.querySelectorAll('pre');
+                    for (var p = 0; p < pres.length; p++) {
+                        targetElements.push(pres[p]);
+                    }
+                    var standaloneDivs = document.querySelectorAll('div.mermaid, div[data-actual-fence-content]');
+                    for (var sd = 0; sd < standaloneDivs.length; sd++) {
+                        var sDiv = standaloneDivs[sd];
+                        if (sDiv.closest('pre')) continue;
+                        if (sDiv.closest('.pm-mermaid-container')) continue;
+                        targetElements.push(sDiv);
+                    }
+
+                    for (var i = 0; i < targetElements.length; i++) {
+                        var el = targetElements[i];
+                        if (el.classList.contains('frontmatter-header')) continue;
+                        if (el.closest('#persian-markdown-switcher')) continue;
+                        if (el.closest('.pm-frontmatter-container')) continue;
+                        if (el.closest('.pm-mermaid-container')) continue;
+
+                        var code = el.querySelector ? el.querySelector('code') : null;
+                        var className = (el.className || '') + ' ' + (code ? code.className : '');
+                        var hasActualAttr = (el.hasAttribute && el.hasAttribute('data-actual-fence-content')) ||
+                                            (el.querySelector && el.querySelector('[data-actual-fence-content]'));
+                        var hasFenceAttr = (el.hasAttribute && el.hasAttribute('data-fence-content')) ||
+                                           (el.querySelector && el.querySelector('[data-fence-content]'));
+                        var isMermaidClass = /\b(language-mermaid|src-mermaid|mermaid)\b/i.test(className) || !!hasActualAttr;
+
+                        var rawText = extractFenceText(el);
+                        var trimmed = rawText.trim();
+
+                        if (!trimmed) {
+                            continue;
+                        }
+
+                        var isMermaidSyntax = /^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram(-v2)?|erDiagram|gantt|pie|gitGraph|mindmap|timeline|quadrantChart|xychart-beta|packet-beta|architecture-beta)\b/m.test(trimmed);
+
+                        if (!isMermaidClass && !isMermaidSyntax) {
+                            continue;
+                        }
+
+                        var isFa = hasPersian(trimmed);
+
+                        var diagramType = 'DIAGRAM';
+                        if (/^(flowchart|graph)\b/i.test(trimmed)) diagramType = 'FLOWCHART';
+                        else if (/^sequenceDiagram\b/i.test(trimmed)) diagramType = 'SEQUENCE';
+                        else if (/^classDiagram\b/i.test(trimmed)) diagramType = 'CLASS';
+                        else if (/^stateDiagram/i.test(trimmed)) diagramType = 'STATE';
+                        else if (/^erDiagram\b/i.test(trimmed)) diagramType = 'ER MODEL';
+                        else if (/^gantt\b/i.test(trimmed)) diagramType = 'GANTT';
+                        else if (/^pie\b/i.test(trimmed)) diagramType = 'PIE';
+                        else if (/^gitGraph\b/i.test(trimmed)) diagramType = 'GIT GRAPH';
+                        else if (/^mindmap\b/i.test(trimmed)) diagramType = 'MINDMAP';
+                        else if (/^timeline\b/i.test(trimmed)) diagramType = 'TIMELINE';
+                        else if (/^quadrantChart\b/i.test(trimmed)) diagramType = 'QUADRANT';
+                        else if (/^xychart-beta\b/i.test(trimmed)) diagramType = 'XY CHART';
+                        else if (/^packet-beta\b/i.test(trimmed)) diagramType = 'PACKET';
+                        else if (/^architecture-beta\b/i.test(trimmed)) diagramType = 'ARCHITECTURE';
+
+                        // Check if an SVG was already rendered inside el (e.g. by native Mermaid)
+                        var existingSvgEl = el.querySelector ? el.querySelector('.mermaid svg, svg') : null;
+                        var existingSvgHtml = existingSvgEl ? existingSvgEl.outerHTML : null;
+
+                        el.classList.add('pm-mermaid-wrapped');
+                        el.style.display = 'none';
+
+                        var prevSibling = el.previousElementSibling;
+                        var card = null;
+
+                        if (prevSibling && prevSibling.classList.contains('pm-mermaid-container')) {
+                            card = prevSibling;
+                            card.classList.remove('pm-mermaid-hidden');
+                            if (existingSvgHtml && !card._lastValidSvg) {
+                                card._lastValidSvg = existingSvgHtml;
+                            }
+                            var svgWrap = card.querySelector('.pm-mermaid-svg-wrap');
+                            var hasSvg = svgWrap && svgWrap.querySelector('svg');
+                            if (!hasSvg || card.getAttribute('data-raw-code') !== rawText) {
+                                renderMermaidCard(card, rawText, isFa, diagramType);
+                            }
+                        } else {
+                            card = createMermaidCard(rawText, isFa, diagramType);
+                            if (existingSvgHtml) {
+                                card._lastValidSvg = existingSvgHtml;
+                            }
+                            el.parentNode.insertBefore(card, el);
+                            renderMermaidCard(card, rawText, isFa, diagramType);
+                        }
+                    }
+                }
+
                 function resetDirections() {
                     var existingFm = document.querySelectorAll('.pm-frontmatter-container');
                     for (var ef = 0; ef < existingFm.length; ef++) {
@@ -1804,6 +2517,18 @@ object CssGenerator {
                     var wrappedPres = document.querySelectorAll('pre.frontmatter-header.pm-wrapped');
                     for (var wp = 0; wp < wrappedPres.length; wp++) {
                         wrappedPres[wp].style.display = '';
+                    }
+                    var existingMm = document.querySelectorAll('.pm-mermaid-container');
+                    for (var em = 0; em < existingMm.length; em++) {
+                        existingMm[em].classList.add('pm-mermaid-hidden');
+                    }
+                    var wrappedMmPres = document.querySelectorAll('pre.pm-mermaid-wrapped, .pm-mermaid-wrapped');
+                    for (var wm = 0; wm < wrappedMmPres.length; wm++) {
+                        wrappedMmPres[wm].style.display = '';
+                    }
+                    var nativeContainers = document.querySelectorAll('.mermaid, div[data-actual-fence-content]');
+                    for (var nc = 0; nc < nativeContainers.length; nc++) {
+                        nativeContainers[nc].style.display = '';
                     }
                     var hiddenFallbacks = document.querySelectorAll('.pm-fallback-hidden');
                     for (var hf = 0; hf < hiddenFallbacks.length; hf++) {
@@ -1830,6 +2555,9 @@ object CssGenerator {
 
                     // Process Front Matter first
                     processFrontMatter();
+
+                    // Process Mermaid Diagrams
+                    processMermaidDiagrams();
 
                     // 1. Code blocks (<pre>) are ALWAYS LTR and left-aligned
                     var preElements = document.querySelectorAll('pre, .code-fence, .markdown-code-fence');
@@ -1888,14 +2616,6 @@ object CssGenerator {
                             }
                         }
                     }
-                }
-
-                function cleanFontName(name) {
-                    if (!name) return '';
-                    if (name.indexOf(',') !== -1) {
-                        name = name.split(',')[0];
-                    }
-                    return name.trim().replace(/['"]/g, '');
                 }
 
                 function setupFontCombobox(type, inputEl, dropdownEl, suggestedList, initialVal, onSelect) {
@@ -2152,7 +2872,6 @@ object CssGenerator {
                                         '</svg>' +
                                     '</div>' +
                                     '<span class="pm-header-title">Markdown RTL</span>' +
-                                    '<span class="pm-header-badge">v1.0</span>' +
                                 '</div>' +
                                 '<div class="pm-header-right">' +
                                     '<button id="pm-close-btn" type="button" title="Close (ESC)">esc</button>' +
@@ -2243,6 +2962,27 @@ object CssGenerator {
                                                 '<span class="pm-metric-val" id="pm-lh-val">' + defaultLh.toFixed(1) + 'x</span>' +
                                                 '<button type="button" class="pm-stepper-btn" id="pm-inc-lh">+</button>' +
                                             '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="pm-section-title">Features</div>' +
+                                    '<div class="pm-bento-card" style="padding: 6px 12px; gap: 8px; display: flex; flex-direction: column;">' +
+                                        '<div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">' +
+                                            '<span style="font-size: 11.5px; font-weight: 500; color: #CBD5E1;">Front Matter</span>' +
+                                            '<label class="pm-switch">' +
+                                                '<input type="checkbox" id="pm-opt-fm">' +
+                                                '<span class="pm-switch-track"></span>' +
+                                            '</label>' +
+                                        '</div>' +
+                                        '<div style="display: flex; align-items: center; justify-content: space-between; width: 100%; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 6px;">' +
+                                            '<div style="display: flex; align-items: center; gap: 6px;">' +
+                                                '<span style="font-size: 11.5px; font-weight: 500; color: #CBD5E1;">Mermaid</span>' +
+                                                (hasNativeMermaid ?
+                                                    '<span style="font-size: 9.5px; padding: 1px 5px; border-radius: 4px; background: rgba(56, 189, 248, 0.15); color: #38BDF8; font-family: var(--pm-code-font);">Native</span>' : '') +
+                                            '</div>' +
+                                            '<label class="pm-switch">' +
+                                                '<input type="checkbox" id="pm-opt-mermaid">' +
+                                                '<span class="pm-switch-track"></span>' +
+                                            '</label>' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +
@@ -2338,9 +3078,9 @@ object CssGenerator {
                     var suggestedEn = ['JetBrains Mono', 'SF Pro', 'Inter', 'Geist', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'System UI'];
                     var suggestedCode = ['JetBrains Mono', 'Cascadia Code', 'Fira Code', 'SF Mono', 'Geist Mono', 'Consolas', 'Courier New', 'Menlo', 'Monaco'];
 
-                    var savedFa = cleanFontName(getPref('fa_font', defaultFaFont)) || defaultFaFont;
-                    var savedEn = cleanFontName(getPref('en_font', defaultEnFont)) || defaultEnFont;
-                    var savedCode = cleanFontName(getPref('code_font', defaultCodeFont)) || defaultCodeFont;
+                    savedFa = cleanFontName(getPref('fa_font', defaultFaFont)) || defaultFaFont;
+                    savedEn = cleanFontName(getPref('en_font', defaultEnFont)) || defaultEnFont;
+                    savedCode = cleanFontName(getPref('code_font', defaultCodeFont)) || defaultCodeFont;
 
                     function updateFaFont(val) {
                         val = cleanFontName(val);
@@ -2376,7 +3116,9 @@ object CssGenerator {
                                     'lineHeight=' + encodeURIComponent(currentLh.toFixed(1)),
                                     'faFont=' + encodeURIComponent(comboFa ? comboFa.getValue() : savedFa),
                                     'enFont=' + encodeURIComponent(comboEn ? comboEn.getValue() : savedEn),
-                                    'codeFont=' + encodeURIComponent(comboCode ? comboCode.getValue() : savedCode)
+                                    'codeFont=' + encodeURIComponent(comboCode ? comboCode.getValue() : savedCode),
+                                    'frontmatter=' + (renderFrontMatterEnabled ? 'true' : 'false'),
+                                    'mermaid=' + (renderMermaidEnabled ? 'true' : 'false')
                                 ].join('&');
                                 window.__IntelliJTools.messagePipe.post('pmUpdateSettings', params);
                             }
@@ -2517,6 +3259,31 @@ object CssGenerator {
                         postUpdateToIde();
                     });
 
+                    // Feature Toggles (Front Matter & Mermaid)
+                    var optFm = card.querySelector('#pm-opt-fm');
+                    if (optFm) {
+                        optFm.checked = renderFrontMatterEnabled;
+                        optFm.addEventListener('change', function(e) {
+                            e.stopPropagation();
+                            renderFrontMatterEnabled = optFm.checked;
+                            savePref('frontmatter', renderFrontMatterEnabled ? '1' : '0');
+                            postUpdateToIde();
+                            processFrontMatter();
+                        });
+                    }
+
+                    var optMermaid = card.querySelector('#pm-opt-mermaid');
+                    if (optMermaid) {
+                        optMermaid.checked = renderMermaidEnabled;
+                        optMermaid.addEventListener('change', function(e) {
+                            e.stopPropagation();
+                            renderMermaidEnabled = optMermaid.checked;
+                            savePref('mermaid', renderMermaidEnabled ? '1' : '0');
+                            postUpdateToIde();
+                            processMermaidDiagrams();
+                        });
+                    }
+
                     // Reset Defaults
                     resetBtn.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -2534,6 +3301,16 @@ object CssGenerator {
                         updateFsDisplay();
                         currentLh = defaultLh;
                         updateLhDisplay();
+
+                        if (optFm) optFm.checked = true;
+                        renderFrontMatterEnabled = true;
+                        savePref('frontmatter', '1');
+                        processFrontMatter();
+
+                        if (optMermaid) optMermaid.checked = true;
+                        renderMermaidEnabled = true;
+                        savePref('mermaid', '1');
+                        processMermaidDiagrams();
 
                         postUpdateToIde();
                     });
@@ -2603,8 +3380,8 @@ object CssGenerator {
                             var target = mut.target;
                             var isInternal = target && (
                                 target.id === 'persian-markdown-switcher' ||
-                                (target.classList && target.classList.contains('pm-frontmatter-container')) ||
-                                (target.closest && (target.closest('#persian-markdown-switcher') || target.closest('.pm-frontmatter-container')))
+                                (target.classList && (target.classList.contains('pm-frontmatter-container') || target.classList.contains('pm-mermaid-container'))) ||
+                                (target.closest && (target.closest('#persian-markdown-switcher') || target.closest('.pm-frontmatter-container') || target.closest('.pm-mermaid-container')))
                             );
                             if (!isInternal) {
                                 onlyInternalPlugin = false;
@@ -2617,9 +3394,9 @@ object CssGenerator {
                         debounceTimer = setTimeout(function() {
                             createSwitcherUI();
                             applyDirections();
-                        }, 50);
+                        }, 80);
                     });
-                    var obsTarget = document.documentElement || document.body;
+                    var obsTarget = document.body || document.documentElement;
                     if (obsTarget) {
                         observer.observe(obsTarget, { childList: true, subtree: true });
                     }

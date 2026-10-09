@@ -17,11 +17,9 @@ class PersianMarkdownState : BaseState() {
     var fontSize by property(16)
     var lineHeight by property(1.8f)
     var useBundledFont by property(true)
-    var keepCodeLTR by property(true)
     var enhanceHeadings by property(true)
-    var enhanceQuotes by property(true)
-    var enhanceTables by property(true)
     var renderFrontMatter by property(true)
+    var renderMermaid by property(true)
 }
 
 fun interface PersianMarkdownSettingsListener {

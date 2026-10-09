@@ -1,6 +1,9 @@
 package com.persian.markdown.preview
 
+import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.diagnostic.Logger
+import com.intellij.openapi.extensions.PluginId
 import com.persian.markdown.settings.PersianMarkdownSettings
 import com.persian.markdown.settings.PersianMarkdownSettingsListener
 import org.intellij.plugins.markdown.extensions.MarkdownBrowserPreviewExtension
@@ -22,7 +25,8 @@ class PersianMarkdownBrowserExtension(
                     return true
                 }
             })
-        } catch (_: Exception) {
+        } catch (t: Throwable) {
+            LOG.warn("Failed to subscribe to browser pipe pmUpdateSettings", t)
         }
 
         connection.subscribe(PersianMarkdownSettingsListener.TOPIC, PersianMarkdownSettingsListener {
@@ -30,7 +34,8 @@ class PersianMarkdownBrowserExtension(
             ApplicationManager.getApplication().invokeLater({
                 try {
                     panel.reloadWithOffset(0)
-                } catch (_: Exception) {
+                } catch (t: Throwable) {
+                    LOG.debug("Failed to reload preview panel with offset", t)
                 }
             }, { ApplicationManager.getApplication().isDisposed })
         })
@@ -63,26 +68,32 @@ class PersianMarkdownBrowserExtension(
                     state.directionMode = com.persian.markdown.settings.DirectionMode.fromId(it)
                 }
                 params["fontSize"]?.toIntOrNull()?.let {
-                    state.fontSize = it
+                    state.fontSize = it.coerceIn(8, 72)
                 }
                 params["lineHeight"]?.toFloatOrNull()?.let {
-                    state.lineHeight = it
+                    if (!it.isNaN() && !it.isInfinite()) {
+                        state.lineHeight = it.coerceIn(1.0f, 4.0f)
+                    }
                 }
                 params["faFont"]?.takeIf { it.isNotBlank() }?.let {
-                    state.fontFamily = it
+                    state.fontFamily = sanitizeFontName(it)
                 }
                 params["enFont"]?.takeIf { it.isNotBlank() }?.let {
-                    state.enFontFamily = it
+                    state.enFontFamily = sanitizeFontName(it)
                 }
                 params["codeFont"]?.takeIf { it.isNotBlank() }?.let {
-                    state.codeFontFamily = it
+                    state.codeFontFamily = sanitizeFontName(it)
                 }
                 params["frontmatter"]?.let {
                     state.renderFrontMatter = it.toBoolean()
                 }
+                params["mermaid"]?.let {
+                    state.renderMermaid = it.toBoolean()
+                }
 
                 settings.notifyChanged()
-            } catch (_: Exception) {
+            } catch (t: Throwable) {
+                LOG.warn("Failed to apply settings from preview JS", t)
             } finally {
                 ApplicationManager.getApplication().invokeLater {
                     isUpdatingFromJs = false
@@ -95,13 +106,27 @@ class PersianMarkdownBrowserExtension(
         get() = MarkdownBrowserPreviewExtension.Priority.AFTER_ALL
 
     override val styles: List<String> = listOf("persianMarkdown/persian.css")
-    override val scripts: List<String> = listOf("persianMarkdown/persian.js")
+
+    override val scripts: List<String>
+        get() {
+            val state = PersianMarkdownSettings.getInstance().state
+            return if (state.renderMermaid) {
+                listOf(
+                    "persianMarkdown/mermaid.min.js",
+                    "persianMarkdown/persian.js"
+                )
+            } else {
+                listOf("persianMarkdown/persian.js")
+            }
+        }
 
     override val resourceProvider: ResourceProvider
         get() = this
 
     override fun canProvide(resourceName: String): Boolean {
-        return resourceName == "persianMarkdown/persian.css" || resourceName == "persianMarkdown/persian.js"
+        return resourceName == "persianMarkdown/persian.css" ||
+                resourceName == "persianMarkdown/persian.js" ||
+                resourceName == "persianMarkdown/mermaid.min.js"
     }
 
     override fun loadResource(resourceName: String): ResourceProvider.Resource? {
@@ -113,24 +138,68 @@ class PersianMarkdownBrowserExtension(
             }
             "persianMarkdown/persian.js" -> {
                 val state = PersianMarkdownSettings.getInstance().state
-                val js = CssGenerator.generateAutoDirScript(state, cachedSystemFonts)
+                val js = CssGenerator.generateAutoDirScript(
+                    state = state,
+                    systemFonts = cachedSystemFonts,
+                    hasNativeMermaid = isNativeMermaidPluginEnabled()
+                )
                 ResourceProvider.Resource(js.toByteArray(Charsets.UTF_8), "application/javascript; charset=utf-8")
+            }
+            "persianMarkdown/mermaid.min.js" -> {
+                ResourceProvider.Resource(cachedMermaidJs, "application/javascript; charset=utf-8")
             }
             else -> null
         }
     }
 
     companion object {
-        val cachedSystemFonts: Array<String> by lazy {
+        private val LOG = Logger.getInstance(PersianMarkdownBrowserExtension::class.java)
+
+        fun sanitizeFontName(raw: String): String {
+            return raw.replace(Regex("""[;{}<>"'\\]"""), "").trim().take(120)
+        }
+
+        fun isNativeMermaidPluginEnabled(): Boolean {
+            return try {
+                val pluginId = PluginId.getId("com.intellij.mermaid")
+                PluginManagerCore.getPlugin(pluginId)?.isEnabled == true
+            } catch (t: Throwable) {
+                LOG.debug("Could not determine native Mermaid plugin status", t)
+                false
+            }
+        }
+
+        val cachedMermaidJs: ByteArray by lazy {
             try {
-                java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment()
-                    .availableFontFamilyNames
-                    .filter { it.isNotBlank() && !it.startsWith("@") }
-                    .distinct()
-                    .sorted()
-                    .toTypedArray()
-            } catch (_: Exception) {
-                emptyArray()
+                PersianMarkdownBrowserExtension::class.java.getResourceAsStream("/js/mermaid.min.js")
+                    ?.use { it.readBytes() } ?: ByteArray(0)
+            } catch (t: Throwable) {
+                LOG.warn("Failed to load bundled mermaid.min.js resource", t)
+                ByteArray(0)
+            }
+        }
+
+        @Volatile
+        var cachedSystemFonts: Array<String> = arrayOf(
+            "Vazirmatn", "Sahel", "Shabnam", "Samim", "Parastoo", "B Nazanin", "B Yekan", "IRANSans"
+        )
+            private set
+
+        fun initFontCacheAsync() {
+            ApplicationManager.getApplication().executeOnPooledThread {
+                try {
+                    val fonts = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment()
+                        .availableFontFamilyNames
+                        .filter { it.isNotBlank() && !it.startsWith("@") }
+                        .distinct()
+                        .sorted()
+                        .toTypedArray()
+                    if (fonts.isNotEmpty()) {
+                        cachedSystemFonts = fonts
+                    }
+                } catch (t: Throwable) {
+                    LOG.debug("Could not enumerate system fonts in background", t)
+                }
             }
         }
     }
@@ -142,7 +211,8 @@ class PersianMarkdownBrowserExtension(
     override fun dispose() {
         try {
             connection.disconnect()
-        } catch (_: Exception) {
+        } catch (t: Throwable) {
+            LOG.debug("Error disconnecting messageBus connection", t)
         }
     }
 

@@ -224,4 +224,78 @@ class CssGeneratorTest {
         assertTrue(js.contains("pm-fm-text-card"))
         assertTrue(js.contains("pm-fm-text-body"))
     }
+
+    @Test
+    fun testMermaidCssGenerated() {
+        val state = PersianMarkdownState()
+        val css = CssGenerator.generateCss(state)
+        assertTrue(css.contains(".pm-mermaid-container"))
+        assertTrue(css.contains(".pm-mermaid-header"))
+        assertTrue(css.contains(".pm-mermaid-svg-wrap"))
+        assertTrue(css.contains(".pm-mermaid-error-banner"))
+        assertTrue(css.contains(".pm-mermaid-zoom-bar"))
+        assertTrue(css.contains(".pm-mermaid-zoom-btn"))
+        assertTrue(css.contains(".pm-mermaid-zoom-val"))
+    }
+
+    @Test
+    fun testMermaidJsScriptInjected() {
+        val state = PersianMarkdownState().apply {
+            renderMermaid = true
+        }
+        val js = CssGenerator.generateAutoDirScript(state)
+        assertTrue(js.contains("renderMermaidEnabled"))
+        assertTrue(js.contains("processMermaidDiagrams"))
+        assertTrue(js.contains("createMermaidCard"))
+        assertTrue(js.contains("renderMermaidCard"))
+        assertTrue(js.contains("sanitizeMermaidCode"))
+        assertTrue(js.contains("detectIdeDarkTheme"))
+        assertTrue(js.contains("pm-opt-mermaid"))
+        assertTrue(js.contains("pm-opt-fm"))
+        assertTrue(js.contains("mermaid"))
+        assertTrue(js.contains("pm-mermaid-zoom-bar"))
+        assertTrue(js.contains("securityLevel: 'antiscript'"))
+        // Version badge must not be in switcher header
+        org.junit.Assert.assertFalse(js.contains("pm-header-badge"))
+    }
+
+    @Test
+    fun testNativeMermaidCoexistenceMode() {
+        val state = PersianMarkdownState().apply {
+            renderMermaid = true
+        }
+        val jsNative = CssGenerator.generateAutoDirScript(state, hasNativeMermaid = true)
+        assertTrue(jsNative.contains("var hasNativeMermaid = true;"))
+        assertTrue(jsNative.contains("enhanceNativeMermaidDiagrams"))
+        assertTrue(jsNative.contains("Native"))
+
+        val jsStandalone = CssGenerator.generateAutoDirScript(state, hasNativeMermaid = false)
+        assertTrue(jsStandalone.contains("var hasNativeMermaid = false;"))
+        org.junit.Assert.assertFalse(jsStandalone.contains("v1.1"))
+    }
+
+    @Test
+    fun testProcessMermaidProcessesUnrenderedBlocksEvenWithNativeMermaid() {
+        val state = PersianMarkdownState().apply {
+            renderMermaid = true
+        }
+        val jsNative = CssGenerator.generateAutoDirScript(state, hasNativeMermaid = true)
+        assertTrue(jsNative.contains("enhanceNativeMermaidDiagrams()"))
+        assertTrue(jsNative.contains("createMermaidCard"))
+        assertTrue(jsNative.contains("renderMermaidCard"))
+        assertTrue(jsNative.contains("isMermaidClass"))
+    }
+
+    @Test
+    fun testBase64ExtractionAndFenceDecoderInjected() {
+        val state = PersianMarkdownState().apply {
+            renderMermaid = true
+        }
+        val js = CssGenerator.generateAutoDirScript(state)
+        assertTrue(js.contains("decodeBase64Utf8"))
+        assertTrue(js.contains("extractFenceText"))
+        assertTrue(js.contains("data-actual-fence-content"))
+        assertTrue(js.contains("data-fence-content"))
+        assertTrue(js.contains("if (!trimmed)"))
+    }
 }

@@ -7,6 +7,8 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.persian.markdown.settings.DirectionMode
 import com.persian.markdown.settings.PersianMarkdownSettings
 
+import com.intellij.openapi.actionSystem.CommonDataKeys
+
 class ToggleDirectionAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
@@ -30,6 +32,14 @@ class ToggleDirectionAction : AnAction() {
     }
 
     override fun update(e: AnActionEvent) {
+        val file = e.getData(CommonDataKeys.VIRTUAL_FILE)
+        val isMarkdown = file != null && (file.extension.equals("md", ignoreCase = true) || file.extension.equals("markdown", ignoreCase = true))
+        if (!isMarkdown) {
+            e.presentation.isEnabledAndVisible = false
+            return
+        }
+        e.presentation.isEnabledAndVisible = true
+
         val settings = PersianMarkdownSettings.getInstance()
         if (!settings.state.enabled) {
             e.presentation.text = "Markdown RTL: Disabled"

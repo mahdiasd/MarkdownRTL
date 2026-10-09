@@ -68,6 +68,7 @@ Markdown RTL works natively inside the **Markdown Preview Pane**:
 ## ✨ Key Features
 
 - 🔄 **Smart BiDi Detection (Auto Mode):** Analyzes paragraphs, headings, and lists dynamically. Persian and Arabic align right; pure English stays left.
+- 📊 **Native Mermaid Diagram Support:** Automatically renders ` ```mermaid ` code fences into interactive SVG diagrams completely offline. Pure English diagrams use *JetBrains Mono* by default, while Persian/Arabic diagrams automatically utilize *Vazirmatn* with RTL-aligned text labels. Includes Diagram/Source view toggles, copy SVG/code, and clean inline zoom (+ / −) controls.
 - 📑 **Smart YAML Front Matter Card:** Seamlessly parses and renders document metadata blocks (`--- ... ---`) into a modern card with field-level BiDi alignment, array badges, clickable URLs, and quick **Raw YAML / Copy** toggles.
 - 🛡️ **Bulletproof Code Isolation:** Monospace code fences (`<pre>`, `.code-fence`, `<code>`) are strictly protected as LTR and left-aligned.
 - 🎛️ **In-Preview Bento Controller:** Floating modern widget to toggle modes, choose fonts (Persian, English, Code), and adjust font size and line height on the fly.
@@ -86,10 +87,10 @@ Markdown RTL works natively inside the **Markdown Preview Pane**:
 | **Force LTR** | Revert LTR | Standard Left-to-Right layout for pure English technical specifications. |
 
 ### Shortcuts Reference:
-- <kbd>Alt</kbd> + <kbd>R</kbd> / <kbd>⌥R</kbd>: Toggle between **Auto RTL** and **Force RTL**
-- <kbd>Alt</kbd> + <kbd>E</kbd> / <kbd>⌥E</kbd>: Toggle **Plugin Enabled / Disabled**
-- <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd>: Cycle modes (**Auto** ➔ **Force RTL** ➔ **Force LTR**)
-- <kbd>Esc</kbd>: Close floating Bento widget
+- <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd> (or <kbd>⇧⌥R</kbd>): Global Editor Shortcut to cycle modes (**Auto** ➔ **Force RTL** ➔ **Force LTR**)
+- <kbd>Alt</kbd> + <kbd>R</kbd> / <kbd>⌥R</kbd>: Inside preview pane to toggle between **Auto RTL** and **Force RTL**
+- <kbd>Alt</kbd> + <kbd>E</kbd> / <kbd>⌥E</kbd>: Inside preview pane to toggle **Plugin Enabled / Disabled**
+- <kbd>Esc</kbd>: Inside preview pane to close floating Bento widget
 
 ---
 

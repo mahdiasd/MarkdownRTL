@@ -1,0 +1,26 @@
+Markdown RTL
+Copyright 2026 Mahdi Asadollahpour
+
+This product includes software developed under the Apache License 2.0.
+
+========================================================================
+Third-Party Software and Assets Bundled with Markdown RTL:
+========================================================================
+
+1. Vazirmatn Font
+   - Origin: https://github.com/rastikerdar/vazirmatn
+   - Copyright (c) 2015-2022 Saber Rastikerdar
+   - License: SIL Open Font License 1.1 (OFL)
+   - License text available at: src/main/resources/fonts/OFL.txt
+
+2. JetBrains Mono Font
+   - Origin: https://github.com/JetBrains/JetBrainsMono
+   - Copyright (c) 2020 JetBrains s.r.o.
+   - License: SIL Open Font License 1.1 (OFL)
+   - License text available at: src/main/resources/fonts/OFL.txt
+
+3. Mermaid JavaScript Library
+   - Origin: https://github.com/mermaid-js/mermaid
+   - Copyright (c) 2014 - 2024 Knut Sveidqvist and mermaid contributors
+   - License: MIT License
+   - License text available at: src/main/resources/js/LICENSE-MERMAID.txt
