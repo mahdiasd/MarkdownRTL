@@ -15,6 +15,9 @@
 | **05** | [`05-syntax-error-resilience.md`](./05-syntax-error-resilience.md) | تاب‌آوری در برابر خطاهای نگارشی | عدم کرش کردن صفحه هنگام تایپ، حفظ آخرین رندر سالم یا نمایش کارت خطای شفاف و بازیابی فوری |
 | **06** | [`06-large-pan-zoom-diagram.md`](./06-large-pan-zoom-diagram.md) | دیاگرام وسیع و نوار ابزار تعاملی | بررسی بزرگ‌نمایی (Zoom)، جابه‌جایی با ماوس (Pan/Drag)، پنجره تمام‌صفحه (Modal) و بستن با کلید Esc |
 | **07** | [`07-bento-feature-toggle.md`](./07-bento-feature-toggle.md) | کلید خاموش/روشن در ویجت بنتو | سوییچ میان حالت نمایش نمودار برداری و کد خام متنی بدون ایجاد اختلال در رندر سایر اجزای سند |
+| **08** | [`08-pure-english-architecture.md`](./08-pure-english-architecture.md) | متن کاملاً انگلیسی + دیاگرام کاملاً انگلیسی | متن چپ‌چین، فونت انگلیسی سیستم، دیاگرام فلوچارت و State با قلم JetBrains Mono بدون تأثیر زبان فارسی |
+| **09** | [`09-pure-english-pipeline-and-gitflow.md`](./09-pure-english-pipeline-and-gitflow.md) | متن کاملاً انگلیسی + نمودارهای پیچیده انگلیسی | تست نمودار گیت (gitGraph)، پایپ‌لاین CI/CD و مدل ER در یک سند کاملاً انگلیسی |
+| **10** | [`10-persian-prose-english-mermaid.md`](./10-persian-prose-english-mermaid.md) | متن کاملاً فارسی + دیاگرام‌های انگلیسی | بررسی تفکیک زبان: متن فارسی راست‌چین با قلم وزیرمتن در کنار دیاگرام‌های انگلیسی چپ‌چین با قلم JetBrains Mono |
 
 ---
 
