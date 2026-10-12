@@ -60,21 +60,24 @@ Markdown RTL works natively inside the **Markdown Preview Pane**:
 1. Open any Markdown file (`.md`).
 2. Switch the view mode in the top-right corner to **Split View** (Editor and Preview) or **Preview Only**.
 3. Persian and Arabic prose will automatically render Right-to-Left with proper punctuation and *Vazirmatn* typography, while all code blocks remain strictly Left-to-Right.
-4. YAML Front Matter blocks (`--- ... ---`) are automatically rendered as an interactive metadata table card with BiDi support.
-5. Click the floating **Markdown RTL** capsule at the bottom-left to adjust fonts, sizes, line heights, or direction modes.
+4. ` ```mermaid ` fenced code blocks are automatically rendered offline as interactive SVG diagram cards with language-aware fonts (*Vazirmatn* for Persian/Arabic, *JetBrains Mono* for English) and inline zoom (`−` / `100%` / `+`) controls.
+5. YAML Front Matter blocks (`--- ... ---`) are automatically rendered as an interactive metadata table card with BiDi support, array badges, and Raw YAML / Copy controls.
+6. Click the floating **Markdown RTL** capsule at the bottom-left to adjust fonts, sizes, line heights, direction modes, or toggle **Front Matter** and **Mermaid** rendering live.
 
 ---
 
 ## ✨ Key Features
 
 - 🔄 **Smart BiDi Detection (Auto Mode):** Analyzes paragraphs, headings, and lists dynamically. Persian and Arabic align right; pure English stays left.
-- 📊 **Native Mermaid Diagram Support:** Automatically renders ` ```mermaid ` code fences into interactive SVG diagrams completely offline. Pure English diagrams use *JetBrains Mono* by default, while Persian/Arabic diagrams automatically utilize *Vazirmatn* with RTL-aligned text labels. Includes Diagram/Source view toggles, copy SVG/code, and clean inline zoom (+ / −) controls.
-- 📑 **Smart YAML Front Matter Card:** Seamlessly parses and renders document metadata blocks (`--- ... ---`) into a modern card with field-level BiDi alignment, array badges, clickable URLs, and quick **Raw YAML / Copy** toggles.
+- 📊 **Offline Mermaid Diagram Rendering:** Automatically renders ` ```mermaid ` code blocks into crisp SVG diagrams completely offline (and enhances native IDE Mermaid output when enabled) across all major diagram types (`Flowchart`, `Sequence`, `Class`, `State`, `ER Model`, `Gantt`, `Pie`, `Git Graph`, `Mindmap`, `Timeline`, `Architecture`, etc.).
+- 🌐 **Language-Aware Diagram Typography & BiDi:** Detects diagram language automatically—pure English diagrams render with *JetBrains Mono* (`EN` badge), while Persian/Arabic diagrams render with *Vazirmatn* (`FA` badge), right-to-left node alignment, and automatic ZWNJ (`نیم‌فاصله`) sanitization.
+- 🔍 **Interactive Diagram Controls & Live-Edit Resilience:** Features header badges for language and diagram type, inline zoom controls (`−` / `100%` / `+` from `40%` to `300%`), automatic IDE Dark/Light theme adaptation, and live-editing resilience that preserves the last valid diagram (`● Editing...`) while typing incomplete syntax.
+- 📑 **Smart YAML Front Matter Card:** Seamlessly parses and renders document metadata blocks (`--- ... ---`) into a structured card with field-level BiDi alignment, array badges, clickable URLs, and **Raw YAML / Table View** & **Copy** buttons.
 - 🛡️ **Bulletproof Code Isolation:** Monospace code fences (`<pre>`, `.code-fence`, `<code>`) are strictly protected as LTR and left-aligned.
-- 🎛️ **In-Preview Bento Controller:** Floating modern widget to toggle modes, choose fonts (Persian, English, Code), and adjust font size and line height on the fly.
+- 🎛️ **In-Preview Bento Controller & IDE Sync:** Floating modern widget to switch direction modes, choose fonts (Persian, English, Code), adjust font size/line height, and toggle **Front Matter** or **Mermaid** features on the fly—fully synchronized with IDE settings and keyboard shortcuts.
 - 🖋️ **Embedded Fonts Included:** Bundled with high-legibility **Vazirmatn** and **JetBrains Mono**—works out of the box on Windows, macOS, and Linux without installing fonts.
-- 💾 **Instant Persistence:** Changes made in the floating widget are automatically saved in `localStorage` across IDE sessions.
-- ⚡ **Zero Markdown Mutation:** Operates completely in the preview DOM layer without touching or dirtying your raw markdown files.
+- 💾 **Instant Persistence:** Changes made in the floating widget are automatically persisted across IDE sessions.
+- ⚡ **Zero Markdown Mutation:** Operates completely in the preview DOM layer without touching or dirtying your raw `.md` files.
 
 ---
 
@@ -87,7 +90,7 @@ Markdown RTL works natively inside the **Markdown Preview Pane**:
 | **Force LTR** | Revert LTR | Standard Left-to-Right layout for pure English technical specifications. |
 
 ### Shortcuts Reference:
-- <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd> (or <kbd>⇧⌥R</kbd>): Global Editor Shortcut to cycle modes (**Auto** ➔ **Force RTL** ➔ **Force LTR**)
+- <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd> (or <kbd>⇧⌥R</kbd>): Global Editor Shortcut (scoped to Markdown files) to cycle modes (**Auto** ➔ **Force RTL** ➔ **Force LTR**)
 - <kbd>Alt</kbd> + <kbd>R</kbd> / <kbd>⌥R</kbd>: Inside preview pane to toggle between **Auto RTL** and **Force RTL**
 - <kbd>Alt</kbd> + <kbd>E</kbd> / <kbd>⌥E</kbd>: Inside preview pane to toggle **Plugin Enabled / Disabled**
 - <kbd>Esc</kbd>: Inside preview pane to close floating Bento widget
@@ -125,7 +128,7 @@ cd MarkdownRTL
 # 3. Build distributable plugin archive
 ./gradlew buildPlugin
 ```
-The output package will be generated at: `build/distributions/PersianMarkdown-1.0.2.zip`.
+The output package will be generated at: `build/distributions/PersianMarkdown-1.1.1.zip`.
 
 ---
 
@@ -137,10 +140,11 @@ The output package will be generated at: `build/distributions/PersianMarkdown-1.
 
 ## 📄 License
 
-Distributed under the **Apache License 2.0**. See [`LICENSE`](LICENSE) for details.
+Distributed under the **Apache License 2.0**. See [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE) for details.
 
-- **Vazirmatn Font:** By Saber Rastikerdar ([OFL License](https://scripts.sil.org/OFL)).
+- **Vazirmatn Font:** By Saber Rastikerdar ([SIL Open Font License 1.1](src/main/resources/fonts/OFL.txt)).
 - **JetBrains Mono:** By JetBrains ([Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0)).
+- **Mermaid.js:** By Knut Sveidqvist & Contributors ([MIT License](src/main/resources/js/LICENSE-MERMAID.txt)).
 
 <p align="center">
   Crafted with ❤️ for the Persian and RTL developer community.
