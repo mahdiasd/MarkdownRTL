@@ -71,6 +71,7 @@
     <depends>org.intellij.plugins.markdown</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <errorHandler implementation="com.intellij.diagnostic.JetBrainsMarketplaceErrorReportSubmitter"/>
         <applicationService serviceImplementation="com.persian.markdown.settings.PersianMarkdownSettings"/>
         <applicationConfigurable
                 parentId="tools"
